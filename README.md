@@ -4,11 +4,14 @@ An offline, iOS-styled task and reminder app. Type a task in plain English and i
 
 > `tomorrow 7:30-10:30 contest on Codeforces` → **Contest on Codeforces**, tomorrow, 7:30 – 10:30 PM
 
-## Features (v0.2)
+## Features (v0.3)
 - Natural-language parser (dates, times, ranges, categories) written from scratch, no libraries or AI
 - Live preview of how your sentence is understood
 - Grouped list: Overdue, Today, Tomorrow, Upcoming, Completed
 - Multiple reminders per task (1 day, 1 hour, 10 min, at the time) plus snooze
+- Recurring tasks: `every sunday 8pm contest`, `daily 6am revise`, `weekly maths homework`
+- Steps (subtasks) with progress, and links: paste a URL in the sentence and it becomes an "Open link" button
+- Swipe right to complete, swipe left to delete; urgency colors for tasks due soon or overdue
 - Works fully offline, data stays on the device (localStorage)
 - iOS-style UI with animations, dark mode support
 
@@ -32,7 +35,7 @@ Enable GitHub Pages with source `main` and folder `/docs` to get a live demo lin
 ## Roadmap
 - [x] v1: parser, offline storage, iOS-style list
 - [x] v2: reminders and snooze
-- [ ] v3: recurring tasks, subtasks, links, swipe gestures
+- [x] v3: recurring tasks, steps, links, swipe gestures, urgency colors
 - [ ] v4: streaks, backup/export, polish
 
 ## Tech
