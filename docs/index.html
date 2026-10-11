@@ -64,8 +64,8 @@ header{display:flex;justify-content:space-between;align-items:flex-end}
 .opt+.opt{border-top:.5px solid var(--sep)}
 .opt .tick{color:var(--blue);opacity:0;transition:opacity .2s}
 .opt.on .tick{opacity:1}
-.banner{position:fixed;top:calc(8px + env(safe-area-inset-top));left:12px;right:12px;max-width:496px;margin:0 auto;z-index:30;background:var(--card);border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.22);padding:12px 14px;transform:translateY(-150%);transition:transform .4s cubic-bezier(.2,.9,.3,1)}
-.banner.show{transform:none}
+.banner{position:fixed;top:calc(max(env(safe-area-inset-top,0px),32px) + 8px);left:12px;right:12px;max-width:496px;margin:0 auto;z-index:30;background:var(--card);border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.22);padding:12px 14px;transform:translateY(-250%);opacity:0;visibility:hidden;transition:transform .4s cubic-bezier(.2,.9,.3,1),opacity .3s,visibility .4s}
+.banner.show{transform:none;opacity:1;visibility:visible}
 .banner b{display:block;font-size:15px}
 .banner span{font-size:14px;color:var(--sub)}
 .acts{display:flex;gap:18px;margin-top:8px}

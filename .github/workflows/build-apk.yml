@@ -23,6 +23,11 @@ jobs:
         run: npx cap add android
       - name: Add notification permissions
         run: sed -i 's#</manifest>#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/></manifest>#' android/app/src/main/AndroidManifest.xml
+      - name: Use the permanent signing key and bump version
+        run: |
+          mkdir -p ~/.android
+          cp signing/debug.keystore ~/.android/debug.keystore
+          sed -i "s/versionCode 1/versionCode ${{ github.run_number }}/" android/app/build.gradle
       - name: Sync web files
         run: npx cap sync android
       - name: Build debug APK

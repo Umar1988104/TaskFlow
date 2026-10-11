@@ -31,6 +31,9 @@ The workflow installs Capacitor and the Local Notifications plugin, so reminders
 
 On Android 13+ allow notifications when asked. On Android 12+ also allow "Alarms & reminders" for the app in system settings for exact timing.
 
+## Updating the installed app
+Every build is signed with the key in `signing/debug.keystore` and gets a higher version number, so a new APK installs over the old one and keeps your tasks. Never uninstall first. (This is a debug key meant for personal use, not for publishing on the Play Store.)
+
 ## Hosting
 Enable GitHub Pages with source `main` and folder `/docs` to get a live demo link.
 
