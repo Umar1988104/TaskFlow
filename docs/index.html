@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>TaskFlow</title>
 <style>
 :root{--bg:#f2f2f7;--card:#fff;--txt:#000;--sub:#8e8e93;--sep:rgba(60,60,67,.18);--blue:#007aff;--red:#ff3b30;--bar:rgba(249,249,249,.85)}
@@ -78,12 +80,21 @@ header{display:flex;justify-content:space-between;align-items:flex-end}
 .meta a{color:var(--blue);text-decoration:none;font-weight:600}
 .sheet{max-height:88vh;overflow-y:auto}
 #sub-in{flex:1;min-width:0;font:inherit;font-size:17px;color:var(--txt);background:var(--card);border:.5px solid var(--sep);border-radius:22px;padding:10px 16px;outline:none}
+.hb{display:flex;gap:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stat{background:var(--card);border-radius:12px;padding:12px 6px;text-align:center}
+.stat b{display:block;font-size:26px;font-weight:700}
+.stat span{font-size:12px;color:var(--sub)}
+.bars{display:flex;gap:6px;align-items:flex-end;height:72px;margin-top:12px;background:var(--card);border-radius:12px;padding:10px 12px 22px;position:relative}
+.bars div{flex:1;height:100%;display:flex;align-items:flex-end;position:relative}
+.bars i{width:100%;background:var(--blue);border-radius:4px 4px 2px 2px;min-height:3px;transition:height .5s cubic-bezier(.2,.9,.3,1)}
+.bars em{position:absolute;bottom:-17px;left:0;right:0;text-align:center;font-style:normal;font-size:11px;color:var(--sub)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div id="app">
-  <header><div><h1>Tasks</h1><div class="count" id="count"></div></div><button class="bell" id="bell" aria-label="Enable reminders"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg></button></header>
+  <header><div><h1>Tasks</h1><div class="count" id="count"></div></div><div class="hb"><button class="bell" id="st" aria-label="Progress and backup"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 20V11M12 20V4M18 20v-6"/></svg></button><button class="bell" id="bell" aria-label="Enable reminders"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg></button></div></header>
   <main id="list"></main>
 </div>
 <div class="dock"><div class="dock-in">
@@ -100,6 +111,10 @@ header{display:flex;justify-content:space-between;align-items:flex-end}
   <h4>Snooze</h4><div class="opts" id="sh-sn"><button class="opt" data-m="10">In 10 minutes</button><button class="opt" data-m="60">In 1 hour</button><button class="opt" data-m="tm">Tomorrow, 9:00 AM</button></div>
   <h4>Steps</h4><div class="opts" id="sh-sub"></div>
   <div class="field" style="margin-top:8px"><input id="sub-in" type="text" placeholder="Add a step" autocomplete="off"><button class="bell" id="sub-add" aria-label="Add step" style="margin:0;font-size:24px">+</button></div>
+</div>
+<div class="sheet" id="stats"><div class="grab"></div><h3>Progress</h3><div class="sm">Based on tasks you completed</div>
+  <div class="stats" id="st-g"></div><div class="bars" id="st-b"></div>
+  <h4>Backup</h4><div class="opts"><button class="opt" id="bk-dl">Download backup</button><button class="opt" id="bk-cp">Copy backup to clipboard</button><label class="opt" for="bk-file">Restore from file…</label><input id="bk-file" type="file" accept=".json,application/json" hidden></div>
 </div>
 <div class="banner" id="banner"><b id="bn-t"></b><span id="bn-s"></span><div class="acts"><button id="bn-sn">Snooze 10 min</button><button id="bn-x">Dismiss</button></div></div>
 
@@ -266,7 +281,7 @@ function drawSheet(){
   $('#sh-sub').innerHTML=(t.subs||[]).map((x,i)=>`<div class="opt${x.d?' on':''}" data-s="${i}"><span>${esc(x.t)}</span><span><span class="tick">✓</span> <button data-x="${i}" aria-label="Remove step" style="color:var(--sub);padding:0 4px">✕</button></span></div>`).join('');
 }
 function openSheet(t){curId=t.id;drawSheet();$('#ov').classList.add('show');$('#sheet').classList.add('show')}
-function closeSheet(){$('#ov').classList.remove('show');$('#sheet').classList.remove('show')}
+function closeSheet(){$('#ov').classList.remove('show');document.querySelectorAll('.sheet').forEach(x=>x.classList.remove('show'))}
 $('#ov').addEventListener('click',closeSheet);
 $('#bell').addEventListener('click',askPerm);
 $('#sh-r').addEventListener('click',e=>{
@@ -289,8 +304,8 @@ function advance(t){
   t.date=ymd(d);delete t.snooze;(t.subs||[]).forEach(x=>x.d=false);t.fired=fireTimes(t).filter(f=>f<=Date.now());
 }
 function toggleDone(t,row){
-  row.querySelector('.chk').classList.toggle('on');row.classList.toggle('done');
-  setTimeout(()=>{if(!t.done&&t.repeat)advance(t);else t.done=!t.done;Store.save(tasks);render()},380);
+  buzz(12);row.querySelector('.chk').classList.toggle('on');row.classList.toggle('done');
+  setTimeout(()=>{if(!t.done)logDone(t);if(!t.done&&t.repeat)advance(t);else t.done=!t.done;Store.save(tasks);render()},380);
 }
 function removeTask(t,row){
   row.style.maxHeight=row.offsetHeight+'px';
@@ -331,6 +346,42 @@ function addSub(){
 }
 $('#sub-add').addEventListener('click',addSub);
 $('#sub-in').addEventListener('keydown',e=>{if(e.key==='Enter')addSub()});
+
+/* ---------- stats, backup, offline install (V4) ---------- */
+const LOGKEY='taskflow.log';
+const buzz=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
+function loadLog(){try{return JSON.parse(localStorage.getItem(LOGKEY))||[]}catch(e){return[]}}
+function saveLog(l){try{localStorage.setItem(LOGKEY,JSON.stringify(l.slice(-500)))}catch(e){}}
+function logDone(t){const L=loadLog();L.push({d:ymd(new Date()),ok:endAt(t).getTime()>=Date.now()});saveLog(L)}
+function stats(){
+  const L=loadLog(),days=new Set(L.map(x=>x.d));let n=0,d=new Date();
+  if(!days.has(ymd(d)))d=addDays(d,-1);
+  while(days.has(ymd(d))){n++;d=addDays(d,-1)}
+  const w=[...Array(7)].map((_,i)=>{const k=ymd(addDays(new Date(),i-6));return{k,c:L.filter(x=>x.d===k).length}});
+  const m=L.filter(x=>x.d>=ymd(addDays(new Date(),-29)));
+  return{streak:n,week:w.reduce((a,b)=>a+b.c,0),ok:m.length?Math.round(m.filter(x=>x.ok).length*100/m.length)+'%':'–',w};
+}
+function openStats(){
+  const t=stats(),mx=Math.max(1,...t.w.map(x=>x.c));
+  $('#st-g').innerHTML=`<div class="stat"><b>${t.streak}</b><span>Day streak</span></div><div class="stat"><b>${t.week}</b><span>Done this week</span></div><div class="stat"><b>${t.ok}</b><span>On time</span></div>`;
+  $('#st-b').innerHTML=t.w.map(x=>`<div><i style="height:0" data-h="${Math.round(x.c/mx*100)}"></i><em>${new Date(x.k+'T00:00:00').toLocaleDateString('en-IN',{weekday:'narrow'})}</em></div>`).join('');
+  $('#ov').classList.add('show');$('#stats').classList.add('show');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('#st-b i').forEach(i=>i.style.height=Math.max(4,i.dataset.h)+'%')));
+}
+$('#st').addEventListener('click',openStats);
+const backup=()=>JSON.stringify({app:'taskflow',v:4,tasks,log:loadLog()},null,1);
+$('#bk-dl').addEventListener('click',()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([backup()],{type:'application/json'}));a.download='taskflow-backup-'+ymd(new Date())+'.json';a.click()});
+$('#bk-cp').addEventListener('click',async e=>{const b=e.currentTarget;
+  try{await navigator.clipboard.writeText(backup());b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy backup to clipboard',1500)}
+  catch(_){prompt('Copy this backup:',backup())}});
+$('#bk-file').addEventListener('change',async e=>{
+  const f=e.target.files[0];if(!f)return;
+  try{const j=JSON.parse(await f.text());if(!Array.isArray(j.tasks))throw 0;
+    if(confirm('Replace your current tasks with this backup ('+j.tasks.length+' tasks)?')){tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);render();closeSheet()}}
+  catch(_){alert('That file is not a TaskFlow backup.')}
+  e.target.value='';
+});
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 tasks.forEach(t=>{if(!t.rem){t.rem=[60,10];t.fired=fireTimes(t).filter(f=>f<=Date.now())}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();tick()}});
