@@ -165,10 +165,12 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 #qs::-webkit-scrollbar{display:none}
 .kb #qs{display:flex}
 #qs button{flex:none;padding:6px 12px;border-radius:999px;background:var(--glass);border:.5px solid var(--glass-b);font-size:13px;font-weight:500;color:var(--blue)}
+#web{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<canvas id="web"></canvas>
 <div id="app">
   <header><div><h1 id="ttl">Today</h1><div class="count" id="count"></div></div><div class="hb"><button class="bell" id="bell" aria-label="Enable reminders"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg></button></div></header>
   <section id="dash" class="dash">
@@ -216,7 +218,7 @@ const Store={
   save(t){try{localStorage.setItem(KEY,JSON.stringify(t))}catch(e){}setTimeout(sync,0)}
 };
 const SKEY='taskflow.settings';
-const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,aurora:true};
+const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,aurora:true,web:true,lite:(navigator.hardwareConcurrency||8)<=4};
 let S=(()=>{try{return Object.assign({},DEF,JSON.parse(localStorage.getItem(SKEY))||{})}catch(e){return Object.assign({},DEF)}})();
 const saveS=()=>{try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}};
 function applyTheme(){
@@ -224,7 +226,7 @@ function applyTheme(){
   document.documentElement.dataset.theme=dark?'dark':'light';
   document.documentElement.style.setProperty('--blue',S.accent);
   const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#06070b':'#f2f2f7';
-  document.body.classList.toggle('noanim',!S.anim);document.body.classList.toggle('noglow',!S.aurora);
+  document.body.classList.toggle('noanim',!S.anim);document.body.classList.toggle('noglow',!S.aurora);window.__webApply&&window.__webApply();
 }
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 applyTheme();
@@ -429,7 +431,7 @@ function advance(t){
   t.date=ymd(d);delete t.snooze;(t.subs||[]).forEach(x=>x.d=false);t.fired=fireTimes(t).filter(f=>f<=Date.now());
 }
 function toggleDone(t,row){
-  buzz(12);row.querySelector('.chk').classList.toggle('on');row.classList.toggle('done');
+  if(!t.done&&window.webPulse){const q=row.querySelector('.chk').getBoundingClientRect();webPulse(q.left+q.width/2,q.top+q.height/2)}buzz(12);row.querySelector('.chk').classList.toggle('on');row.classList.toggle('done');
   setTimeout(()=>{if(!t.done)logDone(t);if(!t.done&&t.repeat)advance(t);else t.done=!t.done;Store.save(tasks);render()},380);
 }
 function removeTask(t,row){
@@ -532,7 +534,7 @@ function renderSettings(){
   const grp=(h,x)=>`<h2>${h}</h2><div class="group">${x}</div>`;
   $('#settings').innerHTML=
     grp('Appearance',seg('theme','Theme',[['auto','Auto'],['dark','Glass dark'],['light','Clean light']])+
-      `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c?'on':''}" aria-label="Accent color"></button>`).join('')}</div></div>`+sw('aurora','Glow background')+sw('anim','Animations')+sw('haptics','Haptic feedback'))+
+      `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c?'on':''}" aria-label="Accent color"></button>`).join('')}</div></div>`+sw('web','Web effect')+sw('lite','Lite effects (saves battery)')+sw('aurora','Glow background')+sw('anim','Animations')+sw('haptics','Haptic feedback'))+
     grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],o[1].replace(' before','')]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+btn('notif','Enable notifications'))+
     grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+sw('h24','24-hour time')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+sw('showDone','Show completed tasks'))+
     grp('Data',btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
@@ -598,6 +600,71 @@ $('#qs').addEventListener('click',e=>{
 });
 $('#sh-del').addEventListener('click',()=>{const t=tasks.find(x=>x.id===curId);if(!t)return;closeSheet();tasks=tasks.filter(x=>x.id!==t.id);Store.save(tasks);render();buzz(10)});
 addEventListener('scroll',()=>{const y=scrollY;if(y>60)document.body.classList.add('scrolled');else if(y<10)document.body.classList.remove('scrolled')},{passive:true});
+/* ---------- web effect (V3): connected-dots network, parallax, tap burst, completion pulse ---------- */
+(function(){
+  const cv=$('#web'),cx=cv&&cv.getContext&&cv.getContext('2d');
+  if(!cx){window.webBurst=window.webPulse=()=>{};return}
+  let W=0,H=0,dpr=1,nodes=[],bursts=[],pulses=[],raf=0,last=0,rgb=[0,122,255];
+  const mod=(a,n)=>((a%n)+n)%n,rm=matchMedia('(prefers-reduced-motion: reduce)');
+  const on=()=>S.web&&S.anim&&!document.hidden&&!rm.matches;
+  function size(){
+    dpr=Math.min(S.lite?1:2,devicePixelRatio||1);W=innerWidth;H=innerHeight;
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cx.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(S.lite?18:40,Math.max(14,W*H/(S.lite?22000:11000))));
+    if(nodes.length!==n)nodes=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H*1.3,z:.35+Math.random()*.65,vx:(Math.random()-.5)*.014,vy:(Math.random()-.5)*.014,b:0,px:0,py:0}));
+  }
+  function drawBursts(dt,col,sc){
+    bursts=bursts.filter(g=>g.life>0);
+    for(const g of bursts){
+      g.life-=dt;const k=Math.max(0,g.life/g.max),f=Math.pow(.93,dt/16);
+      for(const q of g.pts){q.x+=q.vx*dt;q.y+=q.vy*dt;q.vx*=f;q.vy*=f}
+      cx.lineWidth=1.1;
+      for(const q of g.pts){
+        cx.strokeStyle=col(.6*k*sc+.1*k);cx.beginPath();cx.moveTo(g.x,g.y);cx.lineTo(q.x,q.y);cx.stroke();
+        if(!S.lite)for(const n of nodes){const d=Math.hypot(q.x-n.px,q.y-n.py);if(d<110){cx.strokeStyle=col((1-d/110)*.5*k);cx.beginPath();cx.moveTo(q.x,q.y);cx.lineTo(n.px,n.py);cx.stroke()}}
+      }
+      for(let i=0;i<g.pts.length;i++)for(let j=i+1;j<g.pts.length;j++){const a=g.pts[i],b=g.pts[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<100){cx.strokeStyle=col((1-d/100)*.5*k);cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()}}
+      cx.fillStyle=col(.9*k);
+      for(const q of g.pts){cx.beginPath();cx.arc(q.x,q.y,2.2,0,6.283);cx.fill()}
+      cx.beginPath();cx.arc(g.x,g.y,3.2*k+1,0,6.283);cx.fill();
+    }
+  }
+  function frame(ts){
+    if(!on()){raf=0;cx.clearRect(0,0,W,H);return}
+    raf=requestAnimationFrame(frame);
+    if(S.lite&&ts-last<40)return;
+    const dt=Math.min(50,ts-(last||ts));last=ts;
+    cx.clearRect(0,0,W,H);
+    const HW=H*1.3,off=(HW-H)/2,sy=scrollY,sc=document.documentElement.dataset.theme==='dark'?1:.6;
+    const col=a=>`rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
+    pulses=pulses.filter(p=>ts-p.t<1700);
+    for(const n of nodes){
+      n.x=mod(n.x+n.vx*dt,W);n.y=mod(n.y+n.vy*dt,HW);
+      n.px=n.x;n.py=mod(n.y-sy*.3*n.z,HW)-off;n.b=0;
+      for(const p of pulses){const age=(ts-p.t)/1000,d=Math.hypot(n.px-p.x,n.py-p.y);n.b=Math.max(n.b,Math.max(0,1-Math.abs(d-age*440)/70)*(1-age/1.7))}
+    }
+    const D=S.lite?105:130;cx.lineCap='round';
+    for(let i=0;i<nodes.length;i++){const a=nodes[i];
+      for(let j=i+1;j<nodes.length;j++){const b=nodes[j],d=Math.hypot(a.px-b.px,a.py-b.py);
+        if(d<D){const bo=(a.b+b.b)/2;cx.strokeStyle=col(Math.min(.9,(1-d/D)*.34*sc*((a.z+b.z)/2+.3)+bo*.55));cx.lineWidth=.8+bo*1.6;cx.beginPath();cx.moveTo(a.px,a.py);cx.lineTo(b.px,b.py);cx.stroke()}}}
+    for(const n of nodes){cx.fillStyle=col(Math.min(1,.5*sc*n.z+.2*sc+n.b*.5));cx.beginPath();cx.arc(n.px,n.py,1.4+n.z*1.3+n.b*2.8,0,6.283);cx.fill()}
+    for(const p of pulses){const age=(ts-p.t)/1000;cx.strokeStyle=col(.22*(1-age/1.7)*sc);cx.lineWidth=1.5;cx.beginPath();cx.arc(p.x,p.y,age*440,0,6.283);cx.stroke()}
+    drawBursts(dt,col,sc);
+  }
+  const start=()=>{if(!raf&&on()){last=0;raf=requestAnimationFrame(frame)}};
+  const stop=()=>{cancelAnimationFrame(raf);raf=0;cx.clearRect(0,0,W,H)};
+  window.webBurst=(x,y)=>{
+    if(!on())return;const c=S.lite?5:8;
+    bursts.push({x,y,life:900,max:900,pts:Array.from({length:c},(_,i)=>{const a=i/c*6.283+Math.random()*.6,v=.25+Math.random()*.2;return{x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v}})});
+    if(bursts.length>5)bursts.shift();
+  };
+  window.webPulse=(x,y)=>{if(on())pulses.push({x,y,t:performance.now()})};
+  window.__webApply=()=>{rgb=[1,3,5].map(i=>parseInt(S.accent.slice(i,i+2),16));cv.style.display=S.web?'block':'none';size();on()?start():stop()};
+  addEventListener('resize',size);
+  addEventListener('pointerdown',e=>{if(!(e.target.closest&&e.target.closest('input,textarea')))window.webBurst(e.clientX,e.clientY)},{passive:true});
+  document.addEventListener('visibilitychange',()=>{on()?start():stop()});
+  window.__webApply();
+})();
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 tasks.forEach(t=>{if(!t.rem){t.rem=[60,10];t.fired=fireTimes(t).filter(f=>f<=Date.now())}});

@@ -5,6 +5,7 @@ An offline, iOS-styled task and reminder app. Type a task in plain English and i
 > `tomorrow 7:30-10:30 contest on Codeforces` → **Contest on Codeforces**, tomorrow, 7:30 – 10:30 PM
 
 ## Features (v2.0, in progress)
+- Interactive "web" background: a network of connected dots that drifts and moves with your scroll (parallax), bursts into a small web where you tap, and sends a pulse through the lines when you complete a task. Switchable, with a Lite mode for older phones
 - Today dashboard: progress ring, live "Next up" countdown card, glass timeline cards, aurora background (glass dark theme), collapsing title
 - Smart input: live colored chips (date, time, repeat, category) and quick-add chips above the keyboard
 - Tab bar (Today, Upcoming, Progress, Settings) and a Settings screen: theme (auto, glass dark, clean light), accent color, haptics, default reminders, snooze length, 12/24-hour time, backup and restore
