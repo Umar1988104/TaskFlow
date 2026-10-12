@@ -5,6 +5,7 @@ An offline, iOS-styled task and reminder app. Type a task in plain English and i
 > `tomorrow 7:30-10:30 contest on Codeforces` → **Contest on Codeforces**, tomorrow, 7:30 – 10:30 PM
 
 ## Features (v2.0, in progress)
+- Morning summary notification (e.g. "3 tasks today, first: Gym at 6:30 AM") and automatic backup to Documents/TaskFlow on the phone (Android app)
 - Edit any task, priority (`!high`, `!med`, `!low`) and tags (`#dsa`) typed in the sentence with filter chips, and a 4-week history calendar with streak for repeating tasks
 - Interactive "web" background: a network of connected dots that drifts and moves with your scroll (parallax), bursts into a small web where you tap, and sends a pulse through the lines when you complete a task. Switchable, with a Lite mode for older phones
 - Today dashboard: progress ring, live "Next up" countdown card, glass timeline cards, aurora background (glass dark theme), collapsing title
@@ -33,7 +34,7 @@ Reminders in the browser fire while the app is open. For reminders that fire whe
 2. Open the **Actions** tab, choose **Build Android APK**, click **Run workflow**.
 3. When it finishes, download **TaskFlow-apk** from the run's Artifacts, unzip it and install `app-debug.apk` on your phone.
 
-The workflow installs Capacitor and the Local Notifications plugin, so reminders fire even when the app is closed. To build locally instead: `npm install @capacitor/core @capacitor/android @capacitor/local-notifications`, `npm install -D @capacitor/cli`, `npx cap add android`, `npx cap sync`, `npx cap open android`.
+The workflow installs Capacitor and the Local Notifications plugin, so reminders fire even when the app is closed. To build locally instead: `npm install @capacitor/core @capacitor/android @capacitor/local-notifications @capacitor/filesystem`, `npm install -D @capacitor/cli`, `npx cap add android`, `npx cap sync`, `npx cap open android`.
 
 On Android 13+ allow notifications when asked. On Android 12+ also allow "Alarms & reminders" for the app in system settings for exact timing.
 

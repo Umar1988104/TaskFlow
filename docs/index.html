@@ -251,7 +251,7 @@ const Store={
   save(t){try{localStorage.setItem(KEY,JSON.stringify(t))}catch(e){}setTimeout(sync,0)}
 };
 const SKEY='taskflow.settings';
-const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,aurora:true,web:true,lite:(navigator.hardwareConcurrency||8)<=4,tags:true};
+const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,aurora:true,web:true,lite:(navigator.hardwareConcurrency||8)<=4,tags:true,morning:true,morningTime:'07:30',autoBackup:'weekly',lastBackup:'',lastBackupErr:''};
 let S=(()=>{try{return Object.assign({},DEF,JSON.parse(localStorage.getItem(SKEY))||{})}catch(e){return Object.assign({},DEF)}})();
 const saveS=()=>{try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}};
 function applyTheme(){
@@ -426,6 +426,7 @@ async function sync(){ /* real notifications when running as an Android app (Cap
     const p=await ln.getPending();if(p.notifications.length)await ln.cancel({notifications:p.notifications});
     const now=Date.now(),n=[];
     tasks.forEach(t=>{if(!t.done)fireTimes(t).forEach(f=>{if(f>now)n.push({id:hash(t.id+f),title:t.title,body:msgFor(t),at:f})})});
+    if(S.morning)morningList().forEach(x=>n.push(x));
     n.sort((a,b)=>a.at-b.at);
     if(n.length)await ln.schedule({notifications:n.slice(0,60).map(x=>({id:x.id,title:x.title,body:x.body,schedule:{at:new Date(x.at),allowWhileIdle:true}}))});
   }catch(e){}
@@ -573,14 +574,15 @@ function renderSettings(){
   $('#settings').innerHTML=
     grp('Appearance',seg('theme','Theme',[['auto','Auto'],['dark','Glass dark'],['light','Clean light']])+
       `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c?'on':''}" aria-label="Accent color"></button>`).join('')}</div></div>`+sw('web','Web effect')+sw('lite','Lite effects (saves battery)')+sw('aurora','Glow background')+sw('anim','Animations')+sw('haptics','Haptic feedback'))+
-    grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],o[1].replace(' before','')]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+btn('notif','Enable notifications'))+
+    grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],o[1].replace(' before','')]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+sw('morning','Morning summary notification')+(S.morning?`<div class="srow"><span>Summary time</span><input class="tin" type="time" data-k="morningTime" value="${S.morningTime}"></div>`:'')+btn('notif','Enable notifications'))+
     grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+sw('h24','24-hour time')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+sw('showDone','Show completed tasks')+sw('tags','Priority, tags and filters'))+
-    grp('Data',btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
+    grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+`<div class="srow"><span style="font-size:13px;color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
     `<p class="sm" style="margin:14px 6px 0">TaskFlow 2.0 · build ${BUILD.startsWith('__')?'dev':BUILD}</p>`;
 }
 const backup=()=>JSON.stringify({app:'taskflow',v:5,tasks,log:loadLog(),settings:S},null,1);
 function act(a,b){
   if(a==='notif')askPerm();
+  else if(a==='bk-now'){if(!FS()){act('dl',b);return}askFsPerm().then(()=>autoBackup(true)).then(ok=>{b.firstElementChild.textContent=ok?'Saved ✓':'Could not save';setTimeout(renderSettings,1500)})}
   else if(a==='dl'){const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([backup()],{type:'application/json'}));l.download='taskflow-backup-'+ymd(new Date())+'.json';l.click()}
   else if(a==='cp'){const sp=b.firstElementChild;navigator.clipboard.writeText(backup()).then(()=>{sp.textContent='Copied ✓';setTimeout(()=>sp.textContent='Copy backup to clipboard',1500)}).catch(()=>prompt('Copy this backup:',backup()))}
   else if(a==='clear'&&confirm('Delete ALL tasks and history? This cannot be undone.')){tasks=[];Store.save(tasks);saveLog([]);render()}
@@ -598,10 +600,11 @@ $('#settings').addEventListener('click',e=>{
   if(k==='rem'){v=+v;S.rem=S.rem.includes(v)?S.rem.filter(x=>x!==v):S.rem.concat(v).sort((x,y)=>y-x)}
   else S[k]=k==='snooze'?+v:v;
   buzz(8);saveS();applyTheme();renderSettings();
+  if(k==='autoBackup'&&v!=='off')askFsPerm().then(()=>autoBackup(true)).then(()=>renderSettings());
 });
 $('#settings').addEventListener('change',e=>{
   if(e.target.id==='bk-file'){if(e.target.files[0])restore(e.target.files[0]);e.target.value='';return}
-  const k=e.target.dataset.k;if(!k)return;S[k]=e.target.checked;buzz(8);saveS();applyTheme();
+  const k=e.target.dataset.k;if(!k)return;S[k]=e.target.type==='checkbox'?e.target.checked:e.target.value;buzz(8);saveS();applyTheme();setTimeout(sync,0);if(k==='morning'){if(S.morning)askPerm();renderSettings()}
 });
 $('#settings').addEventListener('input',e=>{if(e.target.id==='s-name'){S.name=e.target.value.slice(0,30);saveS()}});
 const fmtIn=ms=>{const m=Math.max(0,Math.round(ms/60000));if(m<1)return'now';if(m<60)return m+' min';const h=Math.floor(m/60);if(h<24)return h+'h '+pad(m%60)+'m';const d=Math.round(h/24);return d+(d===1?' day':' days')};
@@ -685,6 +688,41 @@ $('#e-save').addEventListener('click',()=>{
   delete t.snooze;t.fired=fireTimes(t).filter(f=>f<=Date.now());
   Store.save(tasks);closeSheet();render();buzz(10);
 });
+
+/* ---------- morning summary + automatic backup (V5) ---------- */
+function tasksOn(ds){
+  const wd=new Date(ds+'T00:00:00').getDay();
+  return tasks.filter(t=>!t.done&&(t.date===ds||(t.repeat&&t.date<ds&&effDays(t).includes(wd))));
+}
+function morningList(){
+  const out=[],[hh,mm]=(S.morningTime||'07:30').split(':').map(Number),now=Date.now(),td=ymd(new Date());
+  for(let i=0;i<7;i++){
+    const d=addDays(new Date(),i);d.setHours(hh,mm,0,0);if(d.getTime()<=now)continue;
+    const ds=ymd(d),list=tasksOn(ds).sort((a,b)=>(a.start||'99:99')<(b.start||'99:99')?-1:1);
+    const od=i===0?tasks.filter(t=>!t.done&&endAt(t).getTime()<now).length:0;
+    if(!list.length&&!od)continue;
+    const first=list.find(t=>t.start);
+    const body=(list.length?list.length+(list.length===1?' task today':' tasks today')+(first?' · first: '+first.title+' at '+t12(first.start):''):'')+(od?(list.length?' · ':'')+od+' overdue':'');
+    out.push({id:900000000+i,title:'Good morning'+(S.name?', '+S.name:''),body,at:d.getTime()});
+  }
+  return out;
+}
+const FS=()=>window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Filesystem;
+async function askFsPerm(){try{const f=FS();if(f&&f.requestPermissions)await f.requestPermissions()}catch(e){}}
+async function autoBackup(force){
+  const fs=FS();if(!fs)return false;
+  const td=ymd(new Date());
+  if(!force){if(S.autoBackup==='off')return false;const gap=S.autoBackup==='weekly'?7:1;if(S.lastBackup&&(new Date(td)-new Date(S.lastBackup))/864e5<gap)return false}
+  try{
+    await fs.writeFile({path:'TaskFlow/taskflow-backup-'+td+'.json',data:backup(),directory:'DOCUMENTS',encoding:'utf8',recursive:true});
+    S.lastBackup=td;S.lastBackupErr='';saveS();
+    try{const r=await fs.readdir({path:'TaskFlow',directory:'DOCUMENTS'}),names=r.files.map(f=>f.name||f).filter(n=>/^taskflow-backup-.*\.json$/.test(n)).sort();
+      for(const n of names.slice(0,-5))await fs.deleteFile({path:'TaskFlow/'+n,directory:'DOCUMENTS'}).catch(()=>{})}catch(e){}
+    return true;
+  }catch(e){S.lastBackupErr=String((e&&e.message)||e).slice(0,70);saveS();return false}
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){autoBackup(false);sync()}});
+setTimeout(()=>autoBackup(false),4000);
 
 /* ---------- web effect (V3): connected-dots network, parallax, tap burst, completion pulse ---------- */
 (function(){
