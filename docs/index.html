@@ -166,6 +166,25 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 .kb #qs{display:flex}
 #qs button{flex:none;padding:6px 12px;border-radius:999px;background:var(--glass);border:.5px solid var(--glass-b);font-size:13px;font-weight:500;color:var(--blue)}
 #web{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.pri{font-weight:600;font-size:12px;padding:1px 8px;border-radius:999px}
+.pri.high{background:rgba(255,59,48,.16);color:var(--red)}.pri.med{background:rgba(255,149,0,.16);color:#ff9500}.pri.low{background:rgba(0,122,255,.14);color:var(--blue)}
+.tg{color:var(--sub);font-weight:500}
+#flt{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;scrollbar-width:none}
+#flt::-webkit-scrollbar{display:none}
+#flt button{flex:none;padding:6px 13px;border-radius:999px;background:var(--glass);border:.5px solid var(--glass-b);font-size:13px;font-weight:500;color:var(--txt);transition:background .2s,color .2s}
+#flt button.on{background:var(--blue);color:#fff;border-color:transparent}
+.chipbtn{flex:none;padding:6px 16px;border-radius:999px;background:var(--glass);border:.5px solid var(--glass-b);color:var(--blue);font-weight:600;font-size:15px}
+.opts .srow{background:var(--card)}
+.seg.wrap{flex-wrap:wrap}.seg.wrap button{flex:1 0 30%}
+.pbtn{width:100%;padding:14px;border-radius:14px;background:var(--blue);color:#fff;font-weight:600;font-size:17px;margin-top:18px}
+.tbtn{width:100%;padding:12px;color:var(--sub);font-size:16px}
+.hist{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.hist em{font-style:normal;text-align:center;font-size:11px;color:var(--sub)}
+.hist i{aspect-ratio:1;border-radius:7px;background:var(--glass);border:.5px solid var(--glass-b)}
+.hist i.d{background:var(--blue);border-color:transparent}
+.hist i.m{background:rgba(255,59,48,.24)}
+.hist i.n{opacity:.4}
+.hist i.t{outline:2px solid var(--blue);outline-offset:1px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -177,12 +196,13 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
     <div class="glass ringcard"><svg id="ring" viewBox="0 0 64 64" width="64" height="64"><circle class="rt" cx="32" cy="32" r="27"/><circle class="rp" id="rp" cx="32" cy="32" r="27"/></svg><div><b id="rn">0 of 0</b><span id="rs"></span></div></div>
     <button class="glass nextcard" id="next" hidden><div class="nico" id="nico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div class="nbody"><small id="nlab">Next up</small><b id="nt"></b><span id="nm"></span></div><div class="ncount" id="nc"></div></button>
   </section>
+  <div id="flt"></div>
   <main id="list"></main>
   <section id="progress" hidden></section>
   <section id="settings" hidden></section>
 </div>
 <div class="dock"><div class="dock-in">
-  <div id="qs"><button data-w="today">Today</button><button data-w="tomorrow">Tomorrow</button><button data-w="daily">Daily</button><button data-w="weekdays">Weekdays</button><button data-w="contest">Contest</button><button data-w="homework">Homework</button><button data-w="exam">Exam</button><button data-w="at 7pm">7 pm</button></div>
+  <div id="qs"><button data-w="today">Today</button><button data-w="tomorrow">Tomorrow</button><button data-w="daily">Daily</button><button data-w="weekdays">Weekdays</button><button data-w="!high">High priority</button><button data-w="contest">Contest</button><button data-w="homework">Homework</button><button data-w="exam">Exam</button><button data-w="at 7pm">7 pm</button></div>
   <div id="prev"></div>
   <div class="field">
     <input id="in" type="text" placeholder="tomorrow 7:30-10:30 contest on Codeforces" enterkeyhint="done" autocomplete="off">
@@ -191,7 +211,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 </div></div>
 
 <div class="ov" id="ov"></div>
-<div class="sheet" id="sheet"><div class="grab"></div><h3 id="sh-t"></h3><div class="sm" id="sh-s"></div>
+<div class="sheet" id="sheet"><div class="grab"></div><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="min-width:0"><h3 id="sh-t"></h3><div class="sm" id="sh-s"></div></div><button class="chipbtn" id="sh-edit">Edit</button></div>
   <h4>Remind me</h4><div class="opts" id="sh-r"></div>
   <h4>Snooze</h4><div class="opts" id="sh-sn"><button class="opt" data-m="10">In 10 minutes</button><button class="opt" data-m="60">In 1 hour</button><button class="opt" data-m="tm">Tomorrow, 9:00 AM</button></div>
   <h4>Repeat on</h4><div class="days" id="sh-days"></div>
@@ -199,7 +219,20 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
   <div class="sm" id="sh-rt" style="margin:8px 6px 0"></div>
   <h4>Steps</h4><div class="opts" id="sh-sub"></div>
   <div class="field" style="margin-top:8px"><input id="sub-in" type="text" placeholder="Add a step" autocomplete="off"><button class="bell" id="sub-add" aria-label="Add step" style="margin:0;font-size:24px">+</button></div>
+  <h4 id="sh-histh">History</h4><div id="sh-hist"></div>
   <div class="opts" style="margin-top:18px"><button class="opt" id="sh-del" style="color:var(--red)">Delete task</button></div>
+</div>
+<div class="sheet" id="edit"><div class="grab"></div><h3>Edit task</h3>
+  <div class="opts" style="margin-top:8px">
+    <div class="srow"><span>Title</span><input class="tin" id="e-title" maxlength="120" placeholder="Task title"></div>
+    <div class="srow"><span>Date</span><input class="tin" id="e-date" type="date"></div>
+    <div class="srow"><span>Start</span><input class="tin" id="e-st" type="time"></div>
+    <div class="srow"><span>End</span><input class="tin" id="e-en" type="time"></div>
+  </div>
+  <h4>Category</h4><div class="seg wrap" id="e-cat"></div>
+  <h4>Priority</h4><div class="seg" id="e-pri"></div>
+  <h4>Tags</h4><div class="opts"><div class="srow"><input class="tin" id="e-tags" placeholder="dsa, college" style="width:100%;text-align:left"></div></div>
+  <button class="pbtn" id="e-save">Save changes</button><button class="tbtn" id="e-cancel">Cancel</button>
 </div>
 <div class="banner" id="banner"><b id="bn-t"></b><span id="bn-s"></span><div class="acts"><button id="bn-sn">Snooze 10 min</button><button id="bn-x">Dismiss</button></div></div>
 
@@ -218,7 +251,7 @@ const Store={
   save(t){try{localStorage.setItem(KEY,JSON.stringify(t))}catch(e){}setTimeout(sync,0)}
 };
 const SKEY='taskflow.settings';
-const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,aurora:true,web:true,lite:(navigator.hardwareConcurrency||8)<=4};
+const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,aurora:true,web:true,lite:(navigator.hardwareConcurrency||8)<=4,tags:true};
 let S=(()=>{try{return Object.assign({},DEF,JSON.parse(localStorage.getItem(SKEY))||{})}catch(e){return Object.assign({},DEF)}})();
 const saveS=()=>{try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(e){}};
 function applyTheme(){
@@ -258,6 +291,10 @@ function parse(text){
   let st=null,en=null,m;
   const lk=cut(/\s((?:https?:\/\/|www\.)\S+)/i);let link=lk?lk[1].replace(/[.,;)]+$/,''):null;
   if(link&&!/^https?:/i.test(link))link='https://'+link;
+  let pri=null;const tags=[];
+  if(m=cut(/\s!(high|medium|med|low|h|m|l)(?=[\s,.]|$)/i))pri={h:'high',m:'med',l:'low'}[m[1][0].toLowerCase()];
+  else if(m=cut(/\s(high|medium|low)\s+priority(?=[\s,.]|$)/i))pri={h:'high',m:'med',l:'low'}[m[1][0].toLowerCase()];
+  for(let k=0;k<6&&(m=cut(/\s#([a-z0-9_-]+)(?=[\s,.]|$)/i));k++)tags.push(m[1].toLowerCase());
   if(m=cut(/\s(?:from\s+|at\s+|@\s*)?(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\s*(?:-|–|to|till|until)\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)?(?=[\s,.])/i)){
     const mer=m[3]||m[6];st=conv(m[1],m[2],mer);en=conv(m[4],m[5],m[6]||m[3]);
   }else if(m=cut(/\s(?:at\s+|@\s*)?(\d{1,2})(?::(\d{2}))?\s*(am|pm)(?=[\s,.])/i)){st=conv(m[1],m[2],m[3])}
@@ -296,7 +333,7 @@ function parse(text){
   let title=s.replace(/\s+/g,' ').trim()
     .replace(/^(?:(?:at|on|from|by|due|the|-|,)\s+)+/i,'').replace(/(?:\s+(?:at|on|from|by|due|-|,))+$/i,'').trim();
   title=title?title[0].toUpperCase()+title.slice(1):cat;
-  return{title,category:cat,date:ymd(d),start:st,end:en,repeat:rp,days:dys,link};
+  return{title,category:cat,date:ymd(d),start:st,end:en,repeat:rp,days:dys,link,pri,tags};
 }
 
 /* ---------- formatting ---------- */
@@ -328,19 +365,19 @@ function urg(t){
   return baseAt(t)-now<3*36e5?'soon':'';
 }
 function render(){
-  drawDash();
+  drawDash();drawFlt();
   const order=tab==='upcoming'?['Tomorrow','Upcoming']:['Overdue','Today'].concat(S.showDone?['Completed']:[]),g={};
-  tasks.slice().sort((a,b)=>(a.date+(a.start||'99:99'))<(b.date+(b.start||'99:99'))?-1:1)
+  tasks.filter(passF).sort((a,b)=>{const x=a.date+(a.start||'99:99'),y=b.date+(b.start||'99:99');return x<y?-1:x>y?1:(PR[a.pri]??3)-(PR[b.pri]??3)})
     .forEach(t=>(g[group(t)]=g[group(t)]||[]).push(t));
   let ri=0;
   $('#count').textContent=subtitle();
-  if(!order.some(k=>g[k])){list.innerHTML=!tasks.length?'<div class="empty"><b>Nothing planned</b>Type a task below, like “tomorrow 7:30-10:30 contest on Codeforces”.</div>':tab==='upcoming'?'<div class="empty"><b>Nothing coming up</b>Tasks for later days will show here.</div>':'<div class="empty"><b>All clear today</b>Enjoy it, or add something below.</div>';return}
+  if(!order.some(k=>g[k])){list.innerHTML=flt.t!=='all'?'<div class="empty"><b>No matches</b>Try another filter.</div>':!tasks.length?'<div class="empty"><b>Nothing planned</b>Type a task below, like “tomorrow 7:30-10:30 contest on Codeforces”.</div>':tab==='upcoming'?'<div class="empty"><b>Nothing coming up</b>Tasks for later days will show here.</div>':'<div class="empty"><b>All clear today</b>Enjoy it, or add something below.</div>';return}
   list.innerHTML=order.filter(k=>g[k]).map(k=>`<h2 class="${k==='Overdue'?'od':''}">${k}</h2><div class="group">`+
     g[k].map(t=>{const sb=t.subs||[],dn=sb.filter(x=>x.d).length,u=urg(t);
       return `<div class="row${t.done?' done':''}${t.id===newId?' enter':''}" data-id="${t.id}" style="--i:${ri++};--c:${COLORS[t.category]}"><div class="in">
       <button class="chk${t.done?' on':''}" aria-label="Toggle done"></button>
       <div class="body"><div class="title">${esc(t.title)}</div>
-        <div class="meta"><span class="tag" style="--c:${COLORS[t.category]}">${t.category}</span>${k==='Today'?'':`<span class="when ${u}">${dateTxt(t.date)}</span>`}${t.repeat?`<span>↻ ${repTxt(t)}</span>`:''}${sb.length?`<span>${dn}/${sb.length} steps</span>`:''}${!t.done&&t.rem&&t.rem.length?`<span>🔔 ${t.rem.length}</span>`:''}${t.link?`<a href="${esc(t.link)}" target="_blank" rel="noopener">Open link</a>`:''}</div></div>
+        <div class="meta"><span class="tag" style="--c:${COLORS[t.category]}">${t.category}</span>${S.tags&&t.pri?`<span class="pri ${t.pri}">${PRL[t.pri]}</span>`:''}${k==='Today'?'':`<span class="when ${u}">${dateTxt(t.date)}</span>`}${t.repeat?`<span>↻ ${repTxt(t)}</span>`:''}${sb.length?`<span>${dn}/${sb.length} steps</span>`:''}${!t.done&&t.rem&&t.rem.length?`<span>🔔 ${t.rem.length}</span>`:''}${S.tags?(t.tags||[]).map(x=>`<span class="tg">#${esc(x)}</span>`).join(''):''}${t.link?`<a href="${esc(t.link)}" target="_blank" rel="noopener">Open link</a>`:''}</div></div>
       <div class="tm ${u}">${t.start?`<b>${tp(t.start)[0]}</b><span>${tp(t.start)[1]}</span>${t.end?`<small>to ${t12(t.end)}</small>`:''}`:'<span>All day</span>'}</div></div></div>`}).join('')+'</div>').join('');
   newId=null;
 }
@@ -355,7 +392,7 @@ function preview(){
   const v=inp.value.trim();
   if(!v){prev.classList.remove('show');return}
   const p=parse(v),ch=(t,c)=>`<span class="chip" style="--c:${c}">${t}</span>`;
-  prev.innerHTML='<b>'+esc(p.title)+'</b>'+ch(dateTxt(p.date),'var(--blue)')+(p.start?ch(timeTxt(p),'#ff9500'):'')+(p.repeat?ch('↻ '+repTxt(p),'#34c759'):'')+ch(p.category,COLORS[p.category])+(p.link?ch('Link','#8e8e93'):'');
+  prev.innerHTML='<b>'+esc(p.title)+'</b>'+ch(dateTxt(p.date),'var(--blue)')+(p.start?ch(timeTxt(p),'#ff9500'):'')+(p.repeat?ch('↻ '+repTxt(p),'#34c759'):'')+ch(p.category,COLORS[p.category])+(p.pri?ch(PRL[p.pri],{high:'#ff3b30',med:'#ff9500',low:'#007aff'}[p.pri]):'')+p.tags.map(x=>ch('#'+esc(x),'#8e8e93')).join('')+(p.link?ch('Link','#8e8e93'):'');
   prev.classList.add('show');
 }
 
@@ -406,6 +443,7 @@ function drawSheet(){
   const ed=effDays(t);
   $('#sh-days').innerHTML=['S','M','T','W','T','F','S'].map((l,i)=>`<button data-d="${i}" class="${ed.includes(i)?'on':''}">${l}</button>`).join('');
   $('#sh-rt').textContent=t.repeat?'Repeats: '+repTxt(t):'Does not repeat';
+  $('#sh-histh').hidden=!t.repeat;$('#sh-hist').innerHTML=t.repeat?history(t):'';
 }
 function openSheet(t){curId=t.id;drawSheet();$('#ov').classList.add('show');$('#sheet').classList.add('show')}
 function closeSheet(){$('#ov').classList.remove('show');document.querySelectorAll('.sheet').forEach(x=>x.classList.remove('show'))}
@@ -490,8 +528,8 @@ $('#sheet').addEventListener('click',e=>{
 const LOGKEY='taskflow.log';
 const buzz=n=>{if(!S.haptics)return;try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
 function loadLog(){try{return JSON.parse(localStorage.getItem(LOGKEY))||[]}catch(e){return[]}}
-function saveLog(l){try{localStorage.setItem(LOGKEY,JSON.stringify(l.slice(-500)))}catch(e){}}
-function logDone(t){const L=loadLog();L.push({d:ymd(new Date()),ok:endAt(t).getTime()>=Date.now()});saveLog(L)}
+function saveLog(l){try{localStorage.setItem(LOGKEY,JSON.stringify(l.slice(-2000)))}catch(e){}}
+function logDone(t){const L=loadLog();L.push({d:ymd(new Date()),ok:endAt(t).getTime()>=Date.now(),id:t.id});saveLog(L)}
 function stats(){
   const L=loadLog(),days=new Set(L.map(x=>x.d));let n=0,d=new Date();
   if(!days.has(ymd(d)))d=addDays(d,-1);
@@ -536,9 +574,9 @@ function renderSettings(){
     grp('Appearance',seg('theme','Theme',[['auto','Auto'],['dark','Glass dark'],['light','Clean light']])+
       `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c?'on':''}" aria-label="Accent color"></button>`).join('')}</div></div>`+sw('web','Web effect')+sw('lite','Lite effects (saves battery)')+sw('aurora','Glow background')+sw('anim','Animations')+sw('haptics','Haptic feedback'))+
     grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],o[1].replace(' before','')]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+btn('notif','Enable notifications'))+
-    grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+sw('h24','24-hour time')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+sw('showDone','Show completed tasks'))+
+    grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+sw('h24','24-hour time')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+sw('showDone','Show completed tasks')+sw('tags','Priority, tags and filters'))+
     grp('Data',btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
-    `<p class="sm" style="margin:14px 6px 0">More settings arrive with new features.</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 2.0 · build ${BUILD.startsWith('__')?'dev':BUILD}</p>`;
 }
 const backup=()=>JSON.stringify({app:'taskflow',v:5,tasks,log:loadLog(),settings:S},null,1);
 function act(a,b){
@@ -600,6 +638,54 @@ $('#qs').addEventListener('click',e=>{
 });
 $('#sh-del').addEventListener('click',()=>{const t=tasks.find(x=>x.id===curId);if(!t)return;closeSheet();tasks=tasks.filter(x=>x.id!==t.id);Store.save(tasks);render();buzz(10)});
 addEventListener('scroll',()=>{const y=scrollY;if(y>60)document.body.classList.add('scrolled');else if(y<10)document.body.classList.remove('scrolled')},{passive:true});
+/* ---------- edit, priority/tags filters, history (V4) ---------- */
+const PR={high:0,med:1,low:2},PRL={high:'High',med:'Medium',low:'Low'};
+let flt={t:'all',v:null};
+const passF=t=>!S.tags||flt.t==='all'||(flt.t==='pri'?t.pri===flt.v:(t.tags||[]).includes(flt.v));
+function drawFlt(){
+  const el=$('#flt'),tg=[...new Set(tasks.flatMap(t=>t.tags||[]))].slice(0,12),hasP=tasks.some(t=>t.pri);
+  if(flt.t==='tag'&&!tg.includes(flt.v))flt={t:'all',v:null};
+  if(!S.tags||(!tg.length&&!hasP)||!(tab==='today'||tab==='upcoming')){el.hidden=true;if(!S.tags)flt={t:'all',v:null};return}
+  el.hidden=false;
+  const ch=(l,t,v)=>`<button data-t="${t}" data-v="${v||''}" class="${flt.t===t&&(flt.v||'')===(v||'')?'on':''}">${l}</button>`;
+  el.innerHTML=ch('All','all')+(hasP?ch('High','pri','high')+ch('Medium','pri','med')+ch('Low','pri','low'):'')+tg.map(x=>ch('#'+esc(x),'tag',x)).join('');
+}
+$('#flt').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;flt={t:b.dataset.t,v:b.dataset.v||null};buzz(6);render()});
+function history(t){
+  const done=new Set(loadLog().filter(x=>x.id===t.id).map(x=>x.d)),ed=effDays(t),now=new Date(),td=ymd(now);
+  const start=addDays(now,-now.getDay()-21),first=[...done].sort()[0]||'9999-12-31';let cells='',sch=0,dn=0;
+  for(let i=0;i<28;i++){const d=addDays(start,i),k=ymd(d),fut=k>td,sc=ed.includes(d.getDay()),h=done.has(k);
+    if(!fut){if(sc&&k>=first&&(k<td||h))sch++;if(h)dn++}
+    cells+=`<i class="${h?'d':(!fut&&sc&&k<td&&k>=first)?'m':'n'}${k===td?' t':''}"></i>`}
+  let st=0;for(let i=0;i<400;i++){const d=addDays(now,-i),k=ymd(d);if(done.has(k)){st++;continue}if(!ed.includes(d.getDay())||k===td)continue;break}
+  return `<div class="stats" style="margin-top:0"><div class="stat"><b>${st}</b><span>Streak</span></div><div class="stat"><b>${dn}</b><span>Done, 4 weeks</span></div><div class="stat"><b>${sch?Math.min(100,Math.round(dn*100/sch)):0}%</b><span>Kept up</span></div></div><div class="hist" style="margin-top:10px">`+['S','M','T','W','T','F','S'].map(l=>`<em>${l}</em>`).join('')+cells+`</div><p class="sm" style="margin:8px 6px 0">History counts from your first completion after updating to this version.</p>`;
+}
+let eCat='Task',ePri='';
+const CATS=['Task','Contest','Homework','Assignment','Exam'];
+function drawEdit(){
+  $('#e-cat').innerHTML=CATS.map(c=>`<button data-v="${c}" class="${c===eCat?'on':''}">${c}</button>`).join('');
+  $('#e-pri').innerHTML=[['','None'],['low','Low'],['med','Medium'],['high','High']].map(x=>`<button data-v="${x[0]}" class="${x[0]===ePri?'on':''}">${x[1]}</button>`).join('');
+}
+$('#sh-edit').addEventListener('click',()=>{
+  const t=tasks.find(x=>x.id===curId);if(!t)return;
+  $('#e-title').value=t.title;$('#e-date').value=t.date;$('#e-st').value=t.start||'';$('#e-en').value=t.end||'';
+  $('#e-tags').value=(t.tags||[]).join(', ');eCat=t.category;ePri=t.pri||'';drawEdit();
+  $('#sheet').classList.remove('show');$('#edit').classList.add('show');
+});
+$('#e-cat').addEventListener('click',e=>{const b=e.target.closest('button');if(b){eCat=b.dataset.v;drawEdit()}});
+$('#e-pri').addEventListener('click',e=>{const b=e.target.closest('button');if(b){ePri=b.dataset.v;drawEdit()}});
+$('#e-cancel').addEventListener('click',()=>{$('#edit').classList.remove('show');$('#sheet').classList.add('show')});
+$('#e-save').addEventListener('click',()=>{
+  const t=tasks.find(x=>x.id===curId);if(!t)return;
+  const title=$('#e-title').value.trim();if(!title){$('#e-title').focus();return}
+  const st=$('#e-st').value||null;
+  t.title=title;t.date=$('#e-date').value||t.date;t.start=st;t.end=st?($('#e-en').value||null):null;t.category=eCat;t.pri=ePri||null;
+  t.tags=[...new Set($('#e-tags').value.split(/[,\s]+/).map(x=>x.replace(/^#/,'').toLowerCase().replace(/[^a-z0-9_-]/g,'')).filter(Boolean))].slice(0,6);
+  if(t.repeat==='days'&&t.days&&t.days.length){let x=new Date(t.date+'T00:00:00');for(let g=0;g<8&&!t.days.includes(x.getDay());g++)x=addDays(x,1);t.date=ymd(x)}
+  delete t.snooze;t.fired=fireTimes(t).filter(f=>f<=Date.now());
+  Store.save(tasks);closeSheet();render();buzz(10);
+});
+
 /* ---------- web effect (V3): connected-dots network, parallax, tap burst, completion pulse ---------- */
 (function(){
   const cv=$('#web'),cx=cv&&cv.getContext&&cv.getContext('2d');
@@ -665,7 +751,14 @@ addEventListener('scroll',()=>{const y=scrollY;if(y>60)document.body.classList.a
   document.addEventListener('visibilitychange',()=>{on()?start():stop()});
   window.__webApply();
 })();
-if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+const BUILD='__BUILD__';
+const IS_NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
+  if(IS_NATIVE){ /* the installed app always loads its own files: no service worker, no stale cache */
+    navigator.serviceWorker.getRegistrations().then(r=>r.forEach(x=>x.unregister())).catch(()=>{});
+    if(window.caches)caches.keys().then(k=>k.forEach(x=>caches.delete(x))).catch(()=>{});
+  }else navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
 
 tasks.forEach(t=>{if(!t.rem){t.rem=[60,10];t.fired=fireTimes(t).filter(f=>f<=Date.now())}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();tick()}});
