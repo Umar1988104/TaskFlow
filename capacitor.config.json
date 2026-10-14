@@ -1,5 +1,10 @@
 {
   "appId": "com.taskflow.app",
   "appName": "TaskFlow",
-  "webDir": "docs"
+  "webDir": "docs",
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
 }

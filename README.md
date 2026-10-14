@@ -4,26 +4,16 @@ An offline, iOS-styled task and reminder app. Type a task in plain English and i
 
 > `tomorrow 7:30-10:30 contest on Codeforces` → **Contest on Codeforces**, tomorrow, 7:30 – 10:30 PM
 
-## Features (v2.0, in progress)
-- Morning summary notification (e.g. "3 tasks today, first: Gym at 6:30 AM") and automatic backup to Documents/TaskFlow on the phone (Android app)
-- Edit any task, priority (`!high`, `!med`, `!low`) and tags (`#dsa`) typed in the sentence with filter chips, and a 4-week history calendar with streak for repeating tasks
-- Interactive "web" background: a network of connected dots that drifts and moves with your scroll (parallax), bursts into a small web where you tap, and sends a pulse through the lines when you complete a task. Switchable, with a Lite mode for older phones
-- Today dashboard: progress ring, live "Next up" countdown card, glass timeline cards, aurora background (glass dark theme), collapsing title
-- Smart input: live colored chips (date, time, repeat, category) and quick-add chips above the keyboard
-- Tab bar (Today, Upcoming, Progress, Settings) and a Settings screen: theme (auto, glass dark, clean light), accent color, haptics, default reminders, snooze length, 12/24-hour time, backup and restore
-- Natural-language parser (dates, times, ranges, categories) written from scratch, no libraries or AI
-- Live preview of how your sentence is understood
-- Grouped list: Overdue, Today, Tomorrow, Upcoming, Completed
-- Multiple reminders per task (1 day, 1 hour, 10 min, at the time) plus snooze
-- Custom repeats: `daily except sunday`, `every mon wed fri`, `weekdays`, or tap day chips on any task
-- Recurring tasks: `every sunday 8pm contest`, `daily 6am revise`, `weekly maths homework`
-- Steps (subtasks) with progress, and links: paste a URL in the sentence and it becomes an "Open link" button
-- Swipe right to complete, swipe left to delete; urgency colors for tasks due soon or overdue
-- Progress: day streak, tasks done this week, on-time rate and a 7-day chart
-- Backup: download, copy or restore all tasks as JSON
-- Installable and offline-capable (PWA manifest + service worker), Android APK built automatically with GitHub Actions
-- Works fully offline, data stays on the device (localStorage)
-- iOS-style UI with animations, dark mode support
+## Features (v3.0)
+- Natural-language input: `tomorrow 7:30-10:30 contest on Codeforces !high #cp`, `every mon wed fri 5pm class`, `daily except sunday 6am gym`
+- Compact task boxes (title and time), colored by priority; tap a box for details, description, steps and history; Edit opens a full editor with iOS-style wheel pickers for date and time
+- Repeating tasks: marking one done counts only for today and it returns automatically on its next day
+- Contest import from Codeforces, LeetCode, CodeChef and AtCoder (best effort; needs internet)
+- Today dashboard with progress bar and a live Next up countdown, Upcoming tab grouped by date, Progress tab with streaks
+- Morning summary notification and automatic backup to Documents/TaskFlow (Android app)
+- Settings: theme, accent color, reminders, 12/24-hour time, backup and restore
+- Android Back button goes to the previous screen; it exits the app only from the Today screen
+- Works fully offline; data stays on the device
 
 ## Run it
 Open `docs/index.html` in a browser. No build step.
@@ -49,6 +39,8 @@ Enable GitHub Pages with source `main` and folder `/docs` to get a live demo lin
 - [x] v2: reminders and snooze
 - [x] v3: recurring tasks, steps, links, swipe gestures, urgency colors
 - [x] v4: streaks and stats, backup/export, installable offline app
+- [x] v5: morning summary, automatic backup
+- [x] v6: contest import, redesign, details and editor
 
 ## Tech
 Vanilla HTML, CSS and JavaScript in a single file. Capacitor for the Android wrapper.
