@@ -4,7 +4,9 @@ An offline, iOS-styled task and reminder app. Type a task in plain English and i
 
 > `tomorrow 7:30-10:30 contest on Codeforces` → **Contest on Codeforces**, tomorrow, 7:30 – 10:30 PM
 
-## Features (v4.0)
+## Features (v4.1)
+- Timetable laid out like a college app: month card with a week strip, period cards with time, room, subject and teacher chips; set period times once, add a class to several days and periods at once, copy a day to other days, optional timetable end date
+- Smart Today: week strip with day dots, long-press menu on tasks, reschedule overdue tasks, undo bar, search, big + quick-add sheet, Hinglish input ("kal shaam 7 baje contest"), compact/comfortable/detailed task boxes
 - Timetable tab: subjects, weekly classes (days, times, room, teacher), holidays (single day or range), cancel one class, today's classes card, class reminders; tap a class to add homework that is saved under the subject and also appears as a normal task
 - Natural-language input: `tomorrow 7:30-10:30 contest on Codeforces !high #cp`, `every mon wed fri 5pm class`, `daily except sunday 6am gym`
 - Compact task boxes (title and time), colored by priority; tap a box for details, description, steps and history; Edit opens a full editor with iOS-style wheel pickers for date and time
