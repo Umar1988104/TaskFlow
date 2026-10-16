@@ -1,49 +1,59 @@
 # TaskFlow
 
-An offline, iOS-styled task and reminder app. Type a task in plain English and it becomes a scheduled card.
+An offline-first task, timetable and reminder app for students. Type a task the way you speak (English or Hinglish) and it becomes a scheduled card. Built with plain HTML, CSS and JavaScript in a single file, packaged as an Android app with Capacitor.
 
-> `tomorrow 7:30-10:30 contest on Codeforces` → **Contest on Codeforces**, tomorrow, 7:30 – 10:30 PM
+> `kal shaam 7 baje contest` -> **Contest**, tomorrow, 7:00 PM, reminders set
 
-## Features (v4.1)
-- Timetable laid out like a college app: month card with a week strip, period cards with time, room, subject and teacher chips; set period times once, add a class to several days and periods at once, copy a day to other days, optional timetable end date
-- Smart Today: week strip with day dots, long-press menu on tasks, reschedule overdue tasks, undo bar, search, big + quick-add sheet, Hinglish input ("kal shaam 7 baje contest"), compact/comfortable/detailed task boxes
-- Timetable tab: subjects, weekly classes (days, times, room, teacher), holidays (single day or range), cancel one class, today's classes card, class reminders; tap a class to add homework that is saved under the subject and also appears as a normal task
-- Natural-language input: `tomorrow 7:30-10:30 contest on Codeforces !high #cp`, `every mon wed fri 5pm class`, `daily except sunday 6am gym`
-- Compact task boxes (title and time), colored by priority; tap a box for details, description, steps and history; Edit opens a full editor with iOS-style wheel pickers for date and time
-- Repeating tasks: marking one done counts only for today and it returns automatically on its next day
-- Contest import from Codeforces, LeetCode, CodeChef and AtCoder (best effort; needs internet)
-- Today dashboard with progress bar and a live Next up countdown, Upcoming tab grouped by date, Progress tab with streaks
-- Morning summary notification and automatic backup to Documents/TaskFlow (Android app)
-- Settings: theme, accent color, reminders, 12/24-hour time, backup and restore
-- Android Back button goes to the previous screen; it exits the app only from the Today screen
-- Works fully offline; data stays on the device
+## Screenshots
+Add your screenshots to `docs/screenshots/` and list them here:
+
+| Today | Timetable | Weekly review |
+|---|---|---|
+| `docs/screenshots/today.png` | `docs/screenshots/timetable.png` | `docs/screenshots/review.png` |
+
+## Features (v5.0)
+**Tasks**
+- Natural-language input in English and Hinglish: dates, times, ranges, repeats, priority (`!high`), tags (`#dsa`), links
+- Compact task boxes colored by priority; tap for details, description, steps and history; Edit with iOS-style wheel pickers
+- Repeating tasks (daily, weekdays, custom days): done counts for today only and returns on its next day
+- Swipe to complete or delete, long-press menu, undo bar, search, reschedule overdue tasks
+- Week strip, list or day-timeline view, focus mode, big + quick-add sheet
+
+**Timetable**
+- College-style layout: month card, week chips, period cards with time, room, subject and teacher
+- Set period times once, add a class to several days and periods at once, copy a day, holidays and cancelled classes
+- Tap a class to add homework: saved under the subject and shown as a normal task
+- Class reminders, optional timetable end date
+
+**Insights**
+- Weekly review (share as text, Sunday notification), 17-week heatmap, streaks, homework progress per subject
+
+**Integrations**
+- Contest import from Codeforces, LeetCode, CodeChef and AtCoder, with contest cards and countdowns
+- Morning summary notification, automatic backup to Documents/TaskFlow, backup and restore
+
+**Look and feel**
+- Theme packs (Default, AMOLED, Paper, Midnight, Sakura), accent colors, text size, left-handed mode, welcome screens
+- Works fully offline; all data stays on the device
 
 ## Run it
-Open `docs/index.html` in a browser. No build step.
-Reminders in the browser fire while the app is open. For reminders that fire when the app is closed, build the Android app below.
+Open `docs/index.html` in a browser. No build step. Notifications and automatic backup need the Android app.
 
 ## Get the Android APK (no Android Studio needed)
 1. Push this repo to GitHub.
 2. Open the **Actions** tab, choose **Build Android APK**, click **Run workflow**.
 3. When it finishes, download **TaskFlow-apk** from the run's Artifacts, unzip it and install `app-debug.apk` on your phone.
 
-The workflow installs Capacitor and the Local Notifications plugin, so reminders fire even when the app is closed. To build locally instead: `npm install @capacitor/core @capacitor/android @capacitor/local-notifications @capacitor/filesystem`, `npm install -D @capacitor/cli`, `npx cap add android`, `npx cap sync`, `npx cap open android`.
-
 On Android 13+ allow notifications when asked. On Android 12+ also allow "Alarms & reminders" for the app in system settings for exact timing.
 
 ## Updating the installed app
-Every build is signed with the key in `signing/debug.keystore` and gets a higher version number, so a new APK installs over the old one and keeps your tasks. Never uninstall first. (This is a debug key meant for personal use, not for publishing on the Play Store.)
+Every build is signed with the key in `signing/debug.keystore` and gets a higher version number, so a new APK installs over the old one and keeps your tasks. Never uninstall first. This is a debug key for personal use, not for the Play Store.
 
 ## Hosting
-Enable GitHub Pages with source `main` and folder `/docs` to get a live demo link.
-
-## Roadmap
-- [x] v1: parser, offline storage, iOS-style list
-- [x] v2: reminders and snooze
-- [x] v3: recurring tasks, steps, links, swipe gestures, urgency colors
-- [x] v4: streaks and stats, backup/export, installable offline app
-- [x] v5: morning summary, automatic backup
-- [x] v6: contest import, redesign, details and editor
+Enable GitHub Pages with source `main` and folder `/docs` for a live web demo.
 
 ## Tech
-Vanilla HTML, CSS and JavaScript in a single file. Capacitor for the Android wrapper.
+Vanilla HTML, CSS and JavaScript (no frameworks, one file). Capacitor for the Android wrapper, Local Notifications and Filesystem plugins, GitHub Actions for CI builds. Data is stored in localStorage.
+
+## Roadmap
+All planned phases are complete. Ideas: home-screen widget, voice input, calendar month view, sync between phones.
