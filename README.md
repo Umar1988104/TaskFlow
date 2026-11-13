@@ -11,13 +11,22 @@ Add your screenshots to `docs/screenshots/` and list them here:
 |---|---|---|
 | `docs/screenshots/today.png` | `docs/screenshots/timetable.png` | `docs/screenshots/review.png` |
 
-## Features (v5.0)
+## Features (v6.0)
 **Tasks**
 - Natural-language input in English and Hinglish: dates, times, ranges, repeats, priority (`!high`), tags (`#dsa`), links
 - Compact task boxes colored by priority; tap for details, description, steps and history; Edit with iOS-style wheel pickers
 - Repeating tasks (daily, weekdays, custom days): done counts for today only and returns on its next day
 - Swipe to complete or delete, long-press menu, undo bar, search, reschedule overdue tasks
 - Week strip, list or day-timeline view, focus mode, big + quick-add sheet
+
+**Anytime tasks**
+- Tasks with no date or time ("anytime", "whenever", "kabhi bhi"): never overdue, shown in their own section, can be planned for today with one tap
+
+**Money (smart expense manager)**
+- Monthly budget with income, spent and remaining (with % spent), accounts, spending/savings/plan buckets, and an automatic "budget balanced" check
+- Fast expense entry in plain text ("ammi 1000", "chai 20 misc gpay", Hinglish works), locked money warnings, 80% and over-budget alerts
+- Itemized plans (gift lists) with paid/unpaid tracking, mismatch warnings and reminders that become tasks; dated buckets with a daily allowance
+- Udhar ledger, reports, share summary, hide-amounts toggle, optional daily "log your expenses" reminder, copy last month's budget
 
 **Timetable**
 - College-style layout: month card, week chips, period cards with time, room, subject and teacher
