@@ -11,7 +11,7 @@ Offline-first student planner: natural-language (English + Hinglish) task input,
 - Designed a college timetable module with reusable period times, multi-day class entry, holidays, and homework linked to subjects that also appears in the main task list.
 - Implemented local notification scheduling (task reminders, class reminders, morning summary, weekly review) and automatic JSON backups to device storage.
 - Set up a GitHub Actions pipeline that builds and signs an installable APK with a stable key so updates install over existing data.
-- Built a budgeting module with accounts, spending buckets, itemized plans, a balance check and fast text-based expense entry, plus a no-deadline "anytime" task type.
+- Built a budgeting module with a udhar (lend/borrow) ledger, recurring bills, CSV export and PIN lock, plus accounts, spending buckets, itemized plans, a balance check and fast text-based expense entry, plus a no-deadline "anytime" task type.
 - Added analytics views: streaks, 17-week heatmap, weekly review and per-subject homework progress.
 
 ## LinkedIn post (draft)
