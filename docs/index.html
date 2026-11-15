@@ -21,8 +21,7 @@ header{display:flex;justify-content:space-between;align-items:flex-end;padding:c
 h1{font-size:calc(34px*var(--fs));font-weight:700;letter-spacing:.2px}
 .count{color:var(--sub);font-size:calc(15px*var(--fs));margin-top:2px}
 .ibtn{width:40px;height:40px;border-radius:50%;background:var(--card);color:var(--blue);display:grid;place-items:center;box-shadow:var(--shadow);flex:none}
-body[data-tab=progress] #cbtn,body[data-tab=settings] #cbtn,body[data-tab=timetable] #cbtn{display:none}
-#tadd{display:none}body[data-tab=timetable] #tadd{display:grid}
+body[data-tab=progress] #cbtn,body[data-tab=settings] #cbtn{display:none}
 h2{font-size:calc(13px*var(--fs));font-weight:600;color:var(--sub);margin:20px 6px 8px}
 h2.od{color:var(--red)}
 .prog{display:flex;align-items:center;gap:12px;margin:2px 6px 12px}
@@ -77,7 +76,7 @@ h2.od{color:var(--red)}
 .tabs button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--sub);font-size:calc(11px*var(--fs));font-weight:500}
 .tabs button.on{color:var(--blue)}
 .kb .tabs{display:none}.kb .dock{bottom:0}
-body[data-tab=progress] .dock,body[data-tab=settings] .dock,body[data-tab=timetable] .dock{display:none}
+body[data-tab=progress] .dock,body[data-tab=settings] .dock{display:none}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
 .ov.show{opacity:1;pointer-events:auto}
 .sheet{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:520px;max-height:90vh;overflow-y:auto;background:var(--bg);border-radius:22px 22px 0 0;padding:10px 16px calc(22px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform .3s cubic-bezier(.2,.9,.3,1),visibility 0s .3s;z-index:21}
@@ -181,7 +180,7 @@ textarea.tin{width:100%;text-align:left;resize:none;min-height:70px;line-height:
 .cc i{width:8px;height:8px;border-radius:50%;background:var(--c)}.cc em{font-style:normal;color:var(--sub);font-weight:500}
 .cc.past{opacity:.5}.cc.x{text-decoration:line-through;opacity:.5}.cc.now{outline:2px solid var(--c)}
 .hb{display:flex;gap:8px}
-body[data-tab=progress] #sbtn,body[data-tab=settings] #sbtn,body[data-tab=timetable] #sbtn{display:none}
+body[data-tab=progress] #sbtn,body[data-tab=settings] #sbtn{display:none}
 .ttcard{background:var(--blue);color:#fff;border-radius:24px;padding:16px;box-shadow:var(--shadow)}
 .tth{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.35)}
 .tti{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.92);color:var(--blue);display:grid;place-items:center;flex:none}
@@ -292,7 +291,7 @@ h2.it{font-size:calc(27px*var(--fs));color:var(--txt);margin:34px 0 12px;font-we
 .is{font-size:calc(16px*var(--fs));line-height:1.5;color:var(--sub);max-width:340px}
 .idots{display:flex;gap:8px;margin:30px 0 auto}.idots i{width:8px;height:8px;border-radius:50%;background:var(--sep)}.idots i.on{background:var(--blue);width:22px;border-radius:4px}
 #intro .pbtn,#intro .tbtn{width:100%;max-width:340px}
-body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn,body[data-tab=money] #tadd{display:none}
+body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn{display:none}
 #madd,#meye{display:none}body[data-tab=money] #madd,body[data-tab=money] #meye{display:grid}
 #tseg{background:var(--sep);margin-bottom:10px}
 .mhero{background:var(--blue);color:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow)}
@@ -323,6 +322,7 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 .kpad{display:grid;grid-template-columns:repeat(3,76px);gap:14px;margin-top:10px}.kpad button{height:76px;border-radius:50%;background:var(--card);font-size:calc(26px*var(--fs));box-shadow:var(--shadow)}
 .noanim *,.noanim *::before,.noanim *::after{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.mrow.r3{grid-template-columns:1fr 1fr 1fr}.mrow.r3 b{font-size:calc(15px*var(--fs))}
 </style>
 </head>
 <body>
@@ -331,20 +331,17 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
     <div class="hb"><button class="ibtn" id="sbtn" aria-label="Search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
     <button class="ibtn" id="meye" aria-label="Hide amounts"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
     <button class="ibtn" id="madd" aria-label="Add expense"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-    <button class="ibtn" id="tadd" aria-label="Add class"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
     <button class="ibtn" id="cbtn" aria-label="Contests"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h12l-2.5 4 2.5 4H5"/></svg></button></div></header>
   <div class="seg" id="tseg"><button data-t="today" class="on">Today</button><button data-t="upcoming">Upcoming</button></div>
   <div id="wstrip"></div>
   <section id="dash">
     <div class="prog" id="prog"><div class="pbar"><i id="pfill"></i></div><span id="ptxt"></span><button class="fbtn" id="focus-b">Focus</button></div>
     <button class="next" id="next" hidden><span class="dot"></span><div><small id="nlab">Next up</small><b id="nt"></b></div><em id="nc"></em></button>
-    <button class="clsc" id="clsc" hidden></button>
   </section>
   <div id="flt"></div>
   <main id="list"></main>
   <section id="progress" hidden></section>
-  <section id="tt" hidden></section>
-  <section id="money" hidden></section>
+    <section id="money" hidden></section>
   <section id="settings" hidden></section>
 </div>
 <div class="dock"><div class="dock-in">
@@ -354,7 +351,6 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 </div></div>
 <nav class="tabs">
   <button data-tab="today" class="on"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M16 2v3M3 9h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg><span>Today</span></button>
-  <button data-tab="timetable"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 3v18"/></svg><span>Timetable</span></button>
   <button data-tab="money"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13a2 2 0 012 2v2H5a2 2 0 01-2-2zM3 7v11a2 2 0 002 2h14a2 2 0 002-2v-2M21 9v4h-4a2 2 0 010-4z"/></svg><span>Money</span></button>
   <button data-tab="progress"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V11M12 20V4M18 20v-6"/></svg><span>Progress</span></button>
   <button data-tab="settings"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>Settings</span></button>
@@ -394,7 +390,6 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
   <div class="sm" id="e-rt" style="margin:8px 6px 0"></div>
   <h4>Remind me</h4><div class="seg multi wrap" id="e-rem"></div>
   <h4>Category</h4><div class="seg wrap" id="e-cat"></div>
-  <h4 id="e-subh">Subject</h4><div class="seg wrap" id="e-sub"></div>
   <h4>Priority</h4><div class="seg" id="e-pri"></div>
   <h4>Tags</h4><div class="opts"><div class="srow"><input class="tin" id="e-tags" placeholder="dsa, college" style="width:100%;text-align:left"></div></div>
   <button class="pbtn" id="e-save">Save changes</button><button class="tbtn" id="e-cancel">Cancel</button>
@@ -410,52 +405,6 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 <div class="sheet" id="pick"><div class="grab"></div>
   <div class="phead"><button id="pk-clear">Clear</button><b id="pk-title"></b><button id="pk-ok">Done</button></div>
   <div class="wheels" id="pk-w"></div>
-</div>
-
-<div class="sheet" id="cls"><div class="grab"></div>
-  <div class="dhead"><div style="min-width:0"><h3 id="c2-t"></h3><div class="sm" id="c2-w"></div></div><button class="chipbtn" id="c2-edit">Edit</button></div>
-  <div class="sm" id="c2-st" style="margin-top:8px;color:var(--orange)"></div>
-  <h4>Add homework</h4>
-  <div class="opts"><div class="srow"><input class="tin" id="hw-in" maxlength="120" placeholder="What did the teacher assign?" style="width:100%;text-align:left"></div>
-    <button class="srow" id="hw-due"><span>Due</span><span class="v" id="hw-due-v"></span></button></div>
-  <button class="pbtn" id="hw-add" style="margin-top:12px">Add homework</button>
-  <h4>Homework for this subject</h4><div class="opts" id="hw-list"></div>
-  <div class="opts" style="margin-top:18px"><button class="opt" id="c2-cancel" style="color:var(--orange)"></button></div>
-</div>
-
-<div class="sheet" id="slot"><div class="grab"></div><h3 id="sl-h">Add class</h3>
-  <h4>Subject</h4><div class="seg wrap" id="sl-sub"></div>
-  <div id="sl-new" hidden><div class="opts" style="margin-top:8px"><div class="srow"><input class="tin" id="sl-nn" maxlength="80" placeholder="New subject name" style="width:100%;text-align:left"></div></div>
-    <div class="dots" id="sl-nc" style="margin:12px 6px"></div><button class="chipbtn" id="sl-na" style="margin-left:6px">Add subject</button></div>
-  <h4>Teacher and room</h4><div class="opts"><div class="srow"><span>Teacher</span><input class="tin" id="sl-teach" maxlength="40" placeholder="Optional"></div><div class="srow"><span>Room</span><input class="tin" id="sl-room" maxlength="30" placeholder="Optional"></div></div>
-  <h4>Days</h4><div class="days" id="sl-days"></div>
-  <h4>When</h4><div class="seg" id="sl-mode"></div>
-  <div class="pgrid" id="sl-per"></div>
-  <div class="opts" id="sl-cus" style="margin-top:8px" hidden><button class="srow" id="sl-st"><span>Starts</span><span class="v" id="sl-st-v"></span></button><button class="srow" id="sl-en"><span>Ends</span><span class="v" id="sl-en-v"></span></button></div>
-  <button class="pbtn" id="sl-save">Save</button><button class="tbtn" id="sl-del" style="color:var(--red)" hidden>Delete this class</button><button class="tbtn" id="sl-cancel">Cancel</button>
-</div>
-
-<div class="sheet" id="subs"><div class="grab"></div><h3>Subjects</h3><div class="sm">Tap the color to change it, edit the name, or remove a subject.</div>
-  <div class="opts" id="sb-list" style="margin-top:12px"></div>
-  <h4>Add a subject</h4><div class="opts"><div class="srow"><input class="tin" id="sb-name" maxlength="40" placeholder="Subject name" style="width:100%;text-align:left"></div></div>
-  <div class="dots" id="sb-cols" style="margin:12px 6px"></div><button class="pbtn" id="sb-add" style="margin-top:6px">Add subject</button>
-</div>
-
-<div class="sheet" id="hol"><div class="grab"></div><h3>Holidays</h3><div class="sm">No classes and no class reminders on these days.</div>
-  <div class="opts" id="hl-list" style="margin-top:12px"></div>
-  <h4>Add a holiday</h4>
-  <div class="opts"><button class="srow" id="hl-from"><span>From</span><span class="v" id="hl-from-v"></span></button><button class="srow" id="hl-to"><span>To</span><span class="v" id="hl-to-v"></span></button><div class="srow"><span>Reason</span><input class="tin" id="hl-reason" maxlength="40" placeholder="Optional"></div></div>
-  <button class="pbtn" id="hl-add">Add holiday</button>
-</div>
-
-<div class="sheet" id="per"><div class="grab"></div><h3>Period times</h3><div class="sm">Set your college periods once. Changing a time updates every class in that period.</div>
-  <div class="opts" id="pe-list" style="margin-top:12px"></div>
-  <button class="chipbtn" id="pe-add" style="margin:12px 6px 0">Add period</button><button class="tbtn" id="pe-reset">Reset to default</button>
-</div>
-
-<div class="sheet" id="cp"><div class="grab"></div><h3>Copy this day</h3><div class="sm" id="cp-s"></div>
-  <h4>Copy to</h4><div class="days" id="cp-d"></div>
-  <button class="pbtn" id="cp-go">Copy classes</button>
 </div>
 
 <div class="sheet" id="qa"><div class="grab"></div><h3>New task</h3><div class="sm">Type it naturally. Hinglish works too, like “kal shaam 7 baje contest”.</div>
@@ -483,12 +432,36 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 
 <div class="sheet" id="focus"></div>
 
+<div class="sheet" id="ml"><div class="grab"></div><h3>Loans</h3><div class="sm">Track monthly payments and due dates. Every field can be edited.</div>
+  <div id="ml-list" style="margin-top:12px"></div>
+  <h4 id="ml-fh">Add a loan</h4>
+  <div class="opts">
+    <div class="srow"><span>Name</span><input class="tin" id="ml-n" maxlength="40" placeholder="e.g. Personal loan"></div>
+    <div class="srow"><span>Total to repay (₹)</span><input class="tin" id="ml-t" type="number" inputmode="decimal" placeholder="0"></div>
+    <div class="srow"><span>Monthly payment (₹)</span><input class="tin" id="ml-e" type="number" inputmode="decimal" placeholder="0"></div>
+    <div class="srow"><span>Due day of month</span><input class="tin" id="ml-d" type="number" inputmode="numeric" min="1" max="31" placeholder="5"></div>
+    <div class="srow"><span>Number of payments</span><input class="tin" id="ml-m" type="number" inputmode="numeric" placeholder="12"></div>
+    <div class="srow"><span>First payment month</span><input class="tin" id="ml-s" type="month"></div>
+  </div>
+  <button class="pbtn" id="ml-save">Save loan</button><button class="tbtn" id="ml-del" style="color:var(--red)" hidden>Delete this loan</button>
+</div>
+
+<div class="sheet" id="mw"><div class="grab"></div><h3>Planned purchases</h3><div class="sm" id="mw-s"></div>
+  <div id="mw-list" style="margin-top:12px"></div>
+  <h4>Plan a purchase</h4>
+  <div class="opts"><div class="srow"><span>Item</span><input class="tin" id="mw-n" maxlength="60" placeholder="What will you buy?"></div><div class="srow"><span>Price (₹)</span><input class="tin" id="mw-p" type="number" inputmode="decimal" placeholder="0"></div></div>
+  <h4>Pay from account</h4><div class="seg wrap" id="mw-ac"></div>
+  <h4>Folder</h4><div class="seg wrap" id="mw-b"></div>
+  <button class="pbtn" id="mw-add">Add to plan</button>
+</div>
+
 <div class="sheet" id="mx"><div class="grab"></div><h3 id="mx-h">Add expense</h3>
   <div class="seg" id="mx-k" style="margin-top:12px"><button data-k="exp">Expense</button><button data-k="inc">Income</button></div>
   <div class="field q" style="margin-top:12px"><input id="mx-nl" type="text" placeholder="ammi 1000 · chai 20 misc · gpay 250 shopping" autocomplete="off"></div><div class="qrow" id="mx-fq"></div>
   <div class="opts" style="margin-top:12px"><div class="srow"><span>Amount</span><input class="tin" id="mx-amt" type="number" inputmode="decimal" placeholder="0"></div><div class="srow"><span>What for</span><input class="tin" id="mx-desc" maxlength="60" placeholder="Description"></div><button class="srow" id="mx-date"><span>Date</span><span class="v" id="mx-date-v"></span></button></div>
-  <div id="mx-bw"><h4>Bucket</h4><div class="seg wrap" id="mx-b"></div></div>
   <div id="mx-ac-w"><h4>Account</h4><div class="seg wrap" id="mx-ac"></div></div>
+  <div id="mx-bw"><h4>Folder</h4><div class="seg wrap" id="mx-b"></div></div>
+  <div class="opts" id="mx-fam-w" hidden style="margin-top:12px"><button class="srow" id="mx-fam"><span>Money from family</span><span class="v" id="mx-fam-v"></span></button></div>
   <button class="pbtn" id="mx-save">Save expense</button><button class="tbtn" id="mx-del" style="color:var(--red)" hidden>Delete</button>
 </div>
 
@@ -758,7 +731,7 @@ function morningList(){
   const out=[],[hh,mm]=(S.morningTime||'07:30').split(':').map(Number),now=Date.now();
   for(let i=0;i<7;i++){
     const d=addDays(new Date(),i);d.setHours(hh,mm,0,0);if(d.getTime()<=now)continue;
-    const ds=ymd(d),list=tasksOn(ds).sort((a,b)=>(a.start||'99:99')<(b.start||'99:99')?-1:1),hol=isHoliday(ds),cl=classesOn(ds);
+    const ds=ymd(d),list=tasksOn(ds).sort((a,b)=>(a.start||'99:99')<(b.start||'99:99')?-1:1),hol=null,cl=[];
     const od=i===0?tasks.filter(t=>!t.done&&endAt(t).getTime()<now).length:0;
     const anyN=tasks.filter(t=>t.any&&!t.done).length;if(!list.length&&!od&&!cl.length&&!hol&&!anyN)continue;
     const first=list.find(t=>t.start),parts=[];
@@ -779,10 +752,10 @@ async function sync(){ /* real Android notifications (Capacitor) */
       if(t.done){if(!t.repeat)return;const nd=nextOcc(t);if(!nd)return;u=Object.assign({},t,{date:nd,snooze:null})}
       fireTimes(u).forEach(f=>{if(f>now)n.push({id:hash(t.id+f),title:t.title,body:msgFor(u),at:f})})});
     if(S.morning)morningList().forEach(x=>n.push(x));
-    if(S.classRem||S.classNudge)classAlerts().forEach(x=>n.push(x));
     if(S.weeklyReview)reviewAlerts().forEach(x=>n.push(x));
     if(S.moneyRemind)moneyAlerts().forEach(x=>n.push(x));
     udharAlerts().forEach(x=>n.push(x));
+    loanAlerts().forEach(x=>n.push(x));
     n.sort((a,b)=>a.at-b.at);
     if(n.length)await ln.schedule({notifications:n.slice(0,100).map(x=>({id:x.id,title:x.title,body:x.body,schedule:{at:new Date(x.at),allowWhileIdle:true}}))});
   }catch(e){}
@@ -793,38 +766,10 @@ async function askPerm(){
 async function askFsPerm(){try{const f=FS();if(f&&f.requestPermissions)await f.requestPermissions()}catch(e){}}
 
 
-/* ===== timetable data (Phase 7) ===== */
-const TTKEY='taskflow.tt';
-const DEFPER=[{s:'08:30',e:'09:20'},{s:'09:20',e:'10:10'},{s:'10:15',e:'11:05'},{s:'11:05',e:'11:55'},{s:'12:00',e:'12:50'},{s:'12:50',e:'13:40'},{s:'13:45',e:'14:35'},{s:'14:35',e:'15:25'}];
-let TT=Object.assign({subjects:[],slots:[],holidays:[],cancels:[],periods:DEFPER.map(p=>Object.assign({},p)),until:''},jget(TTKEY,{}));
-const saveTT=()=>{jset(TTKEY,TT);setTimeout(sync,0)};
-const SUBCOL=['#007aff','#af52de','#34c759','#ff9500','#ff2d92','#30b0c7','#ff3b30','#5856d6'];
-const subj=id=>TT.subjects.find(s=>s.id===id);
-const isHoliday=ds=>TT.holidays.find(h=>ds>=h.from&&ds<=(h.to||h.from))||null;
-const isCancelled=(sid,ds)=>TT.cancels.some(c=>c.slot===sid&&c.date===ds);
-function classesOn(ds,all){
-  if(isHoliday(ds)||(TT.until&&ds>TT.until))return[];
-  const wd=new Date(ds+'T00:00:00').getDay();
-  return TT.slots.filter(s=>s.day===wd&&(all||!isCancelled(s.id,ds))).sort((a,b)=>a.start<b.start?-1:a.start>b.start?1:0);
-}
-function nextClassDate(sid,from){
-  for(let i=1;i<=28;i++){const d=addDays(new Date(from+'T00:00:00'),i),ds=ymd(d);
-    if(!isHoliday(ds)&&TT.slots.some(s=>s.sid===sid&&s.day===d.getDay()&&!isCancelled(s.id,ds)))return ds}
-  return ymd(addDays(new Date(from+'T00:00:00'),1));
-}
-function classAlerts(){
-  const out=[],now=Date.now();
-  for(let i=0;i<4;i++){const ds=ymd(addDays(new Date(),i));
-    classesOn(ds).forEach(c=>{const sb=subj(c.sid);if(!sb)return;
-      const st=new Date(ds+'T'+c.start+':00').getTime(),en=new Date(ds+'T'+c.end+':00').getTime(),at=st-S.classMin*60000;
-      if(S.classRem&&at>now)out.push({id:800000000+hash(c.id+ds)%90000000,title:sb.name+' in '+S.classMin+' min',body:t12(c.start)+(c.room?' · '+c.room:''),at});
-      if(S.classNudge&&en>now)out.push({id:890000000+hash(c.id+ds+'n')%9000000,title:sb.name+' is over',body:'Any homework to note?',at:en})})}
-  return out;
-}
-
+const subj=()=>null; /* old tasks may carry a subject id; ignored */
 /* ===== money data ===== */
 const MKEY='taskflow.money';
-let M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[]},jget(MKEY,{}));
+let M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[]},jget(MKEY,{}));
 const saveM=()=>jset(MKEY,M);
 const inr=n=>S.hideAmt?'₹ ••••':'₹'+(Math.round(+n*100)/100).toLocaleString('en-IN');
 function mkey(d){const x=new Date(d||new Date());if(x.getDate()<(S.monthStart||1))x.setMonth(x.getMonth()-1,1);return x.getFullYear()+'-'+pad(x.getMonth()+1)}
@@ -844,13 +789,13 @@ function weekStats(mon){
   const top=o=>Object.entries(o).sort((a,b)=>b[1]-a[1])[0],ts=top(bySub),tc=top(byCat);
   return{days,per,done,missed,ok:done?Math.round(ok*100/done):null,best:best&&best.c?best:null,
     topSub:ts?{name:subj(ts[0]).name,n:ts[1]}:null,topCat:tc?{name:tc[0],n:tc[1]}:null,
-    classes:days.reduce((n,k)=>n+classesOn(k).length,0),hols:days.filter(k=>isHoliday(k)).length};
+    classes:0,hols:0};
 }
 function planned(mon){
   let n=0;
   for(let i=0;i<7;i++){const d=addDays(mon,i),k=ymd(d),wd=d.getDay();
     n+=tasks.filter(t=>t.date===k&&(!t.done||t.repeat)).length+tasks.filter(t=>t.repeat&&t.date<k&&effDays(t).includes(wd)).length}
-  return{tasks:n,classes:[...Array(7)].reduce((a,_,i)=>a+classesOn(ymd(addDays(mon,i))).length,0)};
+  return{tasks:n,classes:0};
 }
 function reviewAlerts(){
   const out=[],[hh,mm]=(S.reviewTime||'20:00').split(':').map(Number),now=Date.now();
@@ -860,7 +805,7 @@ function reviewAlerts(){
 }
 
 /* ===== backup ===== */
-const backup=()=>JSON.stringify({app:'taskflow',v:7,tasks,log:loadLog(),settings:S,tt:TT,money:M},null,1);
+const backup=()=>JSON.stringify({app:'taskflow',v:7,tasks,log:loadLog(),settings:S,money:M},null,1);
 async function autoBackup(force){
   const fs=FS();if(!fs)return false;
   const td=ymd(new Date());
@@ -876,8 +821,7 @@ async function autoBackup(force){
 async function restore(f){
   try{const j=JSON.parse(await f.text());if(!Array.isArray(j.tasks))throw 0;
     if(confirm('Replace your current tasks with this backup ('+j.tasks.length+' tasks)?')){tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
-      if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[]},j.money);saveM()}
-      if(j.tt){TT=Object.assign({subjects:[],slots:[],holidays:[],cancels:[],periods:DEFPER.map(p=>Object.assign({},p)),until:''},j.tt);saveTT()}
+      if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[]},j.money);saveM()}
       if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}render();renderSettings()}}
   catch(_){alert('That file is not a TaskFlow backup.')}
 }
@@ -957,9 +901,8 @@ function timelineHTML(){
   const ds=selDay,td=ymd(new Date()),wd=new Date(ds+'T00:00:00').getDay(),fl=tasks.filter(passF),H=60;
   const ts=fl.filter(t=>t.date===ds).map(t=>({t,v:false}));
   if(ds>td)fl.filter(t=>t.repeat&&t.date<ds&&effDays(t).includes(wd)).forEach(t=>ts.push({t,v:true}));
-  const hol=isHoliday(ds),cls=hol?[]:classesOn(ds,true),mn=x=>+x.slice(0,2)*60+ +x.slice(3,5),items=[];
+  const hol=null,mn=x=>+x.slice(0,2)*60+ +x.slice(3,5),items=[];
   ts.filter(x=>x.t.start).forEach(x=>{const s=mn(x.t.start),e=x.t.end?Math.max(mn(x.t.end),s+30):s+45;items.push({k:'t',id:x.t.id,s,e,title:x.t.title,c:PC[x.t.pri]||'var(--blue)',done:x.t.done,v:x.v,sub:x.t.end?timeTxt(x.t):t12(x.t.start)})});
-  cls.forEach(c=>{const sb=subj(c.sid)||{name:'Class',color:'#8e8e93'};items.push({k:'c',id:c.id,s:mn(c.start),e:mn(c.end),title:sb.name,c:sb.color,x:isCancelled(c.id,ds),sub:rng(c)+(c.room?' · '+c.room:'')})});
   const allDay=ts.filter(x=>!x.t.start),top=hol?`<div class="holc" style="margin-top:8px"><b>Holiday</b><span>${hol.reason?esc(hol.reason):'No classes today'}</span></div>`:'';
   const ad=allDay.length?`<div class="tlad">${allDay.map(x=>`<button class="chip tlb0" data-id="${x.t.id}" style="--c:var(--blue)">${esc(x.t.title)}</button>`).join('')}</div>`:'';
   if(!items.length)return top+ad+(allDay.length||hol?'':emptyHTML('cal','Nothing scheduled','No timed tasks or classes on this day.'));
@@ -975,7 +918,6 @@ function timelineHTML(){
 function render(){
   roll();drawDash();drawFlt();drawStrip();
   $('#count').textContent=subtitle();
-  if(tab==='timetable')renderTT();
   if(tab==='money')renderMoney();
   if(tab!=='today'&&tab!=='upcoming')return;
   if(tab==='today'&&S.view==='timeline'){list.innerHTML=timelineHTML();return}
@@ -1000,7 +942,7 @@ function drawStrip(){
   const sel=new Date(selDay+'T00:00:00'),mon=mondayOf(sel),td=ymd(new Date()),days=[...Array(7)].map((_,i)=>addDays(mon,i));
   const fm=d=>d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
   $('#wstrip').innerHTML=`<div class="wk"><button id="ws-prev" aria-label="Previous week">‹</button><div class="wmid"><b>${fm(days[0])} – ${fm(days[6])}</b>${selDay!==td?'<button class="tdy" id="ws-today">Today</button>':''}</div><button id="ws-next" aria-label="Next week">›</button></div>
-   <div class="wdays">${days.map(d=>{const ds=ymd(d),h=isHoliday(ds),has=tasks.some(t=>!t.done&&t.date===ds)||(!h&&classesOn(ds).length>0);
+   <div class="wdays">${days.map(d=>{const ds=ymd(d),h=null,has=tasks.some(t=>!t.done&&t.date===ds);
      return `<button class="wd${ds===selDay?' on':''}${ds===td?' td':''}" data-date="${ds}"><small>${DOWN[d.getDay()][0]}</small><b>${d.getDate()}</b><i class="${h?'h':has?'n':''}"></i></button>`}).join('')}</div>
    <div class="seg" style="margin-top:10px"><button data-v="list" class="${S.view!=='timeline'?'on':''}">List</button><button data-v="timeline" class="${S.view==='timeline'?'on':''}">Timeline</button></div>`;
 }
@@ -1022,7 +964,7 @@ $('#flt').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)
 function drawDash(){
   if(tab!=='today')return;
   const now=Date.now(),td=ymd(new Date()),isT=selDay===td;
-  $('#prog').hidden=!isT;drawClassCard(selDay);
+  $('#prog').hidden=!isT;
   if(!isT){$('#next').hidden=true;return}
   const done=loadLog().filter(x=>x.d===td).length,left=tasks.filter(t=>!t.done&&['Overdue','Today'].includes(group(t))).length,tot=done+left;
   $('#pfill').style.width=(tot?Math.round(done/tot*100):0)+'%';
@@ -1180,14 +1122,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',cls:'#cls',slot:'#slot',subs:'#subs',hol:'#hol',mx:'#mx',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',per:'#per',cp:'#cp',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',ml:'#ml',mw:'#mw',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='cls')drawCls();if(top==='subs')drawSubs();if(top==='hol')drawHol();if(top==='per')drawPer();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1198,10 +1140,10 @@ $('#ov').addEventListener('click',closeTop);
 function setTab(t,np){
   if(!np&&t!==tab)history.pushState({tab:t,stack:[]},'');
   tab=t;document.body.dataset.tab=t;
-  $('#ttl').textContent={today:'Today',upcoming:'Upcoming',money:'Money',timetable:'Timetable',progress:'Progress',settings:'Settings'}[t];
+  $('#ttl').textContent={today:'Today',upcoming:'Upcoming',money:'Money',progress:'Progress',settings:'Settings'}[t];
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
-  $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#tt').hidden=t!=='timetable';$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';
-  if(t==='progress')renderProgress();if(t==='settings')renderSettings();if(t==='timetable')renderTT();if(t==='money')renderMoney();
+  $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';
+  if(t==='progress')renderProgress();if(t==='settings')renderSettings();if(t==='money')renderMoney();
   render();window.scrollTo(0,0);
 }
 $('.tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){buzz(8);setTab(b.dataset.tab)}});
@@ -1250,8 +1192,6 @@ function drawEdit(){
   $('#e-rt').textContent=E.days.length?'Repeats: '+repTxt({repeat:'days',days:E.days.slice().sort()}):'Does not repeat';
   $('#e-rem').innerHTML=OPTS.map(o=>`<button data-r="${o[0]}" class="${E.rem.includes(o[0])?'on':''}">${SH[o[0]]}</button>`).join('');
   $('#e-cat').innerHTML=CATS.map(c=>`<button data-c="${c}" class="${c===E.cat?'on':''}">${c}</button>`).join('');
-  $('#e-subh').hidden=!TT.subjects.length;$('#e-sub').hidden=!TT.subjects.length;
-  $('#e-sub').innerHTML=[['','None']].concat(TT.subjects.map(s=>[s.id,s.name])).map(x=>`<button data-sb="${x[0]}" class="${x[0]===E.sid?'on':''}">${esc(x[1])}</button>`).join('');
   $('#e-pri').innerHTML=[['','None'],['low','Low'],['med','Medium'],['high','High']].map(x=>`<button data-pr="${x[0]}" class="${x[0]===E.pri?'on':''}">${x[1]}</button>`).join('');
 }
 $('#edit').addEventListener('click',e=>{
@@ -1261,7 +1201,6 @@ $('#edit').addEventListener('click',e=>{
   else if(b=q('[data-r]')){const r=+b.dataset.r;E.rem=E.rem.includes(r)?E.rem.filter(x=>x!==r):E.rem.concat(r);drawEdit()}
   else if(b=q('[data-c]')){E.cat=b.dataset.c;drawEdit()}
   else if(b=q('[data-pr]')){E.pri=b.dataset.pr;drawEdit()}
-  else if(b=q('[data-sb]')){E.sid=b.dataset.sb;drawEdit()}
   else if(q('#e-date'))openPick('date',E.date,v=>{E.date=v;drawEdit()});
   else if(q('#e-st'))openPick('time',E.start,v=>{E.start=v;if(!v)E.end=null;drawEdit()},true);
   else if(q('#e-en')){if(E.start)openPick('time',E.end||E.start,v=>{E.end=v;drawEdit()},true)}
@@ -1270,7 +1209,7 @@ $('#e-cancel').addEventListener('click',closeTop);
 $('#e-save').addEventListener('click',()=>{
   const t=tasks.find(x=>x.id===curId);if(!t)return;
   const title=$('#e-title').value.trim();if(!title){$('#e-title').focus();return}
-  t.title=title;t.desc=$('#e-desc').value.trim();t.date=E.any?'':E.date;t.any=!!E.any;t.start=E.any?null:E.start;t.end=E.start&&!E.any?E.end:null;t.category=E.cat;t.sid=E.sid||null;t.pri=E.pri||null;
+  t.title=title;t.desc=$('#e-desc').value.trim();t.date=E.any?'':E.date;t.any=!!E.any;t.start=E.any?null:E.start;t.end=E.start&&!E.any?E.end:null;t.category=E.cat;t.pri=E.pri||null;
   t.tags=[...new Set($('#e-tags').value.split(/[,\s]+/).map(x=>x.replace(/^#/,'').toLowerCase().replace(/[^a-z0-9_-]/g,'')).filter(Boolean))].slice(0,6);
   t.rem=E.rem.slice().sort((a,b)=>b-a);
   const d=E.days.slice().sort();
@@ -1317,18 +1256,12 @@ function heatHTML(){
     cells+=`<i class="h${k>td?'f':c===0?'0':c===1?'1':c===2?'2':c<=4?'3':'4'}"></i>`}
   return `<div class="group" style="padding:14px"><div class="heat">${cells}</div><div class="hleg"><span>${tot} tasks in 17 weeks</span><span>Less <i class="h0"></i><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i> More</span></div></div>`;
 }
-function subjHTML(){
-  if(!TT.subjects.length)return '<div class="sm" style="margin:0 6px">Add subjects in the Timetable tab to see your homework progress here.</div>';
-  return `<div class="group">${TT.subjects.map(s=>{const ts=tasks.filter(t=>t.sid===s.id),dn=ts.filter(t=>t.done).length,od=ts.filter(t=>!t.done&&endAt(t).getTime()<Date.now()).length;
-    return `<div class="sjr"><div class="sjt"><span><i class="sd" style="background:${s.color}"></i>${esc(s.name.length>34?s.name.slice(0,33)+'…':s.name)}</span><em>${dn}/${ts.length}${od?' · '+od+' overdue':''}</em></div><div class="pbar"><i style="width:${ts.length?Math.round(dn*100/ts.length):0}%;background:${s.color}"></i></div></div>`}).join('')}</div>`;
-}
 function renderProgress(){
   const t=stats(),mx=Math.max(1,...t.w.map(x=>x.c)),ws=weekStats(mondayOf(new Date()));
   $('#progress').innerHTML=`<button class="revc" id="rv-open"><div><small>Weekly review</small><b>${ws.done} done this week</b><span>${ws.ok==null?'Complete tasks to see your stats':ws.ok+'% on time'}</span></div><em>›</em></button>
   <div class="stats"><div class="stat"><b>${t.streak}</b><span>Day streak</span></div><div class="stat"><b>${t.week}</b><span>Done, 7 days</span></div><div class="stat"><b>${t.ok}</b><span>On time</span></div></div>
   <div class="bars">${t.w.map(x=>`<div><i style="height:0" data-h="${Math.round(x.c/mx*100)}"></i><em>${new Date(x.k+'T00:00:00').toLocaleDateString('en-IN',{weekday:'narrow'})}</em></div>`).join('')}</div>
-  <h2>Last 17 weeks</h2>${heatHTML()}
-  <h2>Homework by subject</h2>${subjHTML()}`;
+  <h2>Last 17 weeks</h2>${heatHTML()}`;
   requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('#progress .bars i').forEach(i=>i.style.height=Math.max(4,i.dataset.h)+'%')));
 }
 $('#progress').addEventListener('click',e=>{if(e.target.closest('#rv-open')){revOff=0;openSheet('rev')}});
@@ -1346,7 +1279,6 @@ function renderSettings(){
       `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c?'on':''}" aria-label="Accent color"></button>`).join('')}</div></div>`+seg('boxStyle','Task box style',[['compact','Compact'],['comfy','Comfortable'],['detail','Detailed']])+seg('addStyle','Add tasks with',[['button','Big + button'],['bar','Input bar']])+k('anim','Animations')+k('haptics','Haptic feedback')+seg('textSize','Text size',[['normal','Normal'],['large','Large'],['xl','Extra large']])+k('leftHand','Left-handed mode'))+
     grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],SH[o[0]]]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+k('morning','Morning summary')+(S.morning?`<div class="srow"><span>Summary time</span><input class="tin" type="time" data-k="morningTime" value="${S.morningTime}"></div>`:'')+k('weeklyReview','Weekly review (Sunday)')+(S.weeklyReview?`<div class="srow"><span>Review time</span><input class="tin" type="time" data-k="reviewTime" value="${S.reviewTime}"></div>`:'')+btn('notif','Enable notifications'))+
     grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+k('h24','24-hour time')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+k('showDone','Show completed tasks')+seg('noDate','Tasks with no date go to',[['today','Today'],['anytime','Anytime']])+k('tags','Priority, tags and filters'))+
-    grp('Timetable',k('classCard',"Show today's classes on Today")+k('classRem','Class reminders')+seg('classMin','Remind me before class',[[5,'5 min'],[10,'10 min'],[15,'15 min'],[30,'30 min']])+k('classNudge','Ask about homework after class')+btn('until','Timetable ends: '+(TT.until?fullDate(TT.until):'Never')))+
     grp('Money',k('moneyRemind','Daily reminder to log expenses')+(S.moneyRemind?`<div class="srow"><span>Reminder time</span><input class="tin" type="time" data-k="moneyTime" value="${S.moneyTime}"></div>`:'')+seg('monthStart','Budget month starts on day',[[1,'1'],[5,'5'],[10,'10'],[15,'15'],[20,'20'],[25,'25']])+k('hideAmt','Hide amounts')+seg('dailyLimit','Daily spending limit',[[0,'Off'],[100,'₹100'],[200,'₹200'],[300,'₹300'],[500,'₹500']])+k('udharBal','Count udhar in my budget by default'))+
     grp('Security',btn('pin',S.pin?'Change or remove the PIN lock':'Set a PIN lock'))+
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
@@ -1357,7 +1289,6 @@ function renderSettings(){
 function act(a,b){
   if(a==='notif')askPerm();
   else if(a==='bk-now'){if(!FS()){act('dl',b);return}askFsPerm().then(()=>autoBackup(true)).then(ok=>{b.firstElementChild.textContent=ok?'Saved ✓':'Could not save';setTimeout(renderSettings,1500)})}
-  else if(a==='until')openPick('date',TT.until||ymd(new Date()),v=>{TT.until=v||'';saveTT();renderSettings();render()},true);
   else if(a==='intro'){introI=0;openSheet('intro')}
   else if(a==='pin')pinFlow();
   else if(a==='dl'){const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([backup()],{type:'application/json'}));l.download='taskflow-backup-'+ymd(new Date())+'.json';l.click()}
@@ -1384,214 +1315,6 @@ $('#settings').addEventListener('change',e=>{
   render();
 });
 $('#settings').addEventListener('input',e=>{if(e.target.id==='s-name'){S.name=e.target.value.slice(0,30);saveS()}});
-
-/* ===== timetable (Phase 7-8) ===== */
-let ttSel=ymd(new Date()),clsCtx=null,hwDue=null,SL=null,HL={from:ymd(new Date()),to:ymd(new Date())},sbCol=SUBCOL[0],CPd=[];
-const IC={
-  clock:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-  pin:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
-  user:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
-  cal:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M16 2v3M3 9h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>'};
-const rng=c=>timeTxt({start:c.start,end:c.end});
-function renderTT(){
-  const sel=new Date(ttSel+'T00:00:00'),mon=mondayOf(sel),days=[...Array(7)].map((_,i)=>addDays(mon,i));
-  const hol=isHoliday(ttSel),ended=TT.until&&ttSel>TT.until,cls=hol||ended?[]:classesOn(ttSel,true);
-  const dn=sel.toLocaleDateString('en-IN',{weekday:'long'}),mo=sel.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
-  $('#tt').innerHTML=
-   `<div class="ttcard"><div class="tth"><span class="tti">${IC.cal}</span><div class="ttt"><b>${mo}</b><small>${dn}'s Timetable</small></div><div class="ttn"><button id="tt-prev" aria-label="Previous week">‹</button><button id="tt-next" aria-label="Next week">›</button></div></div>
-    <div class="ttd">${days.map(d=>{const ds=ymd(d),h=isHoliday(ds);return `<button class="td${ds===ttSel?' on':''}${h?' hol':''}" data-date="${ds}"><small>${DOWN[d.getDay()].toUpperCase()}</small><b>${d.getDate()}</b></button>`}).join('')}</div></div>
-    <div class="tsh"><h2><i></i>${dn} Schedule</h2><span class="pill">${hol?'Holiday':ended?'Ended':cls.length+(cls.length===1?' Period':' Periods')}</span></div>`+
-   (hol?`<div class="holc"><b>Holiday</b><span>${hol.reason?esc(hol.reason):'No classes on this day'}</span><button data-act="unhol">Remove holiday</button></div>`
-     :ended?`<div class="empty" style="margin-top:30px"><b>Timetable ended</b>It ended on ${fullDate(TT.until)}. Change this in Settings.</div>`
-     :cls.length?cls.map(c=>{const sb=subj(c.sid)||{name:'Class',color:'#8e8e93'},cx=isCancelled(c.id,ttSel),hw=tasks.filter(t=>t.sid===c.sid&&!t.done).length;
-       return `<button class="pcard${cx?' x':''}" data-slot="${c.id}" style="--c:${sb.color}"><div class="pr1"><span class="tchip">${IC.clock}${rng(c)}</span>${c.room?`<span class="tchip">${IC.pin}${esc(c.room)}</span>`:''}</div><b class="pn">${esc(sb.name)}</b>${c.teacher||cx||hw?`<hr><div class="pr2">${c.teacher?`<span class="tchip">${IC.user}${esc(c.teacher)}</span>`:'<span></span>'}${cx?'<em>Cancelled</em>':hw?`<em>${hw} homework</em>`:''}</div>`:''}</button>`}).join('')
-     :`<div class="empty" style="margin-top:34px"><div class="eart">${ART.cal}</div><b>No classes</b>${TT.slots.length?'Nothing scheduled for this day.':'Tap + at the top to add your first class.'}</div>`)+
-   `<div class="mini" style="flex-wrap:wrap;gap:10px 18px">${hol?'':'<button data-act="addhol">Mark this day as holiday</button>'}${classesOn(ttSel,true).length?'<button data-act="copyday">Copy this day to…</button>':''}<button data-act="periods">Period times</button><button data-act="holidays">All holidays</button><button data-act="subjects">Subjects</button></div>
-    <p class="sm" style="margin:12px 6px 0">Classes repeat every week automatically. Enter them once.</p>`;
-}
-$('#tt').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  const sel=new Date(ttSel+'T00:00:00'),a=b.dataset.act;
-  if(b.id==='tt-prev'){ttSel=ymd(addDays(sel,-7));renderTT()}
-  else if(b.id==='tt-next'){ttSel=ymd(addDays(sel,7));renderTT()}
-  else if(b.dataset.date){ttSel=b.dataset.date;buzz(6);renderTT()}
-  else if(b.dataset.slot){clsCtx={slot:b.dataset.slot,date:ttSel};hwDue=null;openSheet('cls')}
-  else if(a==='addhol'){TT.holidays.push({id:uid(),from:ttSel,to:ttSel,reason:''});saveTT();buzz(10);renderTT();render()}
-  else if(a==='unhol'){const h=isHoliday(ttSel);if(h&&(h.from===h.to||confirm('Remove the whole holiday ('+fullDate(h.from)+' to '+fullDate(h.to)+')?'))){TT.holidays=TT.holidays.filter(x=>x!==h);saveTT();renderTT();render()}}
-  else if(a==='holidays'){HL={from:ttSel,to:ttSel};openSheet('hol')}
-  else if(a==='subjects')openSheet('subs');
-  else if(a==='periods')openSheet('per');
-  else if(a==='copyday'){CPd=[];drawCp();openSheet('cp')}
-});
-$('#tadd').addEventListener('click',()=>openSlot(null));
-
-/* copy a day's classes to other days */
-function drawCp(){
-  const src=new Date(ttSel+'T00:00:00').getDay();
-  $('#cp-s').textContent='Copying '+classesOn(ttSel,true).length+' classes from '+DOWN[src]+'. Existing classes on the days you pick are replaced.';
-  $('#cp-d').innerHTML=[1,2,3,4,5,6,0].map(i=>`<button data-d="${i}" class="${CPd.includes(i)?'on':''}" ${i===src?'disabled style="opacity:.3"':''}>${DOWN[i].slice(0,2)}</button>`).join('');
-}
-$('#cp').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.d&&!b.disabled){const i=+b.dataset.d;CPd=CPd.includes(i)?CPd.filter(x=>x!==i):CPd.concat(i);drawCp()}
-  else if(b.id==='cp-go'){
-    if(!CPd.length){alert('Pick at least one day.');return}
-    const src=new Date(ttSel+'T00:00:00').getDay(),from=TT.slots.filter(s=>s.day===src),clash=TT.slots.filter(s=>CPd.includes(s.day));
-    if(clash.length&&!confirm('Replace the '+clash.length+' existing classes on '+CPd.map(i=>DOWN[i]).join(', ')+'?'))return;
-    TT.slots=TT.slots.filter(s=>!CPd.includes(s.day));
-    CPd.forEach(d=>from.forEach(s=>TT.slots.push(Object.assign({},s,{id:uid(),day:d}))));
-    TT.cancels=TT.cancels.filter(c=>TT.slots.some(s=>s.id===c.slot));
-    saveTT();buzz(10);renderTT();render();closeTop();
-  }
-});
-
-/* period times, set once */
-const per12=p=>t12(p.s)+' – '+t12(p.e);
-function drawPer(){
-  $('#pe-list').innerHTML=TT.periods.map((p,i)=>`<div class="srow"><span style="min-width:74px">Period ${i+1}</span><span style="display:flex;gap:6px;align-items:center;flex:1;justify-content:flex-end"><button data-ps="${i}" class="tm">${t12(p.s)}</button>–<button data-pe="${i}" class="tm">${t12(p.e)}</button></span><button data-pd="${i}" style="color:var(--red);padding:0 4px" aria-label="Delete period">✕</button></div>`).join('');
-}
-function setPer(i,which,v){
-  const p=TT.periods[i];
-  if(which==='s'){p.s=v;if(p.e<=v){const[h,m]=v.split(':').map(Number),e=Math.min(1439,h*60+m+50);p.e=pad(Math.floor(e/60))+':'+pad(e%60)}}
-  else{if(v<=p.s){alert('The end time must be after the start time.');return}p.e=v}
-  TT.slots.forEach(s=>{if(s.p===i){s.start=p.s;s.end=p.e}});saveTT();drawPer();renderTT();render();
-}
-$('#per').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.ps!==undefined){const i=+b.dataset.ps;openPick('time',TT.periods[i].s,v=>setPer(i,'s',v))}
-  else if(b.dataset.pe!==undefined){const i=+b.dataset.pe;openPick('time',TT.periods[i].e,v=>setPer(i,'e',v))}
-  else if(b.dataset.pd!==undefined){const i=+b.dataset.pd;if(!confirm('Delete Period '+(i+1)+'? Classes in it keep their time.'))return;
-    TT.slots.forEach(s=>{if(s.p===i)s.p=null;else if(s.p>i)s.p--});TT.periods.splice(i,1);saveTT();drawPer();renderTT()}
-  else if(b.id==='pe-add'){const l=TT.periods[TT.periods.length-1],st=l?l.e:'08:30',[h,m]=st.split(':').map(Number),e=Math.min(1439,h*60+m+50);
-    TT.periods.push({s:st,e:pad(Math.floor(e/60))+':'+pad(e%60)});saveTT();drawPer()}
-  else if(b.id==='pe-reset'){if(confirm('Reset period times to the default list?')){TT.periods=DEFPER.map(p=>Object.assign({},p));TT.slots.forEach(s=>{if(s.p!=null&&TT.periods[s.p]){s.start=TT.periods[s.p].s;s.end=TT.periods[s.p].e}else s.p=null});saveTT();drawPer();renderTT();render()}}
-});
-
-/* class sheet: homework for a subject, saved as a normal task */
-function drawCls(){
-  const c=clsCtx&&TT.slots.find(s=>s.id===clsCtx.slot);if(!c)return;
-  const sb=subj(c.sid)||{name:'Class',color:'#8e8e93',id:''},cx=isCancelled(c.id,clsCtx.date),nx=nextClassDate(sb.id,clsCtx.date);
-  if(!hwDue)hwDue=nx;
-  $('#c2-t').textContent=sb.name;$('#c2-w').textContent=fullDate(clsCtx.date)+' · '+rng(c)+(c.room?' · '+c.room:'')+(c.teacher?' · '+c.teacher:'');
-  $('#c2-st').textContent=cx?'This class is cancelled for this day.':'';
-  $('#hw-due-v').textContent=fullDate(hwDue)+(hwDue===nx?' (next class)':'');
-  const hws=tasks.filter(t=>t.sid===sb.id).sort((a,b)=>(a.done-b.done)||(a.date<b.date?-1:1));
-  $('#hw-list').innerHTML=hws.map(t=>`<div class="opt${t.done?' on':''}" data-hw="${t.id}"><span>${esc(t.title)}<br><small style="color:var(--sub)">Due ${dateTxt(t.date)}${t.done?' · done':''}</small></span><span class="tick">✓</span></div>`).join('');
-  $('#c2-cancel').textContent=cx?'Restore this class':'Cancel this class for this day';
-}
-function addHw(){
-  const v=$('#hw-in').value.trim(),c=clsCtx&&TT.slots.find(s=>s.id===clsCtx.slot);if(!c)return;if(!v){$('#hw-in').focus();return}
-  const t={id:uid(),done:false,title:v,desc:'',category:'Homework',date:hwDue,start:null,end:null,sid:c.sid,tags:[],pri:null,rem:[1440,0],fired:[],subs:[]};
-  t.fired=fireTimes(t).filter(f=>f<=Date.now());tasks.push(t);Store.save(tasks);askPerm();
-  $('#hw-in').value='';hwDue=null;buzz(10);drawCls();render();
-}
-$('#hw-add').addEventListener('click',addHw);$('#hw-in').addEventListener('keydown',e=>{if(e.key==='Enter')addHw()});
-$('#hw-due').addEventListener('click',()=>openPick('date',hwDue,v=>{hwDue=v;drawCls()}));
-$('#hw-list').addEventListener('click',e=>{const r=e.target.closest('[data-hw]');if(r){curId=r.dataset.hw;openSheet('details')}});
-$('#c2-edit').addEventListener('click',()=>openSlot(clsCtx.slot));
-$('#c2-cancel').addEventListener('click',()=>{
-  const c=clsCtx&&TT.slots.find(s=>s.id===clsCtx.slot);if(!c)return;
-  if(isCancelled(c.id,clsCtx.date))TT.cancels=TT.cancels.filter(x=>!(x.slot===c.id&&x.date===clsCtx.date));else TT.cancels.push({slot:c.id,date:clsCtx.date});
-  saveTT();buzz(8);drawCls();renderTT();render();
-});
-
-/* add / edit class: pick subject, days and periods once */
-function prefillFor(sid){const l=TT.slots.filter(s=>s.sid===sid).pop();if(l){$('#sl-room').value=l.room||'';$('#sl-teach').value=l.teacher||''}}
-function openSlot(id){
-  const s=id&&TT.slots.find(x=>x.id===id),col=SUBCOL[TT.subjects.length%SUBCOL.length];
-  SL=s?{id:s.id,sid:s.sid,days:[s.day],mode:s.p!=null&&TT.periods[s.p]?'p':'c',ps:s.p!=null?[s.p]:[],start:s.start,end:s.end,col,newOpen:false}
-      :{id:null,sid:TT.subjects[0]?TT.subjects[0].id:'',days:[new Date(ttSel+'T00:00:00').getDay()],mode:'p',ps:[],start:'09:00',end:'10:00',col,newOpen:false};
-  $('#sl-h').textContent=s?'Edit class':'Add class';$('#sl-room').value=s?s.room||'':'';$('#sl-teach').value=s?s.teacher||'':'';$('#sl-nn').value='';
-  if(!s&&SL.sid)prefillFor(SL.sid);
-  $('#sl-del').hidden=!s;drawSlot();openSheet('slot');
-}
-function drawSlot(){
-  $('#sl-sub').innerHTML=TT.subjects.map(s=>`<button data-sid="${s.id}" class="${SL.sid===s.id?'on':''}"><i class="sd" style="background:${s.color}"></i>${esc(s.name)}</button>`).join('')+`<button data-new="1" class="${SL.newOpen?'on':''}">+ New</button>`;
-  $('#sl-new').hidden=!(SL.newOpen||!TT.subjects.length);
-  $('#sl-nc').innerHTML=SUBCOL.map(c=>`<button data-col="${c}" style="--c:${c}" class="${SL.col===c?'on':''}" aria-label="Color"></button>`).join('');
-  $('#sl-days').innerHTML=[1,2,3,4,5,6,0].map(i=>`<button data-d="${i}" class="${SL.days.includes(i)?'on':''}">${DOWN[i].slice(0,2)}</button>`).join('');
-  $('#sl-mode').innerHTML=`<button data-mode="p" class="${SL.mode==='p'?'on':''}">Periods</button><button data-mode="c" class="${SL.mode==='c'?'on':''}">Custom time</button>`;
-  $('#sl-per').hidden=SL.mode!=='p';$('#sl-cus').hidden=SL.mode!=='c';
-  $('#sl-per').innerHTML=TT.periods.map((p,i)=>`<button data-pi="${i}" class="${SL.ps.includes(i)?'on':''}"><b>P${i+1}</b><small>${t12(p.s).replace(/ ?[AP]M/,'')}</small></button>`).join('');
-  $('#sl-st-v').textContent=t12(SL.start);$('#sl-en-v').textContent=t12(SL.end);
-}
-function newSubject(){
-  const n=$('#sl-nn').value.trim();if(!n)return null;
-  const s={id:uid(),name:n,color:SL.col};TT.subjects.push(s);saveTT();SL.sid=s.id;SL.newOpen=false;$('#sl-nn').value='';return s;
-}
-$('#slot').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.sid){SL.sid=b.dataset.sid;SL.newOpen=false;if(!SL.id)prefillFor(SL.sid);drawSlot()}
-  else if(b.dataset.new){SL.newOpen=!SL.newOpen;drawSlot()}
-  else if(b.dataset.col){SL.col=b.dataset.col;drawSlot()}
-  else if(b.id==='sl-na'){if(newSubject())drawSlot();else $('#sl-nn').focus()}
-  else if(b.dataset.d){const i=+b.dataset.d;
-    if(SL.id)SL.days=[i];else{SL.days=SL.days.includes(i)?SL.days.filter(x=>x!==i):SL.days.concat(i);if(!SL.days.length)SL.days=[i]}drawSlot()}
-  else if(b.dataset.mode){SL.mode=b.dataset.mode;drawSlot()}
-  else if(b.dataset.pi!==undefined){const i=+b.dataset.pi;if(SL.id)SL.ps=[i];else SL.ps=SL.ps.includes(i)?SL.ps.filter(x=>x!==i):SL.ps.concat(i);drawSlot()}
-  else if(b.id==='sl-st')openPick('time',SL.start,v=>{SL.start=v;if(SL.end<=v){const[h,m]=v.split(':').map(Number);SL.end=pad(Math.min(23,h+1))+':'+pad(m)}drawSlot()});
-  else if(b.id==='sl-en')openPick('time',SL.end,v=>{if(v<=SL.start){alert('The end time must be after the start time.');return}SL.end=v;drawSlot()});
-  else if(b.id==='sl-save'){
-    if(!SL.sid||!subj(SL.sid)){if(!newSubject()){alert('Pick a subject, or type a new subject name.');return}}
-    const targets=SL.mode==='p'?SL.ps.slice().sort((a,c)=>a-c).map(i=>({p:i,start:TT.periods[i].s,end:TT.periods[i].e})):[{p:null,start:SL.start,end:SL.end}];
-    if(!targets.length){alert('Choose at least one period.');return}
-    if(SL.mode==='c'&&SL.end<=SL.start){alert('The end time must be after the start time.');return}
-    const room=$('#sl-room').value.trim(),teacher=$('#sl-teach').value.trim(),clash=[];
-    SL.days.forEach(d=>targets.forEach(tg=>TT.slots.forEach(s=>{if(s.id!==SL.id&&s.day===d&&s.start<tg.end&&tg.start<s.end&&!clash.includes(s))clash.push(s)})));
-    if(clash.length&&!confirm('These times already have '+clash.length+(clash.length>1?' classes (':' class (')+[...new Set(clash.map(s=>(subj(s.sid)||{name:'Class'}).name))].join(', ')+'). Replace '+(clash.length>1?'them':'it')+'?'))return;
-    TT.slots=TT.slots.filter(s=>!clash.includes(s));TT.cancels=TT.cancels.filter(c=>TT.slots.some(s=>s.id===c.slot));
-    if(SL.id){const s=TT.slots.find(x=>x.id===SL.id);Object.assign(s,{sid:SL.sid,day:SL.days[0],start:targets[0].start,end:targets[0].end,p:targets[0].p,room,teacher})}
-    else SL.days.forEach(d=>targets.forEach(tg=>TT.slots.push({id:uid(),sid:SL.sid,day:d,start:tg.start,end:tg.end,p:tg.p,room,teacher})));
-    saveTT();buzz(10);renderTT();render();closeTop();
-  }
-  else if(b.id==='sl-del'){if(!confirm('Delete this class from your timetable?'))return;
-    TT.slots=TT.slots.filter(x=>x.id!==SL.id);TT.cancels=TT.cancels.filter(x=>x.slot!==SL.id);saveTT();renderTT();render();closeAll()}
-  else if(b.id==='sl-cancel')closeTop();
-});
-
-/* subjects */
-function drawSubs(){
-  $('#sb-list').innerHTML=TT.subjects.map(s=>`<div class="srow"><button class="sdb" data-cyc="${s.id}" style="background:${s.color}" aria-label="Change color"></button><input class="tin" data-ren="${s.id}" value="${esc(s.name)}" maxlength="80" style="text-align:left;width:auto;flex:1;min-width:0"><span class="v" style="font-size:calc(13px*var(--fs))">${TT.slots.filter(x=>x.sid===s.id).length}</span><button data-del="${s.id}" style="color:var(--red);padding:0 4px" aria-label="Delete subject">✕</button></div>`).join('');
-  $('#sb-cols').innerHTML=SUBCOL.map(c=>`<button data-col="${c}" style="--c:${c}" class="${sbCol===c?'on':''}" aria-label="Color"></button>`).join('');
-}
-$('#subs').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.cyc){const s=subj(b.dataset.cyc);s.color=SUBCOL[(SUBCOL.indexOf(s.color)+1)%SUBCOL.length];saveTT();drawSubs();renderTT();render()}
-  else if(b.dataset.del){const s=subj(b.dataset.del);if(!confirm('Delete '+s.name+' and its classes? Homework stays as normal tasks.'))return;
-    const ids=TT.slots.filter(x=>x.sid===s.id).map(x=>x.id);TT.subjects=TT.subjects.filter(x=>x!==s);TT.slots=TT.slots.filter(x=>x.sid!==s.id);TT.cancels=TT.cancels.filter(x=>!ids.includes(x.slot));
-    tasks.forEach(t=>{if(t.sid===s.id)t.sid=null});Store.save(tasks);saveTT();drawSubs();renderTT();render()}
-  else if(b.dataset.col){sbCol=b.dataset.col;drawSubs()}
-  else if(b.id==='sb-add'){const n=$('#sb-name').value.trim();if(!n){$('#sb-name').focus();return}
-    TT.subjects.push({id:uid(),name:n,color:sbCol});sbCol=SUBCOL[TT.subjects.length%SUBCOL.length];$('#sb-name').value='';saveTT();buzz(8);drawSubs()}
-});
-$('#subs').addEventListener('change',e=>{const el=e.target;if(el.dataset.ren){const s=subj(el.dataset.ren),v=el.value.trim();if(s&&v){s.name=v;saveTT();renderTT();render()}else if(s)el.value=s.name}});
-
-/* holidays */
-function drawHol(){
-  const hs=TT.holidays.slice().sort((a,b)=>a.from<b.from?-1:1);
-  $('#hl-list').innerHTML=hs.map(h=>`<div class="srow"><span style="flex:1;min-width:0">${h.from===h.to?fullDate(h.from):fullDate(h.from)+' → '+fullDate(h.to)}${h.reason?`<br><small style="color:var(--sub)">${esc(h.reason)}</small>`:''}</span><button data-hd="${h.id}" style="color:var(--red);padding:0 4px" aria-label="Delete holiday">✕</button></div>`).join('');
-  $('#hl-from-v').textContent=fullDate(HL.from);$('#hl-to-v').textContent=fullDate(HL.to);
-}
-$('#hol').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.hd){TT.holidays=TT.holidays.filter(x=>x.id!==b.dataset.hd);saveTT();drawHol();renderTT();render()}
-  else if(b.id==='hl-from')openPick('date',HL.from,v=>{HL.from=v;if(HL.to<v)HL.to=v;drawHol()});
-  else if(b.id==='hl-to')openPick('date',HL.to,v=>{HL.to=v<HL.from?HL.from:v;drawHol()});
-  else if(b.id==='hl-add'){TT.holidays.push({id:uid(),from:HL.from,to:HL.to,reason:$('#hl-reason').value.trim()});$('#hl-reason').value='';saveTT();buzz(10);drawHol();renderTT();render()}
-});
-
-/* today's classes card (for the selected day) */
-function drawClassCard(ds){
-  const el=$('#clsc'),td=ymd(new Date());ds=ds||td;
-  if(!S.classCard){el.hidden=true;return}
-  const hol=isHoliday(ds),cls=hol?[]:classesOn(ds,true);
-  if(!hol&&!cls.length){el.hidden=true;return}
-  const now=new Date(),nt=pad(now.getHours())+':'+pad(now.getMinutes()),isT=ds===td,lbl=isT?"Today's classes":dateTxt(ds)+"'s classes";el.hidden=false;
-  el.innerHTML=hol?`<b class="ch">${isT?'Holiday today':'Holiday'}${hol.reason?' · '+esc(hol.reason):''}</b>`:`<b class="ch">${lbl}</b><div class="cl">${cls.map(c=>{const sb=subj(c.sid)||{name:'Class',color:'#8e8e93'},cx=isCancelled(c.id,ds),live=isT&&!cx&&c.start<=nt&&nt<c.end;
-    return `<span class="cc${cx?' x':''}${isT&&c.end<=nt?' past':''}${live?' now':''}" style="--c:${sb.color}"><i></i><em>${t12(c.start)}</em> ${esc(sb.name.length>22?sb.name.slice(0,21)+'…':sb.name)}</span>`}).join('')}</div>`;
-}
-$('#clsc').addEventListener('click',()=>{ttSel=selDay;setTab('timetable')});
-
 
 /* ===== weekly review sheet (Phase 9) ===== */
 let revOff=0;
@@ -1653,13 +1376,20 @@ const MCOL=['#007aff','#34c759','#ff9500','#af52de','#ff2d92','#30b0c7','#ff3b30
 const sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
 function mCalc(k){
   const mo=M.months[k]||{income:0,alloc:{}},[a,b]=mrange(k),tx=M.tx.filter(t=>t.date>=a&&t.date<=b),ex=tx.filter(t=>t.kind!=='inc');
-  const income=(mo.income||0)+sum(tx.filter(t=>t.kind==='inc'),t=>t.amt),spent=sum(ex,t=>t.amt);
+  const fam=sum(tx.filter(t=>t.kind==='inc'&&t.fam),t=>t.amt),income=(mo.income||0)+sum(tx.filter(t=>t.kind==='inc'),t=>t.amt),spent=sum(ex,t=>t.amt);
   const bs=M.buckets.map(bk=>{const al=+(mo.alloc[bk.id]||0),sp=sum(ex.filter(t=>t.b===bk.id),t=>t.amt);return{bk,al,sp,rem:al-sp}});
   const unb=sum(ex.filter(t=>!t.b),t=>t.amt),alloc=sum(bs,x=>x.al);
-  return{mo,tx,spent,income,remaining:income-spent,bs,unb,alloc,unassigned:income-unb-alloc,accs:M.accounts.map(ac=>({ac,bal:sum(bs.filter(x=>x.bk.acc===ac.id),x=>x.rem)}))};
+  return{mo,tx,fam,spent,income,remaining:income-spent,bs,unb,alloc,unassigned:income-unb-alloc,accs:M.accounts.map(ac=>({ac,bal:sum(bs.filter(x=>x.bk.acc===ac.id),x=>x.rem)}))};
 }
 const chkTxt=un=>Math.abs(un)<.5?'Budget balanced ✓':un>0?inr(un)+' not assigned to a bucket yet':'Over-allocated by '+inr(-un);
 const txRow=t=>`<button class="mtx" data-tx="${t.id}"><span>${esc(t.desc||'Expense')}<small>${t.b&&bkOf(t.b)?esc(bkOf(t.b).name)+' · ':''}${fmd(t.date)}</small></span><b>${t.kind==='inc'?'+':''}${inr(t.amt)}</b></button>`;
+const bkRow=x=>`<button class="mb" data-bk="${x.bk.id}"><div class="mbt"><span><i class="sd" style="background:${x.bk.color}"></i>${esc(x.bk.name)}${x.bk.locked?' 🔒':''}</span><em>${inr(x.sp)} / ${inr(x.al)}</em></div><div class="pbar"><i style="width:${pct(x.sp,x.al)}%;background:${x.sp>x.al?'var(--red)':x.bk.color}"></i></div></button>`;
+function folderList(c){
+  if(!c.bs.length)return '<div class="sm" style="margin:0 6px">No folders yet. Open Budget and accounts to add some.</div>';
+  const grp=(t,rows,bal)=>rows.length?`<h4 style="margin:14px 6px 6px">${t}${bal!=null?' · '+inr(bal)+' left':''}</h4><div class="group">${rows.map(bkRow).join('')}</div>`:'';
+  const ids=c.accs.map(a=>a.ac.id);
+  return c.accs.map(a=>grp(esc(a.ac.name),c.bs.filter(x=>x.bk.acc===a.ac.id),a.bal)).join('')+grp('No account',c.bs.filter(x=>!ids.includes(x.bk.acc)));
+}
 function renderMoney(){
   applyRecur();
   const k=mSel,c=mCalc(k),mo=M.months[k],el=$('#money');
@@ -1669,12 +1399,12 @@ function renderMoney(){
     return;
   }
   const tdc=todayHTML(c),sp=pct(c.spent,c.income),un=c.unassigned,recent=c.tx.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0).slice(0,8);
-  el.innerHTML=nav+`<div class="mhero"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div></div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div></div>
+  el.innerHTML=nav+`<div class="mhero"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow${c.fam>0?' r3':''}"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div>${c.fam>0?`<div><span>From family</span><b>+${inr(c.fam)}</b></div>`:''}</div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div></div>
    <button class="mchip ${Math.abs(un)<.5?'g':un>0?'o':'r'}" data-ma="budget">${chkTxt(un)}</button>
-   ${c.accs.length?`<div class="maccs">${c.accs.map(x=>`<div class="macc" style="--c:${x.ac.color}"><small>${esc(x.ac.name)}</small><b>${inr(x.bal)}</b></div>`).join('')}</div>`:''}
-   ${tdc}<h2>Buckets</h2>${c.bs.length?`<div class="group">${c.bs.map(x=>`<button class="mb" data-bk="${x.bk.id}"><div class="mbt"><span><i class="sd" style="background:${x.bk.color}"></i>${esc(x.bk.name)}${x.bk.locked?' 🔒':''}</span><em>${inr(x.sp)} / ${inr(x.al)}</em></div><div class="pbar"><i style="width:${pct(x.sp,x.al)}%;background:${x.sp>x.al?'var(--red)':x.bk.color}"></i></div></button>`).join('')}</div>`:'<div class="sm" style="margin:0 6px">No buckets yet. Open Budget and accounts to add some.</div>'}
+   ${loanBanner()}${c.accs.length?`<div class="maccs">${c.accs.map(x=>`<div class="macc" style="--c:${x.ac.color}"><small>${esc(x.ac.name)}</small><b>${inr(x.bal)}</b></div>`).join('')}</div>`:''}
+   ${tdc}<h2>Folders</h2>${folderList(c)}
    <h2>Recent expenses</h2>${recent.length?`<div class="group">${recent.map(txRow).join('')}</div>`:'<div class="sm" style="margin:0 6px">Nothing yet. Tap + to add your first expense.</div>'}
-   <div class="mini" style="flex-wrap:wrap;gap:10px 18px"><button data-ma="income">Add income</button><button data-ma="move">Move money</button><button data-ma="budget">Budget and accounts</button><button data-ma="recur">Recurring</button><button data-ma="all">All expenses</button><button data-ma="udhar">Udhar</button><button data-ma="report">Reports</button></div>`;
+   <div class="mini" style="flex-wrap:wrap;gap:10px 18px"><button data-ma="income">Add income</button><button data-ma="move">Move money</button><button data-ma="budget">Budget and accounts</button><button data-ma="recur">Recurring</button><button data-ma="all">All expenses</button><button data-ma="udhar">Udhar</button><button data-ma="loan">Loans</button><button data-ma="wish">Planned${(M.wish||[]).length?' ('+M.wish.length+')':''}</button><button data-ma="report">Reports</button></div>`;
 }
 $('#money').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;const a=b.dataset.ma;
@@ -1684,7 +1414,7 @@ $('#money').addEventListener('click',e=>{
   else if(a==='copy'){const p=M.months[prevKey(mSel)];M.months[mSel]={income:p.income,alloc:Object.assign({},p.alloc)};saveM();renderMoney()}
   else if(a==='quick'){const A=[['Bank','#007aff'],['UPI','#34c759'],['Cash','#ff9500']].map(x=>({id:uid(),name:x[0],color:x[1]}));M.accounts=A;
     M.buckets=[['Family','spend',0],['Shopping','spend',0],['Travel','spend',1],['Miscellaneous','spend',2],['Savings','save',0]].map((x,i)=>({id:uid(),name:x[0],type:x[1],color:MCOL[i],acc:A[x[2]].id,locked:x[1]==='save',from:'',to:'',rule:''}));saveM();renderMoney()}
-  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='report')openSheet('mr');
+  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';X.fam=true;drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='loan'){LE=null;fillLoan(null);openSheet('ml')}else if(a==='wish'){W={acc:'',b:''};openSheet('mw')}else if(a==='report')openSheet('mr');
 });
 $('#madd').addEventListener('click',()=>openExp(''));
 $('#meye').addEventListener('click',()=>{S.hideAmt=!S.hideAmt;saveS();renderMoney()});
@@ -1706,23 +1436,27 @@ function openExp(id){
 }
 function drawExp(){
   drawExtra();$('#mx-date-v').textContent=dateTxt(X.date);
-  $('#mx-b').innerHTML=[['','None']].concat(M.buckets.map(b=>[b.id,b.name])).map(x=>`<button data-b="${x[0]}" class="${X.b===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
-  $('#mx-ac-w').hidden=!!X.b||!M.accounts.length;
+  const inc=X.kind==='inc',bks=M.buckets.filter(b=>!X.acc||!b.acc||b.acc===X.acc);
+  $('#mx-b').innerHTML=[['','None']].concat(bks.map(b=>[b.id,b.name])).map(x=>`<button data-b="${x[0]}" class="${X.b===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
+  $('#mx-ac-w').hidden=inc||!M.accounts.length;
   $('#mx-ac').innerHTML=[['','None']].concat(M.accounts.map(a=>[a.id,a.name])).map(x=>`<button data-a="${x[0]}" class="${X.acc===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
+  $('#mx-fam-w').hidden=!inc;$('#mx-fam-v').textContent=X.fam?'Yes':'No';
 }
-$('#mx-nl').addEventListener('input',e=>{const r=parseExp(e.target.value);if(r.amt!=null){X.amt=r.amt;$('#mx-amt').value=r.amt}if(r.desc!=null){X.desc=r.desc;$('#mx-desc').value=r.desc}if(r.b)X.b=r.b;if(r.acc)X.acc=r.acc;if(r.date)X.date=r.date;drawExp()});
+$('#mx-nl').addEventListener('input',e=>{const r=parseExp(e.target.value);if(r.amt!=null){X.amt=r.amt;$('#mx-amt').value=r.amt}if(r.desc!=null){X.desc=r.desc;$('#mx-desc').value=r.desc}if(r.acc)X.acc=r.acc;if(r.b){X.b=r.b;const k=bkOf(r.b);if(k&&k.acc)X.acc=k.acc}if(r.date)X.date=r.date;drawExp()});
 $('#mx').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.k){X.kind=b.dataset.k;if(X.kind==='inc')X.b='';drawExp()}else if(b.dataset.fq){const t=M.tx.find(y=>y.id===b.dataset.fq);if(t){X.amt=t.amt;X.desc=t.desc;X.b=t.b;$('#mx-amt').value=t.amt;$('#mx-desc').value=t.desc;drawExp()}}else if(b.dataset.b!==undefined){X.b=b.dataset.b;drawExp()}else if(b.dataset.a!==undefined){X.acc=b.dataset.a;drawExp()}
+  if(b.dataset.k){X.kind=b.dataset.k;if(X.kind==='inc')X.b='';else X.fam=false;drawExp()}else if(b.dataset.fq){const t=M.tx.find(y=>y.id===b.dataset.fq);if(t){X.amt=t.amt;X.desc=t.desc;X.b=t.b;$('#mx-amt').value=t.amt;$('#mx-desc').value=t.desc;drawExp()}}else if(b.dataset.b!==undefined){X.b=b.dataset.b;const k=bkOf(X.b);if(k&&k.acc)X.acc=k.acc;drawExp()}else if(b.dataset.a!==undefined){X.acc=b.dataset.a;const k=bkOf(X.b);if(k&&k.acc&&k.acc!==X.acc)X.b='';drawExp()}
+  else if(b.id==='mx-fam'){X.fam=!X.fam;drawExp()}
   else if(b.id==='mx-date')openPick('date',X.date,v=>{X.date=v;drawExp()});
   else if(b.id==='mx-save'){
     X.amt=+$('#mx-amt').value||0;X.desc=$('#mx-desc').value.trim();if(!(X.amt>0)){$('#mx-amt').focus();return}
     const bk=bkOf(X.b);if(bk&&bk.locked&&!X.id&&!confirm('“'+bk.name+'” is locked money. Spend from it anyway?'))return;
     if(X.id)Object.assign(M.tx.find(t=>t.id===X.id),X);else{X.id=uid();M.tx.push(X)}
     saveM();buzz(10);renderMoney();closeTop();
+    if(X.lid)loanPaid(X);if(X.wid){M.wish=(M.wish||[]).filter(w=>w.id!==X.wid);saveM();renderMoney()}
     if(bk){const x=mCalc(mSel).bs.find(y=>y.bk.id===bk.id);if(x&&x.al>0){if(x.sp>x.al)flash(bk.name+': over budget by '+inr(x.sp-x.al));else if(x.sp/x.al>=.8)flash(bk.name+': '+Math.round(x.sp*100/x.al)+'% used, '+inr(x.rem)+' left')}}
   }
-  else if(b.id==='mx-del'){const gone=M.tx.find(t=>t.id===X.id);M.tx=M.tx.filter(t=>t.id!==X.id);saveM();renderMoney();closeTop();flash('Entry deleted','Undo',()=>{M.tx.push(gone);saveM();renderMoney()})}
+  else if(b.id==='mx-del'){const gone=M.tx.find(t=>t.id===X.id);M.tx=M.tx.filter(t=>t.id!==X.id);if(gone&&gone.lid){const l=(M.loans||[]).find(x=>x.id===gone.lid);if(l)l.paid=(l.paid||[]).filter(p=>p.tx!==gone.id)}saveM();renderMoney();closeTop();flash('Entry deleted','Undo',()=>{M.tx.push(gone);if(gone.lid)loanPaid(gone);saveM();renderMoney()})}
 });
 
 /* bucket detail: daily allowance, rule, plan items */
@@ -1818,6 +1552,77 @@ $('#mr-share').addEventListener('click',e=>{const b=e.currentTarget,t=moneyText(
 $('#tseg').addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.dataset.t!==tab){buzz(6);setTab(b.dataset.t)}});
 $('#e-any').addEventListener('change',e=>{E.any=e.target.checked;if(!E.any&&!E.date)E.date=ymd(new Date());drawEdit()});
 
+
+/* ===== loans ===== */
+let LE=null,W={acc:'',b:''};
+const lmKey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1);
+function loanDue(l){
+  const paid=(l.paid||[]).map(p=>p.m),n=Math.max(1,+l.months||1),[y0,m0]=(l.start||lmKey(new Date())).split('-').map(Number);
+  for(let i=0;i<n;i++){const d0=new Date(y0,m0-1+i,1),k=lmKey(d0);if(paid.includes(k))continue;
+    const last=new Date(d0.getFullYear(),d0.getMonth()+1,0).getDate();
+    return{k,date:new Date(d0.getFullYear(),d0.getMonth(),Math.min(+l.day||1,last))}}
+  return null;
+}
+const loanPaidAmt=l=>sum(l.paid||[],p=>+p.amt||0),loanLeft=l=>Math.max(0,(+l.total||0)-loanPaidAmt(l));
+function loanDays(dd){const t=new Date();t.setHours(0,0,0,0);return Math.round((dd-t)/864e5)}
+function loanBanner(){
+  return (M.loans||[]).map(l=>({l,u:loanDue(l)})).filter(x=>x.u&&loanDays(x.u.date)<=5).sort((a,b)=>a.u.date-b.u.date).map(({l,u})=>{
+    const d=loanDays(u.date),t=d<0?'overdue by '+(-d)+(d===-1?' day':' days'):d===0?'due today':d===1?'due tomorrow':'due in '+d+' days';
+    return `<button class="mchip ${d<0?'r':'o'}" data-ma="loan" style="margin-top:8px">${esc(l.name)}: ${inr(l.emi)} ${t}</button>`}).join('');
+}
+function loanAlerts(){
+  const out=[],now=Date.now();
+  (M.loans||[]).forEach((l,i)=>{const u=loanDue(l);if(!u)return;
+    [[3,'in 3 days'],[1,'tomorrow'],[0,'today']].forEach(([b,w],j)=>{const d=new Date(u.date);d.setDate(d.getDate()-b);d.setHours(9,0,0,0);
+      if(d.getTime()>now)out.push({id:899800000+i*10+j,title:'Loan payment due '+w,body:l.name+': '+inr(l.emi),at:d.getTime()})})});
+  return out;
+}
+function loanPaid(t){
+  const l=(M.loans||[]).find(x=>x.id===t.lid);if(!l)return;l.paid=l.paid||[];
+  if(!l.paid.some(p=>p.tx===t.id))l.paid.push({m:t.lm,tx:t.id,amt:t.amt});
+  saveM();if(stack.includes('ml'))drawLoans();renderMoney();
+}
+function fillLoan(l){
+  $('#ml-n').value=l?l.name:'';$('#ml-t').value=l?l.total:'';$('#ml-e').value=l?l.emi:'';$('#ml-d').value=l?l.day:'';$('#ml-m').value=l?l.months:'';$('#ml-s').value=l?l.start:lmKey(new Date());$('#ml-del').hidden=!l;
+}
+function drawLoans(){
+  const L=M.loans||[];
+  $('#ml-list').innerHTML=L.length?L.map(l=>{const u=loanDue(l),d=u?loanDays(u.date):0;
+    return `<div class="group" style="padding:14px;margin-bottom:10px"><div class="mbt"><span><b>${esc(l.name)}</b></span><em>${(l.paid||[]).length}/${+l.months||0} paid</em></div><div class="pbar" style="margin:8px 0"><i style="width:${pct(loanPaidAmt(l),+l.total||0)}%;background:var(--blue)"></i></div><div class="sm">Left to repay: <b>${inr(loanLeft(l))}</b>${u?` · Next: ${inr(l.emi)} on ${fmd(ymd(u.date))} (${d<0?'overdue':d===0?'today':'in '+d+(d===1?' day':' days')})`:' · All payments done 🎉'}</div><div class="mini" style="gap:14px;margin-top:8px">${u?`<button data-lp="${l.id}">Pay now</button>`:''}<button data-le="${l.id}">Edit</button></div></div>`}).join(''):'<div class="sm" style="margin:0 6px">No loans yet. Add one below.</div>';
+  $('#ml-fh').textContent=LE?'Edit loan':'Add a loan';
+}
+$('#ml').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.lp){const l=M.loans.find(x=>x.id===b.dataset.lp),u=l&&loanDue(l);if(!u)return;
+    openExp('');X.amt=+l.emi||'';X.desc='EMI · '+l.name;X.lid=l.id;X.lm=u.k;$('#mx-amt').value=X.amt;$('#mx-desc').value=X.desc;drawExp()}
+  else if(b.dataset.le){LE=b.dataset.le;fillLoan(M.loans.find(x=>x.id===LE));drawLoans();$('#ml-n').scrollIntoView({block:'center'})}
+  else if(b.id==='ml-save'){
+    const n=$('#ml-n').value.trim(),t=+$('#ml-t').value,em=+$('#ml-e').value,d=Math.min(31,Math.max(0,Math.round(+$('#ml-d').value||0))),m=Math.round(+$('#ml-m').value||0),st=$('#ml-s').value||lmKey(new Date());
+    if(!n){$('#ml-n').focus();return}if(!(em>0)){$('#ml-e').focus();return}if(!d){$('#ml-d').focus();return}
+    const o={name:n,total:t>0?t:em*(m||1),emi:em,day:d,months:m>0?m:(t>0?Math.ceil(t/em):1),start:st};
+    if(LE)Object.assign(M.loans.find(x=>x.id===LE),o);else M.loans.push(Object.assign({id:uid(),paid:[]},o));
+    LE=null;saveM();fillLoan(null);drawLoans();renderMoney();flash('Loan saved')}
+  else if(b.id==='ml-del'&&confirm('Delete this loan? Payments already logged stay in your expenses.')){M.loans=M.loans.filter(x=>x.id!==LE);LE=null;saveM();fillLoan(null);drawLoans();renderMoney()}
+});
+/* ===== planned purchases ===== */
+function drawWish(){
+  const L=M.wish||[],c=mCalc(mSel),tot=sum(L,w=>+w.amt||0);
+  $('#mw-s').textContent=L.length?L.length+' planned · '+inr(tot)+' in total':'Add things you plan to buy. Tap Bought when you buy one and it becomes an expense.';
+  $('#mw-list').innerHTML=L.length?`<div class="group">${L.map(w=>{const bk=bkOf(w.b),ac=accOf(w.acc||(bk&&bk.acc)),x=bk&&c.bs.find(y=>y.bk.id===bk.id),short=x&&x.rem<w.amt;
+    return `<div class="srow" style="gap:10px"><span style="min-width:0"><b>${esc(w.name)}</b><br><small style="color:${short?'var(--red)':'var(--sub)'}">${ac?esc(ac.name):'No account'}${bk?' · '+esc(bk.name):''}${short?' · short by '+inr(w.amt-x.rem):''}</small></span><span style="display:flex;gap:10px;align-items:center"><b>${inr(w.amt)}</b><button class="chipbtn" data-wb="${w.id}">Bought</button><button data-wd="${w.id}" style="color:var(--red)" aria-label="Remove">✕</button></span></div>`}).join('')}</div>`:'';
+  const bks=M.buckets.filter(b=>!W.acc||!b.acc||b.acc===W.acc);
+  $('#mw-ac').innerHTML=[['','None']].concat(M.accounts.map(a=>[a.id,a.name])).map(x=>`<button data-a="${x[0]}" class="${W.acc===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
+  $('#mw-b').innerHTML=[['','None']].concat(bks.map(b=>[b.id,b.name])).map(x=>`<button data-b="${x[0]}" class="${W.b===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
+}
+$('#mw').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.a!==undefined){W.acc=b.dataset.a;const k=bkOf(W.b);if(k&&k.acc&&k.acc!==W.acc)W.b='';drawWish()}
+  else if(b.dataset.b!==undefined){W.b=b.dataset.b;const k=bkOf(W.b);if(k&&k.acc)W.acc=k.acc;drawWish()}
+  else if(b.id==='mw-add'){const n=$('#mw-n').value.trim(),p=+$('#mw-p').value;if(!n){$('#mw-n').focus();return}if(!(p>0)){$('#mw-p').focus();return}
+    M.wish.push({id:uid(),name:n,amt:p,acc:W.acc,b:W.b});$('#mw-n').value='';$('#mw-p').value='';saveM();drawWish();renderMoney()}
+  else if(b.dataset.wd){M.wish=M.wish.filter(w=>w.id!==b.dataset.wd);saveM();drawWish();renderMoney()}
+  else if(b.dataset.wb){const w=M.wish.find(x=>x.id===b.dataset.wb);if(!w)return;openExp('');X.amt=w.amt;X.desc=w.name;X.b=w.b;X.acc=w.acc;X.wid=w.id;$('#mx-amt').value=w.amt;$('#mx-desc').value=w.name;drawExp()}
+});
 
 /* ===== Money 2.0 ===== */
 M.recur=M.recur||[];M.moves=M.moves||[];
@@ -1946,7 +1751,6 @@ let introI=0;
 const SV=(p)=>`<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 const SLIDES=[
   {c:'#007aff',a:SV('<path d="M4 20l4-1L19 8a2.8 2.8 0 00-4-4L4 15zM14 6l4 4"/>'),t:'Type it. Done.',s:'Write tasks the way you speak, in English or Hinglish, like “kal shaam 7 baje contest”. TaskFlow sets the date, time and reminder for you.'},
-  {c:'#af52de',a:SV('<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 3v18"/>'),t:'Your timetable, sorted',s:'Add your classes once and they repeat every week. Tap a class to add homework, and it shows up in your task list.'},
   {c:'#34c759',a:SV('<path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/>'),t:'Stay on track',s:'Reminders, a weekly review and focus mode keep you moving. Everything works offline, right on your phone.'}];
 function drawIntro(){
   const sl=SLIDES[introI],last=introI===SLIDES.length-1;
@@ -1982,7 +1786,7 @@ history.replaceState({tab:'today',stack:[]},'');
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();tick();autoBackup(false);sync()}});
 setInterval(render,60000);setInterval(tick,15000);
 setTab('today',true);tick();sync();setTimeout(()=>autoBackup(false),4000);
-if(!S.introDone){S.introDone=true;saveS();if(!tasks.length&&!TT.slots.length){introI=0;setTimeout(()=>openSheet('intro'),450)}}
+if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(()=>openSheet('intro'),450)}}
 
 </script>
 </body>
