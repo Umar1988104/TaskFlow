@@ -323,6 +323,8 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 .noanim *,.noanim *::before,.noanim *::after{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .mrow.r3{grid-template-columns:1fr 1fr 1fr}.mrow.r3 b{font-size:calc(15px*var(--fs))}
+.mtop{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.mtop::-webkit-scrollbar{display:none}.mtop>*{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box}.mtop.two>*{flex-basis:90%}
+.lhero{background:#5856d6;color:#fff;text-align:left;border:0;font:inherit;display:block;cursor:pointer}
 </style>
 </head>
 <body>
@@ -437,12 +439,15 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
   <h4 id="ml-fh">Add a loan</h4>
   <div class="opts">
     <div class="srow"><span>Name</span><input class="tin" id="ml-n" maxlength="40" placeholder="e.g. Personal loan"></div>
-    <div class="srow"><span>Total to repay (₹)</span><input class="tin" id="ml-t" type="number" inputmode="decimal" placeholder="0"></div>
-    <div class="srow"><span>Monthly payment (₹)</span><input class="tin" id="ml-e" type="number" inputmode="decimal" placeholder="0"></div>
+    <div class="srow"><span>Loan amount taken (₹)</span><input class="tin" id="ml-p" type="number" inputmode="decimal" placeholder="16700"></div>
+    <div class="srow"><span>Amount received (₹)</span><input class="tin" id="ml-r" type="number" inputmode="decimal" placeholder="16000"></div>
+    <div class="srow"><span>Interest rate (% a year)</span><input class="tin" id="ml-i" type="number" inputmode="decimal" placeholder="27.02"></div>
+    <div class="srow"><span>Monthly payment (₹, blank = auto)</span><input class="tin" id="ml-e" type="number" inputmode="decimal" placeholder="0"></div>
     <div class="srow"><span>Due day of month</span><input class="tin" id="ml-d" type="number" inputmode="numeric" min="1" max="31" placeholder="5"></div>
     <div class="srow"><span>Number of payments</span><input class="tin" id="ml-m" type="number" inputmode="numeric" placeholder="12"></div>
     <div class="srow"><span>First payment month</span><input class="tin" id="ml-s" type="month"></div>
   </div>
+  <div class="sm" id="ml-calc" style="margin:10px 6px;font-weight:600"></div>
   <button class="pbtn" id="ml-save">Save loan</button><button class="tbtn" id="ml-del" style="color:var(--red)" hidden>Delete this loan</button>
 </div>
 
@@ -455,10 +460,20 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
   <button class="pbtn" id="mw-add">Add to plan</button>
 </div>
 
+<div class="sheet" id="mf"><div class="grab"></div><h3 id="mf-t"></h3><div class="sm" id="mf-s"></div>
+  <div id="mf-body" style="margin-top:12px"></div>
+  <button class="pbtn" id="mf-add">Add expense from loan</button>
+  <h4>Add a folder for this money</h4>
+  <div class="opts"><div class="srow"><span>Folder name</span><input class="tin" id="mf-n" maxlength="30" placeholder="e.g. Shimla trip"></div><div class="srow"><span>Money for it (₹)</span><input class="tin" id="mf-a" type="number" inputmode="decimal" placeholder="0"></div></div>
+  <button class="chipbtn" id="mf-fa" style="margin:12px 6px 0">Add folder</button>
+</div>
+
 <div class="sheet" id="mx"><div class="grab"></div><h3 id="mx-h">Add expense</h3>
   <div class="seg" id="mx-k" style="margin-top:12px"><button data-k="exp">Expense</button><button data-k="inc">Income</button></div>
   <div class="field q" style="margin-top:12px"><input id="mx-nl" type="text" placeholder="ammi 1000 · chai 20 misc · gpay 250 shopping" autocomplete="off"></div><div class="qrow" id="mx-fq"></div>
   <div class="opts" style="margin-top:12px"><div class="srow"><span>Amount</span><input class="tin" id="mx-amt" type="number" inputmode="decimal" placeholder="0"></div><div class="srow"><span>What for</span><input class="tin" id="mx-desc" maxlength="60" placeholder="Description"></div><button class="srow" id="mx-date"><span>Date</span><span class="v" id="mx-date-v"></span></button></div>
+  <div id="mx-src-w" hidden><h4>Pay from</h4><div class="seg" id="mx-src"><button data-s="budget">My budget</button><button data-s="loan">Loan</button></div></div>
+  <div id="mx-ln-w" hidden><div id="mx-lns-w"><h4>Loan</h4><div class="seg wrap" id="mx-lns"></div></div><h4>Loan folder</h4><div class="seg wrap" id="mx-lf"></div></div>
   <div id="mx-ac-w"><h4>Account</h4><div class="seg wrap" id="mx-ac"></div></div>
   <div id="mx-bw"><h4>Folder</h4><div class="seg wrap" id="mx-b"></div></div>
   <div class="opts" id="mx-fam-w" hidden style="margin-top:12px"><button class="srow" id="mx-fam"><span>Money from family</span><span class="v" id="mx-fam-v"></span></button></div>
@@ -1122,14 +1137,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',ml:'#ml',mw:'#mw',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='ml')drawLoans();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1399,7 +1414,7 @@ function renderMoney(){
     return;
   }
   const tdc=todayHTML(c),sp=pct(c.spent,c.income),un=c.unassigned,recent=c.tx.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0).slice(0,8);
-  el.innerHTML=nav+`<div class="mhero"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow${c.fam>0?' r3':''}"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div>${c.fam>0?`<div><span>From family</span><b>+${inr(c.fam)}</b></div>`:''}</div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div></div>
+  el.innerHTML=nav+`<div class="mtop${(M.loans||[]).length?' two':''}"><div class="mhero"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow${c.fam>0?' r3':''}"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div>${c.fam>0?`<div><span>From family</span><b>+${inr(c.fam)}</b></div>`:''}</div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div></div>${loanCards()}</div>
    <button class="mchip ${Math.abs(un)<.5?'g':un>0?'o':'r'}" data-ma="budget">${chkTxt(un)}</button>
    ${loanBanner()}${c.accs.length?`<div class="maccs">${c.accs.map(x=>`<div class="macc" style="--c:${x.ac.color}"><small>${esc(x.ac.name)}</small><b>${inr(x.bal)}</b></div>`).join('')}</div>`:''}
    ${tdc}<h2>Folders</h2>${folderList(c)}
@@ -1414,7 +1429,7 @@ $('#money').addEventListener('click',e=>{
   else if(a==='copy'){const p=M.months[prevKey(mSel)];M.months[mSel]={income:p.income,alloc:Object.assign({},p.alloc)};saveM();renderMoney()}
   else if(a==='quick'){const A=[['Bank','#007aff'],['UPI','#34c759'],['Cash','#ff9500']].map(x=>({id:uid(),name:x[0],color:x[1]}));M.accounts=A;
     M.buckets=[['Family','spend',0],['Shopping','spend',0],['Travel','spend',1],['Miscellaneous','spend',2],['Savings','save',0]].map((x,i)=>({id:uid(),name:x[0],type:x[1],color:MCOL[i],acc:A[x[2]].id,locked:x[1]==='save',from:'',to:'',rule:''}));saveM();renderMoney()}
-  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';X.fam=true;drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='loan'){LE=null;fillLoan(null);openSheet('ml')}else if(a==='wish'){W={acc:'',b:''};openSheet('mw')}else if(a==='report')openSheet('mr');
+  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';X.fam=true;drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='lf'){LF=b.dataset.lid;openSheet('mf')}else if(a==='loan'){LE=null;fillLoan(null);openSheet('ml')}else if(a==='wish'){W={acc:'',b:''};openSheet('mw')}else if(a==='report')openSheet('mr');
 });
 $('#madd').addEventListener('click',()=>openExp(''));
 $('#meye').addEventListener('click',()=>{S.hideAmt=!S.hideAmt;saveS();renderMoney()});
@@ -1441,15 +1456,25 @@ function drawExp(){
   $('#mx-ac-w').hidden=inc||!M.accounts.length;
   $('#mx-ac').innerHTML=[['','None']].concat(M.accounts.map(a=>[a.id,a.name])).map(x=>`<button data-a="${x[0]}" class="${X.acc===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
   $('#mx-fam-w').hidden=!inc;$('#mx-fam-v').textContent=X.fam?'Yes':'No';
+  const LS=M.loans||[],ls=X.src==='loan'&&!inc&&LS.length>0;
+  $('#mx-src-w').hidden=inc||!LS.length||!!X.id;
+  $('#mx-src').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.s===(ls?'loan':'budget')));
+  $('#mx-ln-w').hidden=!ls;
+  if(ls){if(!loanOf(X.ls))X.ls=LS[0].id;const L0=loanOf(X.ls);$('#mx-lns-w').hidden=LS.length<2;
+    $('#mx-lns').innerHTML=LS.map(l=>`<button data-ls="${l.id}" class="${X.ls===l.id?'on':''}">${esc(l.name)}</button>`).join('');
+    $('#mx-lf').innerHTML=[['','None']].concat((L0.folders||[]).map(f=>[f.id,f.name])).map(x=>`<button data-lf="${x[0]}" class="${(X.lf||'')===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
+    $('#mx-ac-w').hidden=true;$('#mx-bw').hidden=true;$('#mx-fq').innerHTML=''}
 }
 $('#mx-nl').addEventListener('input',e=>{const r=parseExp(e.target.value);if(r.amt!=null){X.amt=r.amt;$('#mx-amt').value=r.amt}if(r.desc!=null){X.desc=r.desc;$('#mx-desc').value=r.desc}if(r.acc)X.acc=r.acc;if(r.b){X.b=r.b;const k=bkOf(r.b);if(k&&k.acc)X.acc=k.acc}if(r.date)X.date=r.date;drawExp()});
 $('#mx').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.dataset.k){X.kind=b.dataset.k;if(X.kind==='inc')X.b='';else X.fam=false;drawExp()}else if(b.dataset.fq){const t=M.tx.find(y=>y.id===b.dataset.fq);if(t){X.amt=t.amt;X.desc=t.desc;X.b=t.b;$('#mx-amt').value=t.amt;$('#mx-desc').value=t.desc;drawExp()}}else if(b.dataset.b!==undefined){X.b=b.dataset.b;const k=bkOf(X.b);if(k&&k.acc)X.acc=k.acc;drawExp()}else if(b.dataset.a!==undefined){X.acc=b.dataset.a;const k=bkOf(X.b);if(k&&k.acc&&k.acc!==X.acc)X.b='';drawExp()}
   else if(b.id==='mx-fam'){X.fam=!X.fam;drawExp()}
+  else if(b.dataset.s){X.src=b.dataset.s;drawExp()}else if(b.dataset.ls){X.ls=b.dataset.ls;X.lf='';drawExp()}else if(b.dataset.lf!==undefined){X.lf=b.dataset.lf;drawExp()}
   else if(b.id==='mx-date')openPick('date',X.date,v=>{X.date=v;drawExp()});
   else if(b.id==='mx-save'){
     X.amt=+$('#mx-amt').value||0;X.desc=$('#mx-desc').value.trim();if(!(X.amt>0)){$('#mx-amt').focus();return}
+    if(X.src==='loan'&&X.kind!=='inc'&&!X.id){saveLoanExp();return}
     const bk=bkOf(X.b);if(bk&&bk.locked&&!X.id&&!confirm('“'+bk.name+'” is locked money. Spend from it anyway?'))return;
     if(X.id)Object.assign(M.tx.find(t=>t.id===X.id),X);else{X.id=uid();M.tx.push(X)}
     saveM();buzz(10);renderMoney();closeTop();
@@ -1563,7 +1588,49 @@ function loanDue(l){
     return{k,date:new Date(d0.getFullYear(),d0.getMonth(),Math.min(+l.day||1,last))}}
   return null;
 }
-const loanPaidAmt=l=>sum(l.paid||[],p=>+p.amt||0),loanLeft=l=>Math.max(0,(+l.total||0)-loanPaidAmt(l));
+const loanTotal=l=>(+l.emi||0)*(+l.months||0)||+l.total||0,loanPaidAmt=l=>sum(l.paid||[],p=>+p.amt||0),loanLeft=l=>Math.max(0,loanTotal(l)-loanPaidAmt(l));
+const loanOf=id=>(M.loans||[]).find(l=>l.id===id);
+let LF='';
+function calcEmi(p,r,n){if(!(p>0&&n>0))return 0;const i=r/1200;return Math.round(i>0?p*i/(1-Math.pow(1+i,-n)):p/n)}
+function readLoan(){
+  const p=+$('#ml-p').value||0,rc=+$('#ml-r').value||0,rt=+$('#ml-i').value||0,m=Math.round(+$('#ml-m').value||0);
+  let em=+$('#ml-e').value||0,auto=false;if(!em){em=calcEmi(p||rc,rt,m);auto=em>0}
+  return{p,rc,rt,m,em,auto,d:Math.min(31,Math.max(0,Math.round(+$('#ml-d').value||0))),st:$('#ml-s').value||lmKey(new Date()),n:$('#ml-n').value.trim()};
+}
+function updCalc(){
+  const o=readLoan(),tot=o.em*o.m,got=o.rc||o.p;
+  $('#ml-calc').textContent=tot>0?(o.auto?'Monthly payment (auto): '+inr(o.em)+' · ':'')+'Total to repay: '+inr(tot)+(got>0&&tot>got?' · Extra you pay: '+inr(tot-got):''):'';
+}
+$('#ml').addEventListener('input',e=>{if(e.target.id&&e.target.id.startsWith('ml-'))updCalc()});
+function loanCards(){
+  return (M.loans||[]).map(l=>{const rec=+l.received||+l.principal||0,sp=sum(l.exp||[],e=>+e.amt||0),tot=loanTotal(l),np=(l.paid||[]).length,u=loanDue(l);
+    return `<button class="mhero lhero" data-ma="lf" data-lid="${l.id}"><small>🏦 ${esc(l.name)}${l.rate?' · '+l.rate+'% interest':''}</small><div class="mtot">${inr(loanLeft(l))}<span>left to repay</span></div><div class="mrow"><div><span>Received</span><b>${inr(rec)}</b></div><div><span>Left to spend</span><b>${inr(rec-sp)}</b></div><div><span>Monthly</span><b>${inr(l.emi)}</b></div><div><span>Total to repay</span><b>${inr(tot)}</b></div></div><div class="mbar"><i style="width:${pct(loanPaidAmt(l),tot)}%"></i></div><div class="mpct"><span>${np}/${+l.months||0} paid</span><span>${u?'Next: '+fmd(ymd(u.date)):'All paid 🎉'}</span></div></button>`}).join('');
+}
+function saveLoanExp(){
+  const l=loanOf(X.ls);if(!l){flash('Choose a loan');return}l.exp=l.exp||[];
+  l.exp.push({id:uid(),amt:X.amt,desc:X.desc,date:X.date,f:X.lf||''});saveM();buzz(10);renderMoney();closeTop();
+  const f=(l.folders||[]).find(y=>y.id===X.lf);if(f){const sp=sum(l.exp.filter(e=>e.f===f.id),e=>+e.amt||0);if(sp>(+f.amt||0))flash(f.name+': over by '+inr(sp-(+f.amt||0)))}
+}
+function drawLoanF(){
+  const l=loanOf(LF);if(!l)return;l.folders=l.folders||[];l.exp=l.exp||[];
+  const rec=+l.received||+l.principal||0,sp=sum(l.exp,e=>+e.amt||0),al=sum(l.folders,f=>+f.amt||0);
+  $('#mf-t').textContent=l.name;$('#mf-s').textContent='Received '+inr(rec)+' · spent '+inr(sp)+' · left '+inr(rec-sp);
+  const fr=l.folders.map(f=>{const s2=sum(l.exp.filter(e=>e.f===f.id),e=>+e.amt||0),a=+f.amt||0;
+    return `<div class="srow" style="gap:10px"><span style="min-width:0"><b>${esc(f.name)}</b><br><small style="color:${s2>a?'var(--red)':'var(--sub)'}">${inr(s2)} spent of ${inr(a)} · ${inr(a-s2)} left</small></span><button data-fd="${f.id}" style="color:var(--red)" aria-label="Delete folder">✕</button></div>`}).join('');
+  const nf=sum(l.exp.filter(e=>!e.f||!l.folders.some(f=>f.id===e.f)),e=>+e.amt||0);
+  let h='<h4 style="margin:6px 6px">Folders</h4>'+(fr||nf?`<div class="group">${fr}${nf?`<div class="srow"><span>No folder</span><b>${inr(nf)}</b></div>`:''}</div>`:'<div class="sm" style="margin:0 6px">No folders yet. Add one below.</div>');
+  if(al!==rec&&l.folders.length)h+=`<div class="sm" style="margin:6px">${al<rec?inr(rec-al)+' not in any folder yet':'Folders add up to '+inr(al-rec)+' more than you received'}</div>`;
+  const ex=l.exp.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0);
+  h+='<h4 style="margin:14px 6px 6px">Loan expenses</h4>'+(ex.length?`<div class="group">${ex.map(e=>{const f=l.folders.find(y=>y.id===e.f);return `<div class="srow" style="gap:10px"><span style="min-width:0"><b>${esc(e.desc||'Expense')}</b><br><small style="color:var(--sub)">${f?esc(f.name)+' · ':''}${fmd(e.date)}</small></span><span style="display:flex;gap:10px;align-items:center"><b>${inr(e.amt)}</b><button data-ed="${e.id}" style="color:var(--red)" aria-label="Delete">✕</button></span></div>`}).join('')}</div>`:'<div class="sm" style="margin:0 6px">Nothing spent from the loan yet.</div>');
+  $('#mf-body').innerHTML=h;
+}
+$('#mf').addEventListener('click',e=>{
+  const b=e.target.closest('button'),l=loanOf(LF);if(!b||!l)return;
+  if(b.id==='mf-add'){openExp('');X.src='loan';X.ls=LF;drawExp()}
+  else if(b.id==='mf-fa'){const n=$('#mf-n').value.trim(),a=+$('#mf-a').value||0;if(!n){$('#mf-n').focus();return}l.folders=l.folders||[];l.folders.push({id:uid(),name:n,amt:a});$('#mf-n').value='';$('#mf-a').value='';saveM();drawLoanF();renderMoney()}
+  else if(b.dataset.fd&&confirm('Delete this folder? Its expenses stay, with no folder.')){l.folders=l.folders.filter(f=>f.id!==b.dataset.fd);l.exp.forEach(x=>{if(x.f===b.dataset.fd)x.f=''});saveM();drawLoanF()}
+  else if(b.dataset.ed){l.exp=l.exp.filter(x=>x.id!==b.dataset.ed);saveM();drawLoanF();renderMoney()}
+});
 function loanDays(dd){const t=new Date();t.setHours(0,0,0,0);return Math.round((dd-t)/864e5)}
 function loanBanner(){
   return (M.loans||[]).map(l=>({l,u:loanDue(l)})).filter(x=>x.u&&loanDays(x.u.date)<=5).sort((a,b)=>a.u.date-b.u.date).map(({l,u})=>{
@@ -1583,24 +1650,25 @@ function loanPaid(t){
   saveM();if(stack.includes('ml'))drawLoans();renderMoney();
 }
 function fillLoan(l){
-  $('#ml-n').value=l?l.name:'';$('#ml-t').value=l?l.total:'';$('#ml-e').value=l?l.emi:'';$('#ml-d').value=l?l.day:'';$('#ml-m').value=l?l.months:'';$('#ml-s').value=l?l.start:lmKey(new Date());$('#ml-del').hidden=!l;
+  $('#ml-n').value=l?l.name:'';$('#ml-p').value=l?(l.principal||''):'';$('#ml-r').value=l?(l.received||''):'';$('#ml-i').value=l?(l.rate||''):'';$('#ml-e').value=l?l.emi:'';$('#ml-d').value=l?l.day:'';$('#ml-m').value=l?l.months:'';$('#ml-s').value=l?l.start:lmKey(new Date());$('#ml-del').hidden=!l;updCalc();
 }
 function drawLoans(){
   const L=M.loans||[];
   $('#ml-list').innerHTML=L.length?L.map(l=>{const u=loanDue(l),d=u?loanDays(u.date):0;
-    return `<div class="group" style="padding:14px;margin-bottom:10px"><div class="mbt"><span><b>${esc(l.name)}</b></span><em>${(l.paid||[]).length}/${+l.months||0} paid</em></div><div class="pbar" style="margin:8px 0"><i style="width:${pct(loanPaidAmt(l),+l.total||0)}%;background:var(--blue)"></i></div><div class="sm">Left to repay: <b>${inr(loanLeft(l))}</b>${u?` · Next: ${inr(l.emi)} on ${fmd(ymd(u.date))} (${d<0?'overdue':d===0?'today':'in '+d+(d===1?' day':' days')})`:' · All payments done 🎉'}</div><div class="mini" style="gap:14px;margin-top:8px">${u?`<button data-lp="${l.id}">Pay now</button>`:''}<button data-le="${l.id}">Edit</button></div></div>`}).join(''):'<div class="sm" style="margin:0 6px">No loans yet. Add one below.</div>';
+    return `<div class="group" style="padding:14px;margin-bottom:10px"><div class="mbt"><span><b>${esc(l.name)}</b></span><em>${(l.paid||[]).length}/${+l.months||0} paid</em></div><div class="pbar" style="margin:8px 0"><i style="width:${pct(loanPaidAmt(l),loanTotal(l))}%;background:var(--blue)"></i></div><div class="sm">Left to repay: <b>${inr(loanLeft(l))}</b>${u?` · Next: ${inr(l.emi)} on ${fmd(ymd(u.date))} (${d<0?'overdue':d===0?'today':'in '+d+(d===1?' day':' days')})`:' · All payments done 🎉'}</div><div class="sm">Total to repay: <b>${inr(loanTotal(l))}</b>${l.rate?' · Interest '+l.rate+'%':''}</div><div class="mini" style="gap:14px;margin-top:8px">${u?`<button data-lp="${l.id}">Pay now</button>`:''}<button data-lo="${l.id}">Folders and spending</button><button data-le="${l.id}">Edit</button></div></div>`}).join(''):'<div class="sm" style="margin:0 6px">No loans yet. Add one below.</div>';
   $('#ml-fh').textContent=LE?'Edit loan':'Add a loan';
 }
 $('#ml').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.dataset.lp){const l=M.loans.find(x=>x.id===b.dataset.lp),u=l&&loanDue(l);if(!u)return;
     openExp('');X.amt=+l.emi||'';X.desc='EMI · '+l.name;X.lid=l.id;X.lm=u.k;$('#mx-amt').value=X.amt;$('#mx-desc').value=X.desc;drawExp()}
+  else if(b.dataset.lo){LF=b.dataset.lo;openSheet('mf')}
   else if(b.dataset.le){LE=b.dataset.le;fillLoan(M.loans.find(x=>x.id===LE));drawLoans();$('#ml-n').scrollIntoView({block:'center'})}
   else if(b.id==='ml-save'){
-    const n=$('#ml-n').value.trim(),t=+$('#ml-t').value,em=+$('#ml-e').value,d=Math.min(31,Math.max(0,Math.round(+$('#ml-d').value||0))),m=Math.round(+$('#ml-m').value||0),st=$('#ml-s').value||lmKey(new Date());
-    if(!n){$('#ml-n').focus();return}if(!(em>0)){$('#ml-e').focus();return}if(!d){$('#ml-d').focus();return}
-    const o={name:n,total:t>0?t:em*(m||1),emi:em,day:d,months:m>0?m:(t>0?Math.ceil(t/em):1),start:st};
-    if(LE)Object.assign(M.loans.find(x=>x.id===LE),o);else M.loans.push(Object.assign({id:uid(),paid:[]},o));
+    const r=readLoan();
+    if(!r.n){$('#ml-n').focus();return}if(!(r.em>0)){$('#ml-e').focus();return}if(!r.d){$('#ml-d').focus();return}if(!(r.m>0)){$('#ml-m').focus();return}
+    const o={name:r.n,principal:r.p||r.rc,received:r.rc||r.p,rate:r.rt,emi:r.em,day:r.d,months:r.m,start:r.st,total:r.em*r.m};
+    if(LE)Object.assign(M.loans.find(x=>x.id===LE),o);else M.loans.push(Object.assign({id:uid(),paid:[],folders:[],exp:[]},o));
     LE=null;saveM();fillLoan(null);drawLoans();renderMoney();flash('Loan saved')}
   else if(b.id==='ml-del'&&confirm('Delete this loan? Payments already logged stay in your expenses.')){M.loans=M.loans.filter(x=>x.id!==LE);LE=null;saveM();fillLoan(null);drawLoans();renderMoney()}
 });
