@@ -325,6 +325,7 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 .mrow.r3{grid-template-columns:1fr 1fr 1fr}.mrow.r3 b{font-size:calc(15px*var(--fs))}
 .mtop{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.mtop::-webkit-scrollbar{display:none}.mtop>*{flex:0 0 100%;scroll-snap-align:start;box-sizing:border-box}.mtop.two>*{flex-basis:90%}
 .lhero{background:#5856d6;color:#fff;text-align:left;border:0;font:inherit;display:block;cursor:pointer}
+.chero{background:#248a3d}
 </style>
 </head>
 <body>
@@ -448,6 +449,7 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
     <div class="srow"><span>First payment month</span><input class="tin" id="ml-s" type="month"></div>
   </div>
   <div class="sm" id="ml-calc" style="margin:10px 6px;font-weight:600"></div>
+  <div id="ml-dest-w"><h4>Where did the loan money go?</h4><div class="seg wrap" id="ml-dac"></div><div id="ml-dfw"><h4>Folder in that account</h4><div class="seg wrap" id="ml-dfo"></div></div><div class="sm" style="margin:6px">Pick an account and folder to add the received amount there, or choose "Loan box only" to keep it separate.</div></div>
   <button class="pbtn" id="ml-save">Save loan</button><button class="tbtn" id="ml-del" style="color:var(--red)" hidden>Delete this loan</button>
 </div>
 
@@ -468,11 +470,17 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
   <button class="chipbtn" id="mf-fa" style="margin:12px 6px 0">Add folder</button>
 </div>
 
+<div class="sheet" id="mk"><div class="grab"></div><h3>💵 Cash</h3><div class="sm" id="mk-s"></div>
+  <div class="opts" style="margin-top:12px"><div class="srow"><span>Amount (₹)</span><input class="tin" id="mk-a" type="number" inputmode="decimal" placeholder="0"></div><div class="srow"><span>Note</span><input class="tin" id="mk-n" maxlength="40" placeholder="e.g. From home, ATM"></div></div>
+  <button class="pbtn" id="mk-in">Add cash</button><button class="tbtn" id="mk-ex">Add expense from cash</button>
+  <h4>History</h4><div id="mk-list"></div>
+</div>
+
 <div class="sheet" id="mx"><div class="grab"></div><h3 id="mx-h">Add expense</h3>
   <div class="seg" id="mx-k" style="margin-top:12px"><button data-k="exp">Expense</button><button data-k="inc">Income</button></div>
   <div class="field q" style="margin-top:12px"><input id="mx-nl" type="text" placeholder="ammi 1000 · chai 20 misc · gpay 250 shopping" autocomplete="off"></div><div class="qrow" id="mx-fq"></div>
   <div class="opts" style="margin-top:12px"><div class="srow"><span>Amount</span><input class="tin" id="mx-amt" type="number" inputmode="decimal" placeholder="0"></div><div class="srow"><span>What for</span><input class="tin" id="mx-desc" maxlength="60" placeholder="Description"></div><button class="srow" id="mx-date"><span>Date</span><span class="v" id="mx-date-v"></span></button></div>
-  <div id="mx-src-w" hidden><h4>Pay from</h4><div class="seg" id="mx-src"><button data-s="budget">My budget</button><button data-s="loan">Loan</button></div></div>
+  <div id="mx-src-w" hidden><h4>Pay from</h4><div class="seg" id="mx-src"><button data-s="budget">My budget</button><button data-s="loan" id="mx-src-loan">Loan</button><button data-s="cash">Cash</button></div></div>
   <div id="mx-ln-w" hidden><div id="mx-lns-w"><h4>Loan</h4><div class="seg wrap" id="mx-lns"></div></div><h4>Loan folder</h4><div class="seg wrap" id="mx-lf"></div></div>
   <div id="mx-ac-w"><h4>Account</h4><div class="seg wrap" id="mx-ac"></div></div>
   <div id="mx-bw"><h4>Folder</h4><div class="seg wrap" id="mx-b"></div></div>
@@ -535,7 +543,7 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 
 <div class="banner" id="banner"><b id="bn-t"></b><span id="bn-s"></span><div class="acts"><button id="bn-sn">Snooze 10 min</button><button id="bn-x">Dismiss</button></div></div>
 
-<script>
+<script type="text/x-app" id="app-src">
 /* ===== core ===== */
 const $=s=>document.querySelector(s);
 const pad=n=>String(n).padStart(2,'0');
@@ -551,10 +559,44 @@ const KEY='taskflow.v1',SKEY='taskflow.settings',LOGKEY='taskflow.log',CKEY='tas
 const jget=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
 const jset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const Store={load:()=>jget(KEY,[]),save(t){jset(KEY,t);setTimeout(sync,0)}};
-const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,tags:true,morning:true,morningTime:'07:30',autoBackup:'weekly',lastBackup:'',lastBackupErr:'',classCard:true,classRem:true,classMin:10,classNudge:false,addStyle:'button',boxStyle:'comfy',dailyLimit:0,udharBal:false,pin:'',monthStart:1,hideAmt:false,moneyRemind:false,moneyTime:'21:00',noDate:'today',weeklyReview:true,reviewTime:'20:00',pack:'default',textSize:'normal',leftHand:false,view:'list',introDone:false,src:{codeforces:true,leetcode:true,codechef:true,atcoder:true}};
+const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,tags:true,morning:true,morningTime:'07:30',autoBackup:'daily',lastBackup:'',lastBackupErr:'',classCard:true,classRem:true,classMin:10,classNudge:false,addStyle:'button',boxStyle:'comfy',dailyLimit:0,udharBal:false,pin:'',monthStart:1,hideAmt:false,moneyRemind:false,moneyTime:'21:00',noDate:'today',weeklyReview:true,reviewTime:'20:00',pack:'default',textSize:'normal',leftHand:false,view:'list',introDone:false,src:{codeforces:true,leetcode:true,codechef:true,atcoder:true}};
 let S=Object.assign({},DEF,jget(SKEY,{}));S.src=Object.assign({},DEF.src,S.src||{});
 const saveS=()=>jset(SKEY,S);
 const PACKS={default:{n:'Default'},amoled:{n:'AMOLED',mode:'dark',acc:'#0a84ff',bg:'#000',cd:'#1c1c1e'},paper:{n:'Paper',mode:'light',acc:'#b8733a',bg:'#f6f1e7',cd:'#fffaf0'},midnight:{n:'Midnight',mode:'dark',acc:'#5b8cff',bg:'#0b1020',cd:'#141b33'},sakura:{n:'Sakura',mode:'light',acc:'#e8548a',bg:'#fff1f5',cd:'#fffafc'}};
+function applyBackup(j){
+  tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
+  if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]}},j.money);saveM()}
+  if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}
+  render();renderSettings();
+}
+async function checkEmptyRestore(){
+  try{const fs=FS();if(!fs||tasks.length||M.tx.length||M.accounts.length||(M.loans||[]).length)return;
+    const td=ymd(new Date());if(S.rsDay===td)return;await askFsPerm();
+    const r=await fs.readdir({path:'TaskFlow',directory:'DOCUMENTS'}),names=r.files.map(f=>f.name||f).filter(n=>/^taskflow-backup-.*\.json$/.test(n)).sort();if(!names.length)return;
+    const n=names[names.length-1],d=await fs.readFile({path:'TaskFlow/'+n,directory:'DOCUMENTS',encoding:'utf8'}),j=JSON.parse(typeof d.data==='string'?d.data:await d.data.text());
+    if(!Array.isArray(j.tasks))return;S.rsDay=td;saveS();
+    if(confirm('Your data looks empty, but a backup from '+n.replace(/^taskflow-backup-|\.json$/g,'')+' was found on this phone ('+j.tasks.length+' tasks). Restore it now?'))applyBackup(j);
+  }catch(e){}
+}
+/* ===== self update (from your GitHub Pages link) ===== */
+const otaBase=()=>{let u=(S.otaUrl||'').trim();if(!u)return '';if(!/^https?:\/\//.test(u))u='https://'+u;return u.replace(/index\.html.*$/,'').replace(/\/?$/,'/')};
+async function checkUpdate(manual){
+  const base=otaBase();if(!base){if(manual)flash('Set your update link first');return}
+  if(!manual&&S.otaT&&Date.now()-S.otaT<216e5)return;
+  try{
+    const r=await fetch(base+'index.html?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;
+    const html=await r.text(),m=html.match(/var BV='([^']+)'/);
+    const d=new DOMParser().parseFromString(html,'text/html'),app=d.getElementById('app-src');
+    if(!m||!app)throw 0;
+    S.otaT=Date.now();saveS();
+    if(m[1]>window.__BV){
+      const code=app.textContent;d.body.querySelectorAll('script').forEach(x=>x.remove());
+      await autoBackup(true);
+      localStorage.setItem('taskflow.ota',JSON.stringify({v:m[1],code,body:d.body.innerHTML,css:[...d.head.querySelectorAll('style')].map(x=>x.textContent).join('\n')}));
+      flash('Update '+m[1]+' is ready','Restart now',()=>location.reload());
+    }else if(manual)flash('You already have the latest version');
+  }catch(e){if(manual)flash("Couldn't check for updates. Check the link and your internet.")}
+}
 function applyTheme(){
   const pk=PACKS[S.pack]||{};
   const dark=pk.mode?pk.mode==='dark':(S.theme==='dark'||(S.theme==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));
@@ -784,7 +826,7 @@ async function askFsPerm(){try{const f=FS();if(f&&f.requestPermissions)await f.r
 const subj=()=>null; /* old tasks may carry a subject id; ignored */
 /* ===== money data ===== */
 const MKEY='taskflow.money';
-let M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[]},jget(MKEY,{}));
+let M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]}},jget(MKEY,{}));
 const saveM=()=>jset(MKEY,M);
 const inr=n=>S.hideAmt?'₹ ••••':'₹'+(Math.round(+n*100)/100).toLocaleString('en-IN');
 function mkey(d){const x=new Date(d||new Date());if(x.getDate()<(S.monthStart||1))x.setMonth(x.getMonth()-1,1);return x.getFullYear()+'-'+pad(x.getMonth()+1)}
@@ -829,14 +871,14 @@ async function autoBackup(force){
     await fs.writeFile({path:'TaskFlow/taskflow-backup-'+td+'.json',data:backup(),directory:'DOCUMENTS',encoding:'utf8',recursive:true});
     S.lastBackup=td;S.lastBackupErr='';saveS();
     try{const r=await fs.readdir({path:'TaskFlow',directory:'DOCUMENTS'}),names=r.files.map(f=>f.name||f).filter(n=>/^taskflow-backup-.*\.json$/.test(n)).sort();
-      for(const n of names.slice(0,-5))await fs.deleteFile({path:'TaskFlow/'+n,directory:'DOCUMENTS'}).catch(()=>{})}catch(e){}
+      for(const n of names.slice(0,-7))await fs.deleteFile({path:'TaskFlow/'+n,directory:'DOCUMENTS'}).catch(()=>{})}catch(e){}
     return true;
   }catch(e){S.lastBackupErr=String((e&&e.message)||e).slice(0,70);saveS();return false}
 }
 async function restore(f){
   try{const j=JSON.parse(await f.text());if(!Array.isArray(j.tasks))throw 0;
     if(confirm('Replace your current tasks with this backup ('+j.tasks.length+' tasks)?')){tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
-      if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[]},j.money);saveM()}
+      if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]}},j.money);saveM()}
       if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}render();renderSettings()}}
   catch(_){alert('That file is not a TaskFlow backup.')}
 }
@@ -1137,14 +1179,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',mk:'#mk',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='ml')drawLoans();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='mk')drawCash();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1297,12 +1339,14 @@ function renderSettings(){
     grp('Money',k('moneyRemind','Daily reminder to log expenses')+(S.moneyRemind?`<div class="srow"><span>Reminder time</span><input class="tin" type="time" data-k="moneyTime" value="${S.moneyTime}"></div>`:'')+seg('monthStart','Budget month starts on day',[[1,'1'],[5,'5'],[10,'10'],[15,'15'],[20,'20'],[25,'25']])+k('hideAmt','Hide amounts')+seg('dailyLimit','Daily spending limit',[[0,'Off'],[100,'₹100'],[200,'₹200'],[300,'₹300'],[500,'₹500']])+k('udharBal','Count udhar in my budget by default'))+
     grp('Security',btn('pin',S.pin?'Change or remove the PIN lock':'Set a PIN lock'))+
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
-    grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
+    grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
     grp('Help',btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 6.1 · build ${BUILD.startsWith('__')?'dev':BUILD}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 6.4 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
+  else if(a==='ota-url'){const v=prompt('Your GitHub Pages link, for example https://username.github.io/repo/',S.otaUrl||'');if(v!==null){S.otaUrl=v.trim();S.otaT=0;saveS();renderSettings();if(S.otaUrl)checkUpdate(true)}}
+  else if(a==='ota-check')checkUpdate(true);
   else if(a==='bk-now'){if(!FS()){act('dl',b);return}askFsPerm().then(()=>autoBackup(true)).then(ok=>{b.firstElementChild.textContent=ok?'Saved ✓':'Could not save';setTimeout(renderSettings,1500)})}
   else if(a==='intro'){introI=0;openSheet('intro')}
   else if(a==='pin')pinFlow();
@@ -1414,7 +1458,7 @@ function renderMoney(){
     return;
   }
   const tdc=todayHTML(c),sp=pct(c.spent,c.income),un=c.unassigned,recent=c.tx.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0).slice(0,8);
-  el.innerHTML=nav+`<div class="mtop${(M.loans||[]).length?' two':''}"><div class="mhero"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow${c.fam>0?' r3':''}"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div>${c.fam>0?`<div><span>From family</span><b>+${inr(c.fam)}</b></div>`:''}</div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div></div>${loanCards()}</div>
+  el.innerHTML=nav+`<div class="mtop two"><div class="mhero"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow${c.fam>0?' r3':''}"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div>${c.fam>0?`<div><span>From family</span><b>+${inr(c.fam)}</b></div>`:''}</div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div></div>${loanCards()}${cashCard()}</div>
    <button class="mchip ${Math.abs(un)<.5?'g':un>0?'o':'r'}" data-ma="budget">${chkTxt(un)}</button>
    ${loanBanner()}${c.accs.length?`<div class="maccs">${c.accs.map(x=>`<div class="macc" style="--c:${x.ac.color}"><small>${esc(x.ac.name)}</small><b>${inr(x.bal)}</b></div>`).join('')}</div>`:''}
    ${tdc}<h2>Folders</h2>${folderList(c)}
@@ -1429,7 +1473,7 @@ $('#money').addEventListener('click',e=>{
   else if(a==='copy'){const p=M.months[prevKey(mSel)];M.months[mSel]={income:p.income,alloc:Object.assign({},p.alloc)};saveM();renderMoney()}
   else if(a==='quick'){const A=[['Bank','#007aff'],['UPI','#34c759'],['Cash','#ff9500']].map(x=>({id:uid(),name:x[0],color:x[1]}));M.accounts=A;
     M.buckets=[['Family','spend',0],['Shopping','spend',0],['Travel','spend',1],['Miscellaneous','spend',2],['Savings','save',0]].map((x,i)=>({id:uid(),name:x[0],type:x[1],color:MCOL[i],acc:A[x[2]].id,locked:x[1]==='save',from:'',to:'',rule:''}));saveM();renderMoney()}
-  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';X.fam=true;drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='lf'){LF=b.dataset.lid;openSheet('mf')}else if(a==='loan'){LE=null;fillLoan(null);openSheet('ml')}else if(a==='wish'){W={acc:'',b:''};openSheet('mw')}else if(a==='report')openSheet('mr');
+  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';X.fam=true;drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='ck'){openSheet('mk')}else if(a==='lf'){LF=b.dataset.lid;openSheet('mf')}else if(a==='loan'){LE=null;fillLoan(null);openSheet('ml')}else if(a==='wish'){W={acc:'',b:''};openSheet('mw')}else if(a==='report')openSheet('mr');
 });
 $('#madd').addEventListener('click',()=>openExp(''));
 $('#meye').addEventListener('click',()=>{S.hideAmt=!S.hideAmt;saveS();renderMoney()});
@@ -1456,14 +1500,16 @@ function drawExp(){
   $('#mx-ac-w').hidden=inc||!M.accounts.length;
   $('#mx-ac').innerHTML=[['','None']].concat(M.accounts.map(a=>[a.id,a.name])).map(x=>`<button data-a="${x[0]}" class="${X.acc===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
   $('#mx-fam-w').hidden=!inc;$('#mx-fam-v').textContent=X.fam?'Yes':'No';
-  const LS=M.loans||[],ls=X.src==='loan'&&!inc&&LS.length>0;
-  $('#mx-src-w').hidden=inc||!LS.length||!!X.id;
-  $('#mx-src').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.s===(ls?'loan':'budget')));
+  const LS=(M.loans||[]).filter(l=>!l.dest);if(X.src==='loan'&&!LS.length)X.src='budget';
+  const ls=X.src==='loan'&&!inc,cs=X.src==='cash'&&!inc;
+  $('#mx-src-w').hidden=inc||!!X.id;$('#mx-src-loan').hidden=!LS.length;
+  $('#mx-src').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.s===(ls?'loan':cs?'cash':'budget')));
   $('#mx-ln-w').hidden=!ls;
-  if(ls){if(!loanOf(X.ls))X.ls=LS[0].id;const L0=loanOf(X.ls);$('#mx-lns-w').hidden=LS.length<2;
+  if(ls){if(!LS.some(l=>l.id===X.ls))X.ls=LS[0].id;const L0=loanOf(X.ls);$('#mx-lns-w').hidden=LS.length<2;
     $('#mx-lns').innerHTML=LS.map(l=>`<button data-ls="${l.id}" class="${X.ls===l.id?'on':''}">${esc(l.name)}</button>`).join('');
     $('#mx-lf').innerHTML=[['','None']].concat((L0.folders||[]).map(f=>[f.id,f.name])).map(x=>`<button data-lf="${x[0]}" class="${(X.lf||'')===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
     $('#mx-ac-w').hidden=true;$('#mx-bw').hidden=true;$('#mx-fq').innerHTML=''}
+  if(cs){$('#mx-ac-w').hidden=true;$('#mx-bw').hidden=true;$('#mx-fq').innerHTML=''}
 }
 $('#mx-nl').addEventListener('input',e=>{const r=parseExp(e.target.value);if(r.amt!=null){X.amt=r.amt;$('#mx-amt').value=r.amt}if(r.desc!=null){X.desc=r.desc;$('#mx-desc').value=r.desc}if(r.acc)X.acc=r.acc;if(r.b){X.b=r.b;const k=bkOf(r.b);if(k&&k.acc)X.acc=k.acc}if(r.date)X.date=r.date;drawExp()});
 $('#mx').addEventListener('click',e=>{
@@ -1475,6 +1521,7 @@ $('#mx').addEventListener('click',e=>{
   else if(b.id==='mx-save'){
     X.amt=+$('#mx-amt').value||0;X.desc=$('#mx-desc').value.trim();if(!(X.amt>0)){$('#mx-amt').focus();return}
     if(X.src==='loan'&&X.kind!=='inc'&&!X.id){saveLoanExp();return}
+    if(X.src==='cash'&&X.kind!=='inc'&&!X.id){saveCashExp();return}
     const bk=bkOf(X.b);if(bk&&bk.locked&&!X.id&&!confirm('“'+bk.name+'” is locked money. Spend from it anyway?'))return;
     if(X.id)Object.assign(M.tx.find(t=>t.id===X.id),X);else{X.id=uid();M.tx.push(X)}
     saveM();buzz(10);renderMoney();closeTop();
@@ -1604,7 +1651,7 @@ function updCalc(){
 $('#ml').addEventListener('input',e=>{if(e.target.id&&e.target.id.startsWith('ml-'))updCalc()});
 function loanCards(){
   return (M.loans||[]).map(l=>{const rec=+l.received||+l.principal||0,sp=sum(l.exp||[],e=>+e.amt||0),tot=loanTotal(l),np=(l.paid||[]).length,u=loanDue(l);
-    return `<button class="mhero lhero" data-ma="lf" data-lid="${l.id}"><small>🏦 ${esc(l.name)}${l.rate?' · '+l.rate+'% interest':''}</small><div class="mtot">${inr(loanLeft(l))}<span>left to repay</span></div><div class="mrow"><div><span>Received</span><b>${inr(rec)}</b></div><div><span>Left to spend</span><b>${inr(rec-sp)}</b></div><div><span>Monthly</span><b>${inr(l.emi)}</b></div><div><span>Total to repay</span><b>${inr(tot)}</b></div></div><div class="mbar"><i style="width:${pct(loanPaidAmt(l),tot)}%"></i></div><div class="mpct"><span>${np}/${+l.months||0} paid</span><span>${u?'Next: '+fmd(ymd(u.date)):'All paid 🎉'}</span></div></button>`}).join('');
+    return `<button class="mhero lhero" data-ma="lf" data-lid="${l.id}"><small>🏦 ${esc(l.name)}${l.rate?' · '+l.rate+'% interest':''}</small><div class="mtot">${inr(loanLeft(l))}<span>left to repay</span></div><div class="mrow"><div><span>Received</span><b>${inr(rec)}</b></div>${l.dest?`<div><span>Added to</span><b style="font-size:calc(14px*var(--fs))">${esc((accOf(l.dest.acc)||{}).name||'')} · ${esc((bkOf(l.dest.b)||{}).name||'')}</b></div>`:`<div><span>Left to spend</span><b>${inr(rec-sp)}</b></div>`}<div><span>Monthly</span><b>${inr(l.emi)}</b></div><div><span>Total to repay</span><b>${inr(tot)}</b></div></div><div class="mbar"><i style="width:${pct(loanPaidAmt(l),tot)}%"></i></div><div class="mpct"><span>${np}/${+l.months||0} paid</span><span>${u?'Next: '+fmd(ymd(u.date)):'All paid 🎉'}</span></div></button>`}).join('');
 }
 function saveLoanExp(){
   const l=loanOf(X.ls);if(!l){flash('Choose a loan');return}l.exp=l.exp||[];
@@ -1614,7 +1661,7 @@ function saveLoanExp(){
 function drawLoanF(){
   const l=loanOf(LF);if(!l)return;l.folders=l.folders||[];l.exp=l.exp||[];
   const rec=+l.received||+l.principal||0,sp=sum(l.exp,e=>+e.amt||0),al=sum(l.folders,f=>+f.amt||0);
-  $('#mf-t').textContent=l.name;$('#mf-s').textContent='Received '+inr(rec)+' · spent '+inr(sp)+' · left '+inr(rec-sp);
+  $('#mf-t').textContent=l.name;$('#mf-add').hidden=!!l.dest;$('#mf-s').textContent='Received '+inr(rec)+' · spent '+inr(sp)+' · left '+inr(rec-sp);
   const fr=l.folders.map(f=>{const s2=sum(l.exp.filter(e=>e.f===f.id),e=>+e.amt||0),a=+f.amt||0;
     return `<div class="srow" style="gap:10px"><span style="min-width:0"><b>${esc(f.name)}</b><br><small style="color:${s2>a?'var(--red)':'var(--sub)'}">${inr(s2)} spent of ${inr(a)} · ${inr(a-s2)} left</small></span><button data-fd="${f.id}" style="color:var(--red)" aria-label="Delete folder">✕</button></div>`}).join('');
   const nf=sum(l.exp.filter(e=>!e.f||!l.folders.some(f=>f.id===e.f)),e=>+e.amt||0);
@@ -1649,8 +1696,15 @@ function loanPaid(t){
   if(!l.paid.some(p=>p.tx===t.id))l.paid.push({m:t.lm,tx:t.id,amt:t.amt});
   saveM();if(stack.includes('ml'))drawLoans();renderMoney();
 }
+let LD={acc:'',b:''};
+function drawDest(){
+  $('#ml-dest-w').hidden=!!LE;
+  $('#ml-dac').innerHTML=[['','Loan box only']].concat(M.accounts.map(a=>[a.id,a.name])).map(x=>`<button data-da="${x[0]}" class="${LD.acc===x[0]?'on':''}">${esc(x[1])}</button>`).join('');
+  $('#ml-dfw').hidden=!LD.acc;
+  $('#ml-dfo').innerHTML=M.buckets.filter(b=>b.acc===LD.acc).map(b=>`<button data-db="${b.id}" class="${LD.b===b.id?'on':''}">${esc(b.name)}</button>`).join('')||'<span class="sm">No folders in this account yet. Create one in Budget and accounts.</span>';
+}
 function fillLoan(l){
-  $('#ml-n').value=l?l.name:'';$('#ml-p').value=l?(l.principal||''):'';$('#ml-r').value=l?(l.received||''):'';$('#ml-i').value=l?(l.rate||''):'';$('#ml-e').value=l?l.emi:'';$('#ml-d').value=l?l.day:'';$('#ml-m').value=l?l.months:'';$('#ml-s').value=l?l.start:lmKey(new Date());$('#ml-del').hidden=!l;updCalc();
+  $('#ml-n').value=l?l.name:'';$('#ml-p').value=l?(l.principal||''):'';$('#ml-r').value=l?(l.received||''):'';$('#ml-i').value=l?(l.rate||''):'';$('#ml-e').value=l?l.emi:'';$('#ml-d').value=l?l.day:'';$('#ml-m').value=l?l.months:'';$('#ml-s').value=l?l.start:lmKey(new Date());$('#ml-del').hidden=!l;updCalc();LD={acc:'',b:''};drawDest();
 }
 function drawLoans(){
   const L=M.loans||[];
@@ -1662,15 +1716,43 @@ $('#ml').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.dataset.lp){const l=M.loans.find(x=>x.id===b.dataset.lp),u=l&&loanDue(l);if(!u)return;
     openExp('');X.amt=+l.emi||'';X.desc='EMI · '+l.name;X.lid=l.id;X.lm=u.k;$('#mx-amt').value=X.amt;$('#mx-desc').value=X.desc;drawExp()}
+  else if(b.dataset.da!==undefined){LD.acc=b.dataset.da;LD.b='';drawDest()}else if(b.dataset.db!==undefined){LD.b=b.dataset.db;drawDest()}
   else if(b.dataset.lo){LF=b.dataset.lo;openSheet('mf')}
   else if(b.dataset.le){LE=b.dataset.le;fillLoan(M.loans.find(x=>x.id===LE));drawLoans();$('#ml-n').scrollIntoView({block:'center'})}
   else if(b.id==='ml-save'){
     const r=readLoan();
     if(!r.n){$('#ml-n').focus();return}if(!(r.em>0)){$('#ml-e').focus();return}if(!r.d){$('#ml-d').focus();return}if(!(r.m>0)){$('#ml-m').focus();return}
     const o={name:r.n,principal:r.p||r.rc,received:r.rc||r.p,rate:r.rt,emi:r.em,day:r.d,months:r.m,start:r.st,total:r.em*r.m};
-    if(LE)Object.assign(M.loans.find(x=>x.id===LE),o);else M.loans.push(Object.assign({id:uid(),paid:[],folders:[],exp:[]},o));
+    if(LE)Object.assign(M.loans.find(x=>x.id===LE),o);else{
+      const nl=Object.assign({id:uid(),paid:[],folders:[],exp:[]},o),amt=+nl.received||0;
+      if(LD.acc&&amt>0){if(!LD.b){flash('Pick a folder in that account');return}
+        const k=mkey(),mo=M.months[k]=M.months[k]||{};mo.alloc=mo.alloc||{};mo.alloc[LD.b]=(mo.alloc[LD.b]||0)+amt;
+        M.tx.push({id:uid(),amt,desc:'Loan received · '+nl.name,b:'',acc:LD.acc,date:ymd(new Date()),kind:'inc',lr:nl.id});nl.dest={acc:LD.acc,b:LD.b}}
+      M.loans.push(nl)}
     LE=null;saveM();fillLoan(null);drawLoans();renderMoney();flash('Loan saved')}
   else if(b.id==='ml-del'&&confirm('Delete this loan? Payments already logged stay in your expenses.')){M.loans=M.loans.filter(x=>x.id!==LE);LE=null;saveM();fillLoan(null);drawLoans();renderMoney()}
+});
+/* ===== cash ===== */
+const cashLog=()=>{M.cash=M.cash||{log:[]};M.cash.log=M.cash.log||[];return M.cash.log};
+const cashBal=()=>sum(cashLog(),e=>+e.amt||0);
+function cashCard(){
+  const lg=cashLog(),inn=sum(lg.filter(e=>e.amt>0),e=>e.amt),out=sum(lg.filter(e=>e.amt<0),e=>-e.amt);
+  return `<button class="mhero lhero chero" data-ma="ck"><small>💵 Cash</small><div class="mtot">${inr(inn-out)}<span>in hand</span></div><div class="mrow"><div><span>Cash added</span><b>${inr(inn)}</b></div><div><span>Cash spent</span><b>${inr(out)}</b></div></div></button>`;
+}
+function saveCashExp(){
+  cashLog().push({id:uid(),amt:-X.amt,desc:X.desc||'Cash expense',date:X.date});saveM();buzz(10);renderMoney();closeTop();
+  if(cashBal()<0)flash('Cash is now '+inr(cashBal())+'. Add the cash you have.');
+}
+function drawCash(){
+  const lg=cashLog();$('#mk-s').textContent='In hand: '+inr(cashBal());
+  const rows=lg.slice().reverse().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0);
+  $('#mk-list').innerHTML=rows.length?`<div class="group">${rows.map(e=>`<div class="srow" style="gap:10px"><span style="min-width:0"><b>${esc(e.desc||'')}</b><br><small style="color:var(--sub)">${fmd(e.date)}</small></span><span style="display:flex;gap:10px;align-items:center"><b style="color:${e.amt<0?'var(--red)':'var(--green)'}">${e.amt<0?'-':'+'}${inr(Math.abs(e.amt))}</b><button data-kd="${e.id}" style="color:var(--red)" aria-label="Delete">✕</button></span></div>`).join('')}</div>`:'<div class="sm" style="margin:0 6px">No cash entries yet.</div>';
+}
+$('#mk').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='mk-in'){const a=+$('#mk-a').value||0;if(!(a>0)){$('#mk-a').focus();return}cashLog().push({id:uid(),amt:a,desc:$('#mk-n').value.trim()||'Cash added',date:ymd(new Date())});$('#mk-a').value='';$('#mk-n').value='';saveM();drawCash();renderMoney()}
+  else if(b.id==='mk-ex'){openExp('');X.src='cash';drawExp()}
+  else if(b.dataset.kd){M.cash.log=cashLog().filter(x=>x.id!==b.dataset.kd);saveM();drawCash();renderMoney()}
 });
 /* ===== planned purchases ===== */
 function drawWish(){
@@ -1851,11 +1933,37 @@ if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
   else navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 history.replaceState({tab:'today',stack:[]},'');
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();tick();autoBackup(false);sync()}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();tick();autoBackup(false);sync();checkUpdate(false)}});
 setInterval(render,60000);setInterval(tick,15000);
-setTab('today',true);tick();sync();setTimeout(()=>autoBackup(false),4000);
+if(!S.bk2){S.bk2=1;if(S.autoBackup==='weekly')S.autoBackup='daily';saveS()}
+setTab('today',true);tick();sync();setTimeout(()=>autoBackup(false),4000);setTimeout(checkEmptyRestore,1800);setTimeout(()=>checkUpdate(false),7000);
+try{localStorage.setItem('taskflow.ota.ok',window.__BV)}catch(e){}
 if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(()=>openSheet('intro'),450)}}
 
+</script>
+<script>
+(function(){
+  var BV='2026.11.16.01';window.__BV=BV;
+  function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
+  try{
+    var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
+    if(o&&o.v&&o.v>BV&&o.code&&o.body){
+      if(localStorage.getItem('taskflow.ota.try')===o.v&&localStorage.getItem('taskflow.ota.ok')!==o.v){localStorage.removeItem('taskflow.ota')}
+      else{
+        localStorage.setItem('taskflow.ota.try',o.v);window.__BV=o.v;
+        var st=document.querySelector('head style');if(st&&o.css)st.textContent=o.css;
+        var keep=[document.getElementById('app-src'),document.currentScript];
+        Array.prototype.slice.call(document.body.children).forEach(function(n){if(keep.indexOf(n)<0)n.remove()});
+        var tmp=document.createElement('div');tmp.innerHTML=o.body;
+        while(tmp.firstChild)document.body.insertBefore(tmp.firstChild,keep[0]);
+        run(o.code);
+        setTimeout(function(){if(localStorage.getItem('taskflow.ota.ok')!==o.v){localStorage.removeItem('taskflow.ota');location.reload()}},5000);
+        return;
+      }
+    }else if(o&&o.v&&o.v<=BV){localStorage.removeItem('taskflow.ota')}
+  }catch(e){}
+  run(document.getElementById('app-src').textContent);
+})();
 </script>
 </body>
 </html>

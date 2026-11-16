@@ -17,8 +17,8 @@ jobs:
           java-version: 21
       - name: Install Capacitor
         run: |
-          npm install @capacitor/core @capacitor/android @capacitor/local-notifications @capacitor/filesystem
-          npm install -D @capacitor/cli
+          npm install @capacitor/core@8 @capacitor/android@8 @capacitor/local-notifications@8 @capacitor/filesystem@8
+          npm install -D @capacitor/cli@8
       - name: Add Android platform
         run: npx cap add android
       - name: Add notification permissions
