@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!--var BV='2026.11.16.03'-->
+<meta name="app-version" content="2026.11.16.03">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -594,9 +596,8 @@ async function checkUpdate(manual){
   if(!manual&&S.otaT&&Date.now()-S.otaT<216e5)return;
   try{
     const r=await fetch(base+'index.html?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;
-    const html=await r.text(),m=html.match(/var BV='([^']+)'/);
-    const d=new DOMParser().parseFromString(html,'text/html'),app=d.getElementById('app-src');
-    if(!m||!app)throw 0;
+    const html=await r.text(),d=new DOMParser().parseFromString(html,'text/html'),app=d.getElementById('app-src'),mv=d.querySelector('meta[name=app-version]'),m=[0,mv&&mv.content];
+    if(!m[1]||!app)throw 0;
     S.otaT=Date.now();saveS();
     if(m[1]>window.__BV){
       const code=app.textContent;d.body.querySelectorAll('script').forEach(x=>x.remove());
@@ -1988,7 +1989,7 @@ if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.02';window.__BV=BV;
+  var BV='2026.11.16.03';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
