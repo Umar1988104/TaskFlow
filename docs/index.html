@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.16.05'-->
-<meta name="app-version" content="2026.11.16.05">
+<!--var BV='2026.11.16.06'-->
+<meta name="app-version" content="2026.11.16.06">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -336,6 +336,11 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 .calw,.calg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calw{margin-top:12px;text-align:center;font-size:calc(12px*var(--fs));color:var(--sub);font-weight:600}
 .cald{aspect-ratio:1;border-radius:12px;background:var(--card);background:color-mix(in srgb,var(--red) calc(var(--h)*40%),var(--card));display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--txt)}.cald span{font-size:calc(14px*var(--fs));font-weight:600}.cald small{font-size:calc(9px*var(--fs));color:var(--sub);min-height:11px}.cald.td{outline:2px solid var(--blue)}.cald.on{box-shadow:0 0 0 2px var(--txt) inset}
 .greet{padding:2px 6px 10px}.greet h2{font-size:calc(26px*var(--fs));margin:0}.greet p{margin:4px 0 0;color:var(--sub);font-size:calc(15px*var(--fs))}
+@property --p{syntax:'<number>';inherits:false;initial-value:0}
+@keyframes ringIn{from{--p:0}}
+.rings-in .ring{animation:ringIn .9s cubic-bezier(.2,.7,.2,1)}
+.mhero.bud{cursor:pointer}.fliph{font-size:calc(11px*var(--fs));opacity:.7;margin-top:8px;text-align:center}
+.wk{display:flex;gap:6px;align-items:flex-end;height:96px;margin:12px 0 4px}.wkc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%}.wkb{flex:1;width:100%;display:flex;align-items:flex-end}.wkb i{display:block;width:100%;border-radius:6px 6px 3px 3px;background:rgba(255,255,255,.85)}.wkc b{font-size:10px}.wkc span{font-size:10px;opacity:.75}
 </style>
 </head>
 <body>
@@ -515,6 +520,8 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
   </div>
   <button class="pbtn" id="sg-save">Save goal</button><button class="tbtn" id="sg-del" style="color:var(--red)" hidden>Delete this goal</button>
 </div>
+
+<div class="sheet" id="wn"><div class="grab"></div><h3>What's new</h3><div id="wn-l"></div><button class="pbtn" id="wn-ok">Got it</button></div>
 
 <div class="sheet" id="mx"><div class="grab"></div><h3 id="mx-h">Add expense</h3>
   <div class="seg" id="mx-k" style="margin-top:12px"><button data-k="exp">Expense</button><button data-k="inc">Income</button></div>
@@ -1219,14 +1226,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1241,7 +1248,7 @@ function setTab(t,np){
   $('#ttl').textContent={today:'Today',upcoming:'Upcoming',money:'Money',progress:'Progress',settings:'Settings'}[t];
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
   $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';
-  if(t==='progress')renderProgress();if(t==='settings')renderSettings();if(t==='money')renderMoney();
+  if(t==='progress')renderProgress();if(t==='settings')renderSettings();if(t==='money'){$('#money').dataset.fresh='1';renderMoney()}
   render();window.scrollTo(0,0);
 }
 $('.tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){buzz(8);setTab(b.dataset.tab)}});
@@ -1380,14 +1387,15 @@ function renderSettings(){
     grp('Money',k('moneyRemind','Daily reminder to log expenses')+(S.moneyRemind?`<div class="srow"><span>Reminder time</span><input class="tin" type="time" data-k="moneyTime" value="${S.moneyTime}"></div>`:'')+seg('monthStart','Budget month starts on day',[[1,'1'],[5,'5'],[10,'10'],[15,'15'],[20,'20'],[25,'25']])+k('hideAmt','Hide amounts')+seg('dailyLimit','Daily spending limit',[[0,'Off'],[100,'₹100'],[200,'₹200'],[300,'₹300'],[500,'₹500']])+k('udharBal','Count udhar in my budget by default'))+
     grp('Security',btn('pin',S.pin?'Change or remove the PIN lock':'Set a PIN lock'))+
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
-    grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
+    grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
     grp('Help',btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 6.7 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 6.8 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
   else if(a==='ota-url'){const v=prompt('Your GitHub Pages link, for example https://username.github.io/repo/',S.otaUrl||'');if(v!==null){S.otaUrl=v.trim();S.otaT=0;saveS();renderSettings();if(S.otaUrl)checkUpdate(true)}}
   else if(a==='ota-check')checkUpdate(true);
+  else if(a==='whatsnew'){WN=CHANGES.slice(0,3);openSheet('wn')}
   else if(a==='bk-now'){if(!FS()){act('dl',b);return}askFsPerm().then(()=>autoBackup(true)).then(ok=>{b.firstElementChild.textContent=ok?'Saved ✓':'Could not save';setTimeout(renderSettings,1500)})}
   else if(a==='intro'){introI=0;openSheet('intro')}
   else if(a==='pin')pinFlow();
@@ -1505,7 +1513,7 @@ function renderMoney(){
   }
   const tdc=todayHTML(c),sp=pct(c.spent,c.income),un=c.unassigned,recent=c.tx.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0).slice(0,8);
   const __sl=(el.querySelector('.mtop')||{}).scrollLeft||0;
-  el.innerHTML=nav+`<div class="mtop two"><div class="mhero"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow${c.fam>0?' r3':''}"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div>${c.fam>0?`<div><span>From family</span><b>+${inr(c.fam)}</b></div>`:''}</div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div></div>${loanCards()}${cashCard()}</div><div class="mdots">${Array.from({length:2+(M.loans||[]).length},(_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>
+  el.innerHTML=nav+`<div class="mtop two"><div class="mhero bud"><small>💰 My Budget</small><div class="mtot">${inr(c.income)}<span>total this month</span></div><div class="mrow${c.fam>0?' r3':''}"><div><span>Already spent</span><b>${inr(c.spent)}</b></div><div><span>Money remaining</span><b>${inr(c.remaining)}</b></div>${c.fam>0?`<div><span>From family</span><b>+${inr(c.fam)}</b></div>`:''}</div><div class="mbar"><i style="width:${sp}%"></i></div><div class="mpct"><span>${sp.toFixed(1)}% spent</span><span>${(c.income>0?100-sp:0).toFixed(1)}% remaining</span></div><div class="fliph">Tap for this week</div></div>${loanCards()}${cashCard()}</div><div class="mdots">${Array.from({length:2+(M.loans||[]).length},(_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>
    <button class="mchip ${Math.abs(un)<.5?'g':un>0?'o':'r'}" data-ma="budget">${chkTxt(un)}</button>
    ${loanBanner()}${c.accs.length?`<div class="maccs">${c.accs.map(x=>`<div class="macc" style="--c:${x.ac.color}"><small>${esc(x.ac.name)}</small><b>${inr(x.bal)}</b></div>`).join('')}</div>`:''}
    ${tdc}<h2>Folders</h2>${folderList(c)}${goalsSection()}
@@ -1513,6 +1521,7 @@ function renderMoney(){
    <div class="mini" style="flex-wrap:wrap;gap:10px 18px"><button data-ma="income">Add income</button><button data-ma="move">Move money</button><button data-ma="budget">Budget and accounts</button><button data-ma="recur">Recurring</button><button data-ma="all">All expenses</button><button data-ma="udhar">Udhar</button><button data-ma="loan">Loans</button><button data-ma="wish">Planned${(M.wish||[]).length?' ('+M.wish.length+')':''}</button><button data-ma="xf">Cash and account</button><button data-ma="cal">Calendar</button><button data-ma="goals">Goals</button><button data-ma="report">Reports</button></div>`;
   {const mt=el.querySelector('.mtop');if(mt&&__sl){mt.scrollLeft=__sl;updDots(mt)}}
   animNums(el);
+  if(el.dataset.fresh==='1'&&S.anim!==false){el.classList.add('rings-in');setTimeout(()=>el.classList.remove('rings-in'),1100)}el.dataset.fresh='0';window.__flip=false;
 }
 $('#money').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;const a=b.dataset.ma;
@@ -1931,6 +1940,35 @@ function animNums(root){
       if(p<1&&tn.isConnected)requestAnimationFrame(step)})(t0);
   });
 }
+/* ===== what's new, flip card ===== */
+const CHANGES=[
+ {v:'2026.11.16.06',t:'A quick guide and a livelier Money tab',i:["This What's new card appears after every update","Folder rings fill up when you open the Money tab","Tap the Budget card to flip it and see your last 7 days"]},
+ {v:'2026.11.16.05',t:'Back button, keypad and more',i:["Back goes to the previous page, and press back twice on Today to exit","A number keypad for amounts","A calendar of your daily spending","Savings goals with progress bars","New income asks which account and folder it goes to","A greeting on Today with what you can spend today","Totals count up smoothly"]}
+];
+let WN=[];
+function checkWhatsNew(){
+  const has=tasks.length||M.accounts.length||M.tx.length;
+  if(!S.seenV){S.seenV=has?'2026.11.16.04':window.__BV;saveS()}
+  if(S.seenV<window.__BV){const n=CHANGES.filter(c=>c.v>S.seenV&&c.v<=window.__BV);S.seenV=window.__BV;saveS();if(n.length){WN=n.slice(0,3);openSheet('wn')}}
+}
+function drawWn(){$('#wn-l').innerHTML=WN.map(c=>`<h4 style="margin:14px 6px 6px">${esc(c.t)}</h4><div class="group">${c.i.map(x=>`<div class="srow"><span>✨ ${esc(x)}</span></div>`).join('')}</div>`).join('')}
+$('#wn').addEventListener('click',e=>{if(e.target.closest('#wn-ok'))closeTop()});
+function weekBack(){
+  const days=[],td=new Date();
+  for(let i=6;i>=0;i--){const d=new Date(td.getFullYear(),td.getMonth(),td.getDate()-i),ds=ymd(d);days.push({l:d.toLocaleDateString('en-IN',{weekday:'short'}).slice(0,3),a:sum(spendOnDay(ds),e=>e.a)})}
+  const mx=Math.max(1,...days.map(d=>d.a)),tot=sum(days,d=>d.a),best=days.reduce((a,b)=>b.a>a.a?b:a,days[0]);
+  return `<small>📊 Last 7 days</small><div class="mtot">${inr(tot)}<span>spent this week</span></div><div class="wk">${days.map(d=>`<div class="wkc"><div class="wkb"><i style="height:${Math.max(4,Math.round(d.a/mx*100))}%"></i></div><b>${d.a>0?kfmt(d.a):'–'}</b><span>${d.l}</span></div>`).join('')}</div><div class="fliph">Daily average ${inr(Math.round(tot/7))}${best.a>0?' · most on '+best.l:''} · tap to flip back</div>`;
+}
+function flipBudget(card){
+  if(card.__busy)return;card.__busy=true;
+  const swap=()=>{if(!window.__flip){window.__front=card.innerHTML;card.innerHTML=weekBack();window.__flip=true}else{card.innerHTML=window.__front;window.__flip=false;animNums(card)}};
+  if(S.anim===false){swap();card.__busy=false;return}
+  card.style.transition='transform .16s ease-in';card.style.transform='perspective(800px) rotateY(90deg)';
+  setTimeout(()=>{swap();card.style.transition='none';card.style.transform='perspective(800px) rotateY(-90deg)';void card.offsetWidth;
+    card.style.transition='transform .16s ease-out';card.style.transform='perspective(800px) rotateY(0deg)';
+    setTimeout(()=>{card.style.transform='';card.style.transition='';card.__busy=false},180)},170);
+}
+document.addEventListener('click',e=>{const c=e.target.closest&&e.target.closest('.mhero.bud');if(!c||e.target.closest('button'))return;flipBudget(c)});
 /* ===== planned purchases ===== */
 function drawWish(){
   const L=M.wish||[],c=mCalc(mSel),tot=sum(L,w=>+w.amt||0);
@@ -2115,14 +2153,14 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();
 setInterval(render,60000);setInterval(tick,15000);
 if(!S.bk2){S.bk2=1;if(S.autoBackup==='weekly')S.autoBackup='daily';saveS()}
 if(!S.nm2){S.nm2=1;if(!S.name)S.name='Umar';saveS()}
-setTab('today',true);tick();sync();setTimeout(()=>autoBackup(false),4000);setTimeout(checkEmptyRestore,1800);setTimeout(()=>checkUpdate(false),7000);
+setTab('today',true);tick();sync();setTimeout(()=>autoBackup(false),4000);setTimeout(checkEmptyRestore,1800);setTimeout(checkWhatsNew,2600);setTimeout(()=>checkUpdate(false),7000);
 try{localStorage.setItem('taskflow.ota.ok',window.__BV)}catch(e){}
 if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(()=>openSheet('intro'),450)}}
 
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.05';window.__BV=BV;
+  var BV='2026.11.16.06';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
