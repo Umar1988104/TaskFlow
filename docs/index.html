@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.16.07'-->
-<meta name="app-version" content="2026.11.16.07">
+<!--var BV='2026.11.16.08'-->
+<meta name="app-version" content="2026.11.16.08">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -625,7 +625,7 @@ const KEY='taskflow.v1',SKEY='taskflow.settings',LOGKEY='taskflow.log',CKEY='tas
 const jget=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
 const jset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const Store={load:()=>jget(KEY,[]),save(t){jset(KEY,t);setTimeout(sync,0)}};
-const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,tags:true,morning:true,morningTime:'07:30',autoBackup:'daily',lastBackup:'',lastBackupErr:'',classCard:true,classRem:true,classMin:10,classNudge:false,addStyle:'button',boxStyle:'comfy',dailyLimit:0,udharBal:false,pin:'',monthStart:1,hideAmt:false,moneyRemind:false,moneyTime:'21:00',noDate:'today',weeklyReview:true,reviewTime:'20:00',pack:'default',textSize:'normal',leftHand:false,view:'list',introDone:false,src:{codeforces:true,leetcode:true,codechef:true,atcoder:true}};
+const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,tags:true,morning:true,morningTime:'07:30',autoBackup:'daily',autoPri:true,lastBackup:'',lastBackupErr:'',classCard:true,classRem:true,classMin:10,classNudge:false,addStyle:'button',boxStyle:'comfy',dailyLimit:0,udharBal:false,pin:'',monthStart:1,hideAmt:false,moneyRemind:false,moneyTime:'21:00',noDate:'today',weeklyReview:true,reviewTime:'20:00',pack:'default',textSize:'normal',leftHand:false,view:'list',introDone:false,src:{codeforces:true,leetcode:true,codechef:true,atcoder:true}};
 let S=Object.assign({},DEF,jget(SKEY,{}));S.src=Object.assign({},DEF.src,S.src||{});
 const saveS=()=>jset(SKEY,S);
 const PACKS={default:{n:'Default'},amoled:{n:'AMOLED',mode:'dark',acc:'#0a84ff',bg:'#000',cd:'#1c1c1e'},paper:{n:'Paper',mode:'light',acc:'#b8733a',bg:'#f6f1e7',cd:'#fffaf0'},midnight:{n:'Midnight',mode:'dark',acc:'#5b8cff',bg:'#0b1020',cd:'#141b33'},sakura:{n:'Sakura',mode:'light',acc:'#e8548a',bg:'#fff1f5',cd:'#fffafc'}};
@@ -798,6 +798,20 @@ function nextOcc(t){ /* next scheduled date after this instance, never in the pa
 function roll(){ /* a repeating task done on an earlier day comes back as a fresh task for its next day */
   const td=ymd(new Date());let ch=false;
   tasks.forEach(t=>{if(t.repeat&&t.done&&t.date<td){const nd=nextOcc(t);if(nd){t.date=nd;t.done=false;delete t.snooze;(t.subs||[]).forEach(x=>x.d=false);t.fired=fireTimes(t).filter(f=>f<=Date.now());ch=true}}});
+  /* auto priority: a task due tomorrow, today or overdue becomes High once; reschedule it far away and the old priority returns */
+  if(S.autoPri!==false){
+    const lim=ymd(new Date(Date.now()+864e5)),moved=[];
+    tasks.forEach(t=>{
+      if(t.done||t.repeat||!t.date)return;
+      if(t.date<=lim){
+        if(t.autoFor!==t.date){if(t.pri!=='high'){t.priBefore=t.pri||null;t.pri='high';moved.push(t.title||'A task')}t.autoFor=t.date;ch=true}
+      }else if(t.autoFor&&t.autoFor!==t.date){
+        if(t.pri==='high'&&t.priBefore!==undefined)t.pri=t.priBefore;
+        delete t.priBefore;delete t.autoFor;ch=true;
+      }
+    });
+    if(moved.length)setTimeout(()=>flash(moved.length===1?'"'+moved[0]+'" is due soon, so it is now High priority':moved.length+' tasks due soon are now High priority'),600);
+  }
   if(ch)Store.save(tasks);
 }
 
@@ -1402,13 +1416,13 @@ function renderSettings(){
     grp('Appearance',packRow()+(S.pack==='default'?seg('theme','Theme',[['auto','Auto'],['dark','Dark'],['light','Light']]):'')+
       `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c?'on':''}" aria-label="Accent color"></button>`).join('')}</div></div>`+seg('boxStyle','Task box style',[['compact','Compact'],['comfy','Comfortable'],['detail','Detailed']])+seg('addStyle','Add tasks with',[['button','Big + button'],['bar','Input bar']])+k('anim','Animations')+k('haptics','Haptic feedback')+seg('textSize','Text size',[['normal','Normal'],['large','Large'],['xl','Extra large']])+k('leftHand','Left-handed mode'))+
     grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],SH[o[0]]]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+k('morning','Morning summary')+(S.morning?`<div class="srow"><span>Summary time</span><input class="tin" type="time" data-k="morningTime" value="${S.morningTime}"></div>`:'')+k('weeklyReview','Weekly review (Sunday)')+(S.weeklyReview?`<div class="srow"><span>Review time</span><input class="tin" type="time" data-k="reviewTime" value="${S.reviewTime}"></div>`:'')+btn('notif','Enable notifications'))+
-    grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+k('h24','24-hour time')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+k('showDone','Show completed tasks')+seg('noDate','Tasks with no date go to',[['today','Today'],['anytime','Anytime']])+k('tags','Priority, tags and filters'))+
+    grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+k('h24','24-hour time')+k('autoPri','Auto high priority when 1 day is left')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+k('showDone','Show completed tasks')+seg('noDate','Tasks with no date go to',[['today','Today'],['anytime','Anytime']])+k('tags','Priority, tags and filters'))+
     grp('Money',k('moneyRemind','Daily reminder to log expenses')+(S.moneyRemind?`<div class="srow"><span>Reminder time</span><input class="tin" type="time" data-k="moneyTime" value="${S.moneyTime}"></div>`:'')+seg('monthStart','Budget month starts on day',[[1,'1'],[5,'5'],[10,'10'],[15,'15'],[20,'20'],[25,'25']])+k('hideAmt','Hide amounts')+seg('dailyLimit','Daily spending limit',[[0,'Off'],[100,'₹100'],[200,'₹200'],[300,'₹300'],[500,'₹500']])+k('udharBal','Count udhar in my budget by default'))+
     grp('Security',btn('pin',S.pin?'Change or remove the PIN lock':'Set a PIN lock'))+
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
     grp('Help',btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 6.9 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.0 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -1981,6 +1995,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.16.08',t:'Tasks that raise their own priority',i:["A task due tomorrow, today or overdue becomes High priority automatically","If you move its date far away, the old priority comes back","You can turn this off in Settings, under Tasks"]},
  {v:'2026.11.16.07',t:'Subscriptions and tidier Settings',i:["A Subscriptions tracker with renewal reminders and yearly totals","Settings sections now expand and collapse with an arrow","Folder rings and totals animate when you scroll to them"]},
  {v:'2026.11.16.06',t:'A quick guide and a livelier Money tab',i:["This What's new card appears after every update","Folder rings fill up when you open the Money tab","Tap the Budget card to flip it and see your last 7 days"]},
  {v:'2026.11.16.05',t:'Back button, keypad and more',i:["Back goes to the previous page, and press back twice on Today to exit","A number keypad for amounts","A calendar of your daily spending","Savings goals with progress bars","New income asks which account and folder it goes to","A greeting on Today with what you can spend today","Totals count up smoothly"]}
@@ -2260,7 +2275,7 @@ if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.07';window.__BV=BV;
+  var BV='2026.11.16.08';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
