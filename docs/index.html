@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.16.11'-->
-<meta name="app-version" content="2026.11.16.11">
+<!--var BV='2026.11.16.12'-->
+<meta name="app-version" content="2026.11.16.12">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -382,6 +382,14 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 .srow{transition:background .15s}
 .od{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px;padding:12px 14px;border-radius:var(--r);background:color-mix(in srgb,var(--red) 11%,var(--card));border:1px solid color-mix(in srgb,var(--red) 30%,transparent)}.od>div{flex:1 0 100%}.od b{display:block;color:var(--red);font-size:calc(16px*var(--fs))}.od span{color:var(--sub);font-size:calc(13px*var(--fs))}.od button{flex:1;padding:9px;border-radius:12px;background:var(--red);color:#fff;font-weight:600;font-size:calc(14px*var(--fs))}.od button+button{background:var(--card);color:var(--red)}
 .wsum{display:block;width:100%;text-align:left;margin:10px 0 2px;padding:14px;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);color:var(--txt)}.wsum.sun{background:linear-gradient(135deg,color-mix(in srgb,var(--blue) 14%,var(--card)),var(--card))}.wsh small{display:block;color:var(--sub);font-size:calc(12px*var(--fs));font-weight:600}.wsh b{font-size:calc(26px*var(--fs))}.wst{font-weight:700;font-size:calc(14px*var(--fs));margin-top:2px;color:var(--sub)}.wst.up{color:var(--red)}.wst.dn{color:var(--green)}.wsm{color:var(--sub);font-size:calc(12px*var(--fs));margin-top:4px}
+
+.ph{background:linear-gradient(135deg,#ff9500,#ff2d55)}.ph .hring::before{background:#f2603f}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.pst{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 4px;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow)}.pst span{font-size:20px}.pst b{font-size:calc(22px*var(--fs))}.pst small{color:var(--sub);font-size:calc(10px*var(--fs));font-weight:600;text-align:center}
+.pc{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin:10px 0}.pch{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}.pch b{font-size:calc(16px*var(--fs))}.pch span{color:var(--sub);font-size:calc(13px*var(--fs));font-weight:600}
+.pbars{display:flex;gap:8px;align-items:flex-end;height:140px}.pbars>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}.pbars b{font-size:calc(11px*var(--fs));color:var(--sub);min-height:13px}.pbars i{display:block;width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#6aa9ff,var(--blue));transition:height .7s var(--spring)}.pbars .td i{background:linear-gradient(180deg,#ff9500,#ff2d55)}.pbars em{font-style:normal;font-size:calc(11px*var(--fs));color:var(--sub);font-weight:600}.pbars .td em{color:var(--txt)}
+.pgl{margin:10px 0}.pgt{display:flex;justify-content:space-between;gap:8px}.pgt b{font-size:calc(14px*var(--fs));min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pgt span{color:var(--sub);font-size:calc(13px*var(--fs));font-weight:600}.pgb{height:8px;border-radius:4px;background:var(--sep);overflow:hidden;margin:6px 0 3px}.pgb i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--blue),#7d5cff)}.pgb.g i{background:linear-gradient(90deg,#34c759,#30b0c7)}.pgl small{color:var(--sub);font-size:calc(12px*var(--fs))}
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mgrid button{display:flex;align-items:center;gap:10px;padding:12px;border-radius:16px;background:var(--card);box-shadow:var(--shadow);font-size:calc(14px*var(--fs));font-weight:600;color:var(--txt);text-align:left;transition:transform .15s var(--spring)}.mgrid button:active{transform:scale(.97)}.mi{flex:0 0 36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-size:18px;font-weight:700}
+#money h2{margin:22px 6px 10px;font-size:calc(19px*var(--fs))}
 </style>
 </head>
 <body>
@@ -1445,12 +1453,19 @@ function heatHTML(){
   return `<div class="group" style="padding:14px"><div class="heat">${cells}</div><div class="hleg"><span>${tot} tasks in 17 weeks</span><span>Less <i class="h0"></i><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i> More</span></div></div>`;
 }
 function renderProgress(){
-  const t=stats(),mx=Math.max(1,...t.w.map(x=>x.c)),ws=weekStats(mondayOf(new Date()));
-  $('#progress').innerHTML=`<button class="revc" id="rv-open"><div><small>Weekly review</small><b>${ws.done} done this week</b><span>${ws.ok==null?'Complete tasks to see your stats':ws.ok+'% on time'}</span></div><em>›</em></button>
-  <div class="stats"><div class="stat"><b>${t.streak}</b><span>Day streak</span></div><div class="stat"><b>${t.week}</b><span>Done, 7 days</span></div><div class="stat"><b>${t.ok}</b><span>On time</span></div></div>
-  <div class="bars">${t.w.map(x=>`<div><i style="height:0" data-h="${Math.round(x.c/mx*100)}"></i><em>${new Date(x.k+'T00:00:00').toLocaleDateString('en-IN',{weekday:'narrow'})}</em></div>`).join('')}</div>
-  <h2>Last 17 weeks</h2>${heatHTML()}`;
-  requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('#progress .bars i').forEach(i=>i.style.height=Math.max(4,i.dataset.h)+'%')));
+  const t=stats(),mx=Math.max(1,...t.w.map(x=>x.c)),ws=weekStats(mondayOf(new Date())),td=ymd(new Date());
+  const open=tasks.filter(x=>!x.done).length,over=tasks.filter(x=>!x.done&&!x.repeat&&x.date&&!x.any&&x.date<td).length;
+  const cnts=tasks.filter(x=>x.cnt&&!x.done),goals=M.goals||[];
+  const tile=(ic,v,l,c)=>`<div class="pst"><span>${ic}</span><b${c?` style="color:${c}"`:''}>${v}</b><small>${l}</small></div>`;
+  const gc=cnts.map(x=>{const i=cntInfo(x);return `<div class="pgl"><div class="pgt"><b>${esc(x.title)}</b><span>${x.cnt.done}/${x.cnt.target}</span></div><div class="pgb"><i style="width:${i.pct}%"></i></div><small>${i.left} left${i.pace?' · '+i.pace:''}</small></div>`}).join('')
+    +goals.map(g=>`<div class="pgl"><div class="pgt"><b>🎯 ${esc(g.name)}</b><span>${goalPct(g)}%</span></div><div class="pgb g"><i style="width:${goalPct(g)}%"></i></div><small>${inr(g.saved||0)} of ${inr(g.target)}</small></div>`).join('');
+  $('#progress').innerHTML=`<div class="hh ph"><div class="hht"><div style="min-width:0"><small>Keep it going</small><h2>🔥 ${t.streak} day streak</h2><p>${ws.done} done this week · ${ws.ok==null?'no on-time data yet':ws.ok+'% on time'}</p></div><div class="hring" style="--p:${ws.ok||0}"><b>${ws.ok==null?'–':ws.ok+'%'}</b><small>on time</small></div></div></div>
+  <button class="revc" id="rv-open"><div><small>Weekly review</small><b>${ws.done} done this week</b><span>${ws.ok==null?'Complete tasks to see your stats':ws.ok+'% on time'}</span></div><em>›</em></button>
+  <div class="pgrid">${tile('✅',t.week,'Done, 7 days')}${tile('⏱',t.ok,'On time')}${tile('📌',open,'Open tasks')}${tile('⚠️',over,'Overdue',over?'var(--red)':'')}</div>
+  <div class="pc"><div class="pch"><b>Last 7 days</b><span>${t.week} done</span></div><div class="pbars">${t.w.map(x=>`<div class="${x.k===td?'td':''}"><b>${x.c||''}</b><i style="height:0" data-h="${Math.round(x.c/mx*100)}"></i><em>${new Date(x.k+'T00:00:00').toLocaleDateString('en-IN',{weekday:'narrow'})}</em></div>`).join('')}</div></div>
+  <div class="pc"><div class="pch"><b>Goals and counters</b><span>${cnts.length+goals.length||''}</span></div>${gc||'<div class="sm" style="padding:6px 2px">Add a counter to a task or create a savings goal and its progress shows here.</div>'}</div>
+  <div class="pc"><div class="pch"><b>Last 17 weeks</b><span>consistency</span></div>${heatHTML()}</div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('#progress .pbars i').forEach(i=>i.style.height=Math.max(4,i.dataset.h)+'%')));
 }
 $('#progress').addEventListener('click',e=>{if(e.target.closest('#rv-open')){revOff=0;openSheet('rev')}});
 const packRow=()=>`<div class="srow col"><span>Theme pack</span><div class="packs">${Object.keys(PACKS).map(k=>{const p=PACKS[k];return `<button data-k="pack" data-v="${k}" class="pk${S.pack===k?' on':''}" aria-label="${p.n}"><i style="background:${p.bg||'linear-gradient(135deg,#f2f2f7 50%,#000 50%)'}"><b style="background:${p.cd||'#8e8e93'}"></b></i><small>${p.n}</small></button>`}).join('')}</div></div>`;
@@ -1458,7 +1473,7 @@ const SWATCH=['#007aff','#af52de','#34c759','#ff9500','#ff2d92','#30b0c7'];
 const BUILD='__BUILD__';
 function settingsTop(){
   const nm=S.name||'You',th=S.theme||'auto',tile=(a,ic,l,on)=>`<button class="qt${on?' on':''}" data-qt="${a}"><span>${ic}</span><b>${l}</b></button>`;
-  return `<div class="prof"><div class="pav">${esc(nm.trim().charAt(0).toUpperCase()||'U')}</div><div class="pin"><b>${esc(nm)}</b><span>TaskFlow 7.3 · ${window.__BV}</span></div></div>
+  return `<div class="prof"><div class="pav">${esc(nm.trim().charAt(0).toUpperCase()||'U')}</div><div class="pin"><b>${esc(nm)}</b><span>TaskFlow 7.4 · ${window.__BV}</span></div></div>
   <div class="qts">${tile('theme','🌓',th==='auto'?'Auto':th==='dark'?'Dark':'Light',th!=='auto')}${tile('anim','✨','Motion',S.anim!==false)}${tile('haptics','📳','Haptics',S.haptics!==false)}${tile('backup','💾','Back up',false)}</div>
   <input class="tin sq" id="s-q" placeholder="Search settings" autocomplete="off">`;
 }
@@ -1483,7 +1498,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
     grp('Help',btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.3 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.4 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -1614,7 +1629,9 @@ function renderMoney(){
    ${loanBanner()}${subBanner()}${c.accs.length?`<div class="maccs">${c.accs.map(x=>`<div class="macc" style="--c:${x.ac.color}"><small>${esc(x.ac.name)}</small><b>${inr(x.bal)}</b></div>`).join('')}</div>`:''}
    ${tdc}<h2>Folders</h2>${folderList(c)}${goalsSection()}
    <h2>Recent expenses</h2>${recent.length?`<div class="group">${recent.map(txRow).join('')}</div>`:emptyBox('🧾','No expenses yet','Tap + to add your first one.')}
-   <div class="mini" style="flex-wrap:wrap;gap:10px 18px"><button data-ma="income">Add income</button><button data-ma="move">Move money</button><button data-ma="budget">Budget and accounts</button><button data-ma="recur">Recurring</button><button data-ma="all">All expenses</button><button data-ma="udhar">Udhar</button><button data-ma="loan">Loans</button><button data-ma="wish">Planned${(M.wish||[]).length?' ('+M.wish.length+')':''}</button><button data-ma="xf">Cash and account</button><button data-ma="subs">Subscriptions</button><button data-ma="rn">Reconcile</button><button data-ma="cal">Calendar</button><button data-ma="goals">Goals</button><button data-ma="report">Reports</button></div>`;
+   <h2>Add and move</h2><div class="mgrid"><button data-ma="income"><span class="mi" style="background:#34c759">＋</span>Add income</button><button data-ma="move"><span class="mi" style="background:#0a84ff">⇄</span>Move between folders</button><button data-ma="xf"><span class="mi" style="background:#30b0c7">💵</span>Cash and account</button><button data-ma="rn"><span class="mi" style="background:#8e8e93">⚖</span>Reconcile balance</button></div>
+   <h2>Plan ahead</h2><div class="mgrid"><button data-ma="budget"><span class="mi" style="background:#5856d6">🧮</span>Budget and accounts</button><button data-ma="recur"><span class="mi" style="background:#ff9500">♻</span>Recurring</button><button data-ma="subs"><span class="mi" style="background:#af52de">🔁</span>Subscriptions</button><button data-ma="wish"><span class="mi" style="background:#ff2d55">🛍</span>Planned${(M.wish||[]).length?' ('+M.wish.length+')':''}</button><button data-ma="goals"><span class="mi" style="background:#34c759">🎯</span>Savings goals</button><button data-ma="loan"><span class="mi" style="background:#6e5ce6">🏦</span>Loans</button></div>
+   <h2>People and review</h2><div class="mgrid"><button data-ma="udhar"><span class="mi" style="background:#ff9500">🤝</span>Udhar</button><button data-ma="all"><span class="mi" style="background:#0a84ff">📋</span>All expenses</button><button data-ma="cal"><span class="mi" style="background:#ff3b30">📅</span>Calendar</button><button data-ma="report"><span class="mi" style="background:#5e5ce6">📊</span>Reports</button></div>`;
   {const mt=el.querySelector('.mtop');if(mt&&__sl){mt.scrollLeft=__sl;updDots(mt)}}
   if(el.dataset.fresh==='1'){RING={};for(const k in NP)delete NP[k]}
   el.dataset.fresh='0';window.__flip=false;
@@ -2057,6 +2074,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.16.12',t:'Tidy Money buttons and a livelier Progress page',i:["Money actions are now grouped into three sections of clear colored buttons","Progress has a streak header, stat cards, a labeled weekly chart, goals and counters, and a framed heatmap"]},
  {v:'2026.11.16.11',t:'Overdue rescue, balance check, weekly summary and a cooler look',i:["Overdue rescue card on Home: move all overdue tasks to today in one tap","Reconcile balance: match an account with what your bank or UPI app shows","This week card on Home with spending trend and the folder that grew most","A refreshed look: glass tab bar, gradient cards, smoother sheets and buttons"]},
  {v:'2026.11.16.10',t:'A real Home dashboard and a new Settings look',i:["Home now has a header with today's progress ring, stat tiles, Focus, Coming up and shortcuts","Settings has a profile card, quick toggles, search and colored section icons"]},
  {v:'2026.11.16.09',t:'A Home page, counter tasks and days-left tags',i:["A new Home tab in the middle opens first and shows your most important tasks","Counter tasks, like 20 questions: log what you did and see how many are left and how many a day","Every task shows a colored days-left tag"]},
@@ -2445,7 +2463,7 @@ if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.11';window.__BV=BV;
+  var BV='2026.11.16.12';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
