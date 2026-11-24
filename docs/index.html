@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.16.10'-->
-<meta name="app-version" content="2026.11.16.10">
+<!--var BV='2026.11.16.11'-->
+<meta name="app-version" content="2026.11.16.11">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -360,6 +360,28 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 .qts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.qt{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:16px;background:var(--card);box-shadow:var(--shadow);color:var(--sub)}.qt span{font-size:22px;filter:grayscale(1);opacity:.7}.qt b{font-size:calc(11px*var(--fs));font-weight:600}.qt.on{background:var(--blue);color:#fff}.qt.on span{filter:none;opacity:1}
 .sq{width:100%;box-sizing:border-box;margin:12px 0 2px;padding:12px 14px;border-radius:14px;background:var(--card);text-align:left}
 .sgh{gap:12px}.sgic{flex:0 0 32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:17px}.sgt{flex:1;text-align:left}
+
+/* ===== look & feel upgrade ===== */
+:root{--r:20px;--spring:cubic-bezier(.2,.9,.3,1);--shadow:0 1px 2px rgba(20,20,40,.05),0 8px 24px rgba(20,20,40,.08)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#home,#money,#settings,#progress,#dash,#list{animation:fadeUp .32s var(--spring)}
+#ttl{font-weight:800;letter-spacing:-.6px}
+.group,.hc,.hmoney,.ht,.hgrid button,.qt,.prof,.sgh,.macc{border-radius:var(--r)}
+.group{box-shadow:var(--shadow)}
+.tabs{background:color-mix(in srgb,var(--bar) 78%,transparent);-webkit-backdrop-filter:saturate(1.8) blur(20px);backdrop-filter:saturate(1.8) blur(20px)}
+.tabs button svg{transition:transform .25s var(--spring)}.tabs button.on svg{transform:translateY(-2px) scale(1.14)}
+.tabs button.on::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--blue);margin-top:1px}
+.pbtn{background:linear-gradient(135deg,var(--blue),color-mix(in srgb,var(--blue) 62%,#7d5cff));border-radius:16px;box-shadow:0 8px 20px color-mix(in srgb,var(--blue) 32%,transparent);transition:transform .15s var(--spring)}
+.pbtn:active,.chipbtn:active,.ht:active,.hgrid button:active,.hc:active,.qt:active,.sgh:active,.mb:active,.macc:active,.kp button:active{transform:scale(.97)}
+.fab{background:linear-gradient(135deg,var(--blue),color-mix(in srgb,var(--blue) 62%,#7d5cff));box-shadow:0 10px 26px color-mix(in srgb,var(--blue) 40%,transparent)}
+.sheet{border-radius:28px 28px 0 0;box-shadow:0 -12px 44px rgba(0,0,0,.2)}
+.seg{border-radius:12px;padding:4px}.seg button{border-radius:9px;transition:background .2s,color .2s,box-shadow .2s}
+.mhero{background:linear-gradient(135deg,#0a84ff,#5e5ce6)}.lhero{background:linear-gradient(135deg,#6e5ce6,#bf5af2)}.chero{background:linear-gradient(135deg,#1f9d55,#34c759)}
+.mhero,.hh{box-shadow:0 14px 30px rgba(70,80,220,.22)}
+.mchip{box-shadow:var(--shadow)}
+.srow{transition:background .15s}
+.od{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px;padding:12px 14px;border-radius:var(--r);background:color-mix(in srgb,var(--red) 11%,var(--card));border:1px solid color-mix(in srgb,var(--red) 30%,transparent)}.od>div{flex:1 0 100%}.od b{display:block;color:var(--red);font-size:calc(16px*var(--fs))}.od span{color:var(--sub);font-size:calc(13px*var(--fs))}.od button{flex:1;padding:9px;border-radius:12px;background:var(--red);color:#fff;font-weight:600;font-size:calc(14px*var(--fs))}.od button+button{background:var(--card);color:var(--red)}
+.wsum{display:block;width:100%;text-align:left;margin:10px 0 2px;padding:14px;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);color:var(--txt)}.wsum.sun{background:linear-gradient(135deg,color-mix(in srgb,var(--blue) 14%,var(--card)),var(--card))}.wsh small{display:block;color:var(--sub);font-size:calc(12px*var(--fs));font-weight:600}.wsh b{font-size:calc(26px*var(--fs))}.wst{font-weight:700;font-size:calc(14px*var(--fs));margin-top:2px;color:var(--sub)}.wst.up{color:var(--red)}.wst.dn{color:var(--green)}.wsm{color:var(--sub);font-size:calc(12px*var(--fs));margin-top:4px}
 </style>
 </head>
 <body>
@@ -558,6 +580,14 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
   <h4>Remind me before</h4><div class="seg" id="sb-rm"></div>
   <h4>Usually paid from (optional)</h4><div class="seg wrap" id="sb-ac"></div><div class="seg wrap" id="sb-bk" style="margin-top:8px"></div>
   <button class="pbtn" id="sb-save">Save subscription</button><button class="tbtn" id="sb-del" style="color:var(--red)" hidden>Delete this subscription</button>
+</div>
+
+<div class="sheet" id="rn"><div class="grab"></div><h3>Reconcile balance</h3><div class="sm">Match the app with what your bank or UPI app really shows.</div>
+  <h4>Account</h4><div class="seg wrap" id="rn-ac"></div>
+  <div class="opts" style="margin-top:12px"><div class="srow"><span>The app shows</span><b id="rn-app">-</b></div><div class="srow"><span>Your real balance (₹)</span><input class="tin" id="rn-a" type="number" inputmode="decimal" placeholder="0"></div></div>
+  <div class="sm" id="rn-d" style="margin:8px 6px;font-weight:600"></div>
+  <h4>Put the difference in folder</h4><div class="seg wrap" id="rn-bk"></div>
+  <button class="pbtn" id="rn-go">Record adjustment</button>
 </div>
 
 <div class="sheet" id="mx"><div class="grab"></div><h3 id="mx-h">Add expense</h3>
@@ -1278,14 +1308,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',rn:'#rn',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='rn')drawRc();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1428,7 +1458,7 @@ const SWATCH=['#007aff','#af52de','#34c759','#ff9500','#ff2d92','#30b0c7'];
 const BUILD='__BUILD__';
 function settingsTop(){
   const nm=S.name||'You',th=S.theme||'auto',tile=(a,ic,l,on)=>`<button class="qt${on?' on':''}" data-qt="${a}"><span>${ic}</span><b>${l}</b></button>`;
-  return `<div class="prof"><div class="pav">${esc(nm.trim().charAt(0).toUpperCase()||'U')}</div><div class="pin"><b>${esc(nm)}</b><span>TaskFlow 7.2 · ${window.__BV}</span></div></div>
+  return `<div class="prof"><div class="pav">${esc(nm.trim().charAt(0).toUpperCase()||'U')}</div><div class="pin"><b>${esc(nm)}</b><span>TaskFlow 7.3 · ${window.__BV}</span></div></div>
   <div class="qts">${tile('theme','🌓',th==='auto'?'Auto':th==='dark'?'Dark':'Light',th!=='auto')}${tile('anim','✨','Motion',S.anim!==false)}${tile('haptics','📳','Haptics',S.haptics!==false)}${tile('backup','💾','Back up',false)}</div>
   <input class="tin sq" id="s-q" placeholder="Search settings" autocomplete="off">`;
 }
@@ -1453,7 +1483,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
     grp('Help',btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.2 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.3 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -1584,7 +1614,7 @@ function renderMoney(){
    ${loanBanner()}${subBanner()}${c.accs.length?`<div class="maccs">${c.accs.map(x=>`<div class="macc" style="--c:${x.ac.color}"><small>${esc(x.ac.name)}</small><b>${inr(x.bal)}</b></div>`).join('')}</div>`:''}
    ${tdc}<h2>Folders</h2>${folderList(c)}${goalsSection()}
    <h2>Recent expenses</h2>${recent.length?`<div class="group">${recent.map(txRow).join('')}</div>`:emptyBox('🧾','No expenses yet','Tap + to add your first one.')}
-   <div class="mini" style="flex-wrap:wrap;gap:10px 18px"><button data-ma="income">Add income</button><button data-ma="move">Move money</button><button data-ma="budget">Budget and accounts</button><button data-ma="recur">Recurring</button><button data-ma="all">All expenses</button><button data-ma="udhar">Udhar</button><button data-ma="loan">Loans</button><button data-ma="wish">Planned${(M.wish||[]).length?' ('+M.wish.length+')':''}</button><button data-ma="xf">Cash and account</button><button data-ma="subs">Subscriptions</button><button data-ma="cal">Calendar</button><button data-ma="goals">Goals</button><button data-ma="report">Reports</button></div>`;
+   <div class="mini" style="flex-wrap:wrap;gap:10px 18px"><button data-ma="income">Add income</button><button data-ma="move">Move money</button><button data-ma="budget">Budget and accounts</button><button data-ma="recur">Recurring</button><button data-ma="all">All expenses</button><button data-ma="udhar">Udhar</button><button data-ma="loan">Loans</button><button data-ma="wish">Planned${(M.wish||[]).length?' ('+M.wish.length+')':''}</button><button data-ma="xf">Cash and account</button><button data-ma="subs">Subscriptions</button><button data-ma="rn">Reconcile</button><button data-ma="cal">Calendar</button><button data-ma="goals">Goals</button><button data-ma="report">Reports</button></div>`;
   {const mt=el.querySelector('.mtop');if(mt&&__sl){mt.scrollLeft=__sl;updDots(mt)}}
   if(el.dataset.fresh==='1'){RING={};for(const k in NP)delete NP[k]}
   el.dataset.fresh='0';window.__flip=false;
@@ -1598,7 +1628,7 @@ $('#money').addEventListener('click',e=>{
   else if(a==='copy'){const p=M.months[prevKey(mSel)];M.months[mSel]={income:p.income,alloc:Object.assign({},p.alloc)};saveM();renderMoney()}
   else if(a==='quick'){const A=[['Bank','#007aff'],['UPI','#34c759'],['Cash','#ff9500']].map(x=>({id:uid(),name:x[0],color:x[1]}));M.accounts=A;
     M.buckets=[['Family','spend',0],['Shopping','spend',0],['Travel','spend',1],['Miscellaneous','spend',2],['Savings','save',0]].map((x,i)=>({id:uid(),name:x[0],type:x[1],color:MCOL[i],acc:A[x[2]].id,locked:x[1]==='save',from:'',to:'',rule:''}));saveM();renderMoney()}
-  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';X.fam=true;drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='ck'){openSheet('cs')}else if(a==='subs'){SBE='';fillSub(null);openSheet('sb')}else if(a==='cal'){const n=new Date();CAL={y:n.getFullYear(),m:n.getMonth(),sel:ymd(n)};openSheet('cal')}else if(a==='goals'){GE='';fillGoal(null);openSheet('sg')}else if(a==='xf'){XF={d:'tocash',acc:'',b:''};openSheet('mm')}else if(a==='lf'){LF=b.dataset.lid;openSheet('mf')}else if(a==='loan'){LE=null;fillLoan(null);openSheet('ml')}else if(a==='wish'){W={acc:'',b:''};openSheet('mw')}else if(a==='report')openSheet('mr');
+  else if(a==='budget')openSheet('ma');else if(a==='all'){$('#me-q').value='';openSheet('me')}else if(a==='udhar'){$('#u-cnt').checked=!!S.udharBal;uDue='';openSheet('mu')}else if(a==='income'){openExp('');X.kind='inc';X.fam=true;drawExp()}else if(a==='move'){T={f:'',t:''};drawMove();openSheet('mt')}else if(a==='recur')openSheet('mc');else if(a==='ck'){openSheet('cs')}else if(a==='rn'){RCS={acc:'',b:''};$('#rn-a').value='';openSheet('rn')}else if(a==='subs'){SBE='';fillSub(null);openSheet('sb')}else if(a==='cal'){const n=new Date();CAL={y:n.getFullYear(),m:n.getMonth(),sel:ymd(n)};openSheet('cal')}else if(a==='goals'){GE='';fillGoal(null);openSheet('sg')}else if(a==='xf'){XF={d:'tocash',acc:'',b:''};openSheet('mm')}else if(a==='lf'){LF=b.dataset.lid;openSheet('mf')}else if(a==='loan'){LE=null;fillLoan(null);openSheet('ml')}else if(a==='wish'){W={acc:'',b:''};openSheet('mw')}else if(a==='report')openSheet('mr');
 });
 $('#madd').addEventListener('click',()=>openExp(''));
 $('#meye').addEventListener('click',()=>{S.hideAmt=!S.hideAmt;saveS();renderMoney()});
@@ -2027,6 +2057,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.16.11',t:'Overdue rescue, balance check, weekly summary and a cooler look',i:["Overdue rescue card on Home: move all overdue tasks to today in one tap","Reconcile balance: match an account with what your bank or UPI app shows","This week card on Home with spending trend and the folder that grew most","A refreshed look: glass tab bar, gradient cards, smoother sheets and buttons"]},
  {v:'2026.11.16.10',t:'A real Home dashboard and a new Settings look',i:["Home now has a header with today's progress ring, stat tiles, Focus, Coming up and shortcuts","Settings has a profile card, quick toggles, search and colored section icons"]},
  {v:'2026.11.16.09',t:'A Home page, counter tasks and days-left tags',i:["A new Home tab in the middle opens first and shows your most important tasks","Counter tasks, like 20 questions: log what you did and see how many are left and how many a day","Every task shows a colored days-left tag"]},
  {v:'2026.11.16.08',t:'Tasks that raise their own priority',i:["A task due tomorrow, today or overdue becomes High priority automatically","If you move its date far away, the old priority comes back","You can turn this off in Settings, under Tasks"]},
@@ -2147,6 +2178,15 @@ function homeTasks(){
   return tasks.filter(t=>!t.done&&!(t.repeat&&t.date>td)).map(t=>{const d=t.date&&!t.any?tDays(t.date):999;return{t,d,sc:(t.pri==='high'?-1000:t.pri==='med'?-200:0)+Math.min(d,200)-(t.cnt?50:0)}})
     .filter(x=>x.d<=14||x.t.cnt||x.t.pri==='high').sort((a,b)=>a.sc-b.sc).slice(0,6).map(x=>x.t);
 }
+function weekCard(){
+  const agg=off=>{let tot=0;const by={};for(let i=0;i<7;i++){spendOnDay(ymd(new Date(Date.now()-(off+i)*864e5))).forEach(e=>{tot+=e.a;const f=e.f||e.s;by[f]=(by[f]||0)+e.a})}return{tot,by}};
+  const a=agg(0),b=agg(7);if(!a.tot&&!b.tot)return{html:''};
+  const top=Object.entries(a.by).sort((x,y)=>y[1]-x[1])[0],jump=Object.keys(a.by).map(k=>[k,a.by[k]-(b.by[k]||0)]).sort((x,y)=>y[1]-x[1])[0];
+  const pc=b.tot>0?Math.round((a.tot-b.tot)/b.tot*100):null,up=pc!==null&&pc>0;
+  const sun=new Date().getDay()===0;
+  const trend=pc===null?'First week of data':(pc===0?'Same as last week':(up?'▲ ':'▼ ')+Math.abs(pc)+'% '+(up?'more':'less')+' than last week');
+  return{html:`<button class="wsum${sun?' sun':''}" data-hq="cal"><div class="wsh"><small>${sun?'Your week in review':'This week'}</small><b>${inr(a.tot)}</b></div><div class="wst ${pc===null?'':up?'up':'dn'}">${trend}</div><div class="wsm">${top?'Most on '+esc(top[0])+' '+inr(top[1]):''}${jump&&jump[1]>0&&b.tot>0?' · Biggest jump: '+esc(jump[0])+' +'+inr(jump[1]):''}</div></button>`};
+}
 function renderHome(){
   const el=$('#home');if(!el)return;
   const td=ymd(new Date()),tt=tasks.filter(t=>t.date===td),dn=tt.filter(t=>t.done).length,open=tt.length-dn,pct=tt.length?Math.round(dn/tt.length*100):0;
@@ -2162,11 +2202,15 @@ function renderHome(){
   {const g=(M.goals||[]).slice().sort((a,b)=>goalPct(b)-goalPct(a)).find(x=>goalPct(x)<100);if(g)tiles+=tile('sg','🎯',g.name,goalPct(g)+'%',inr(Math.max(0,g.target-(g.saved||0)))+' to go')}
   const L=homeTasks(),ids=new Set(L.map(t=>t.id));
   const soon=tasks.filter(t=>!t.done&&t.date&&!t.any&&!t.repeat&&!ids.has(t.id)&&tDays(t.date)>=0&&tDays(t.date)<=7).sort((a,b)=>a.date<b.date?-1:1).slice(0,4);
+  const od=tasks.filter(t=>!t.done&&!t.repeat&&t.date&&!t.any&&t.date<td);
+  const ws=weekCard(),sun=new Date().getDay()===0;
   const ds=new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
   const sub=[open?open+(open===1?' task':' tasks')+' to do today':(tt.length?'All done for today 🎉':'No tasks due today')].concat(parts).join(' · ');
   const gi=(k,ic,l)=>`<button data-hq="${k}"><span>${ic}</span>${l}</button>`;
   el.innerHTML=`<div class="hh"><div class="hht"><div style="min-width:0"><small>${ds}</small><h2>${greet()}${S.name?', '+esc(S.name):''} 👋</h2><p>${sub}</p></div><div class="hring" style="--p:${pct}"><b>${tt.length?dn+'/'+tt.length:'–'}</b><small>today</small></div></div></div>
+  ${od.length?`<div class="od"><div><b>${od.length} overdue ${od.length===1?'task':'tasks'}</b><span>Do not let them pile up</span></div><button data-od="today">Move to today</button><button data-od="review">Review</button></div>`:''}
   <div class="htiles">${tiles}</div>
+  ${ws.html?ws.html:''}
   <h2>Focus${L.length?' <em class="cn">'+L.length+'</em>':''}</h2>${L.length?L.map(t=>`<div class="hc" data-hid="${t.id}"><button class="chk" data-hdone="${t.id}" aria-label="Done"></button><div class="hcm"><b>${esc(t.title)}</b>${dlTag(t)}${cntRow(t)}</div></div>`).join(''):emptyBox('🎯','Nothing urgent','Add a task with a date or a counter and it will show up here.','<button class="chipbtn" data-hq="task">Add a task</button>')}
   ${soon.length?'<h2>Coming up</h2><div class="group">'+soon.map(t=>{const d=tDays(t.date);return `<button class="cu" data-hid="${t.id}"><span class="cud"><b>${new Date(t.date+'T00:00:00').getDate()}</b>${new Date(t.date+'T00:00:00').toLocaleDateString('en-IN',{month:'short'})}</span><span class="cut">${esc(t.title)}</span><em>${d===0?'today':d===1?'tomorrow':'in '+d+' days'}</em></button>`}).join('')+'</div>':''}
   <h2>Shortcuts</h2><div class="hgrid">${gi('task','➕','Add task')}${gi('exp','💸','Add expense')}${gi('cal','📅','Calendar')}${gi('goals','🎯','Goals')}${gi('subs','🔁','Subscriptions')}${gi('cash','💵','Cash')}</div>`;
@@ -2177,10 +2221,39 @@ document.addEventListener('click',e=>{
   if(b=q('[data-log]')){e.stopPropagation();const v=parseFloat(prompt('How many did you finish? It is added to your count.','1'));if(v>0)cntAdd(b.dataset.log,Math.round(v));return}
   if(b=q('[data-hdone]')){e.stopPropagation();const t=tasks.find(x=>x.id===b.dataset.hdone);if(t){buzz(12);pushUndo('Task completed');logDone(t);t.done=true;Store.save(tasks);render()}return}
   if(b=q('[data-hq]')){e.stopPropagation();const k=b.dataset.hq;if(k==='task')$('#fab').click();else if(k==='exp')openExp('');else if(k==='cal'){const n=new Date();CAL={y:n.getFullYear(),m:n.getMonth(),sel:ymd(n)};openSheet('cal')}else if(k==='goals'){GE='';fillGoal(null);openSheet('sg')}else if(k==='subs'){SBE='';fillSub(null);openSheet('sb')}else if(k==='cash')openSheet('cs');return}
+  if(b=q('[data-od]')){e.stopPropagation();if(b.dataset.od==='review')setTab('today');else{const td=ymd(new Date()),L=tasks.filter(t=>!t.done&&!t.repeat&&t.date&&!t.any&&t.date<td);pushUndo('Overdue tasks moved');L.forEach(t=>{t.date=td;delete t.fired});Store.save(tasks);render();flash(L.length+(L.length===1?' task':' tasks')+' moved to today')}return}
   if(b=q('[data-hsh]')){e.stopPropagation();const k=b.dataset.hsh;if(k==='today'||k==='money')setTab(k);else if(k==='cs')openSheet('cs');else if(k==='ml'){LE=null;fillLoan(null);openSheet('ml')}else if(k==='sb'){SBE='';fillSub(null);openSheet('sb')}else if(k==='sg'){GE='';fillGoal(null);openSheet('sg')}return}
   if(b=q('[data-hgo]')){e.stopPropagation();setTab(b.dataset.hgo);return}
   if((b=q('.hc,.cu'))&&b.closest('#home')){curId=b.dataset.hid;openSheet('details')}
 },true);
+/* ===== reconcile ===== */
+let RCS={acc:'',b:''};
+const rcApp=id=>{const x=mCalc(mkey()).accs.find(a=>a.ac.id===id);return x?x.bal:0};
+function rcDiff(){const v=$('#rn-a').value;return v===''||!RCS.acc?null:Math.round((+v-rcApp(RCS.acc))*100)/100}
+function updRc(){
+  $('#rn-app').textContent=RCS.acc?inr(rcApp(RCS.acc)):'-';const d=rcDiff();
+  $('#rn-d').textContent=d===null?'':d===0?'It already matches.':d>0?'Your real balance is '+inr(d)+' higher. It will be added to the folder.':'Your real balance is '+inr(-d)+' lower. It will be recorded as spending.';
+}
+function drawRc(){
+  $('#rn-ac').innerHTML=M.accounts.map(a=>`<button data-ra="${a.id}" class="${RCS.acc===a.id?'on':''}">${esc(a.name)}</button>`).join('')||'<span class="sm">Create an account first.</span>';
+  $('#rn-bk').innerHTML=M.buckets.filter(b=>b.acc===RCS.acc).map(b=>`<button data-rb="${b.id}" class="${RCS.b===b.id?'on':''}">${esc(b.name)}</button>`).join('')||'<span class="sm">Choose an account to see its folders.</span>';
+  updRc();
+}
+$('#rn').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.ra){RCS.acc=b.dataset.ra;RCS.b='';drawRc()}
+  else if(b.dataset.rb){RCS.b=b.dataset.rb;drawRc()}
+  else if(b.id==='rn-go'){
+    const d=rcDiff();if(d===null){flash('Choose an account and enter the real balance');return}
+    if(d===0){flash('It already matches');return}
+    if(!RCS.b){flash('Choose a folder for the difference');return}
+    const td=ymd(new Date());
+    if(d>0){allocAdj(RCS.b,mkey(),d);M.tx.push({id:uid(),amt:d,desc:'Balance adjustment',b:'',acc:'',ib:RCS.b,ia:RCS.acc,date:td,kind:'inc',adj:1})}
+    else M.tx.push({id:uid(),amt:-d,desc:'Balance adjustment',b:RCS.b,acc:RCS.acc,date:td,kind:'exp',adj:1});
+    saveM();renderMoney();closeTop();flash('Balance updated');
+  }
+});
+$('#rn').addEventListener('input',e=>{if(e.target.id==='rn-a')updRc()});
 /* ===== planned purchases ===== */
 function drawWish(){
   const L=M.wish||[],c=mCalc(mSel),tot=sum(L,w=>+w.amt||0);
@@ -2372,7 +2445,7 @@ if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.10';window.__BV=BV;
+  var BV='2026.11.16.11';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
