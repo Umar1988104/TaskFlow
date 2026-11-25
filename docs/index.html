@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.16.14'-->
-<meta name="app-version" content="2026.11.16.14">
+<!--var BV='2026.11.16.15'-->
+<meta name="app-version" content="2026.11.16.15">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -412,6 +412,13 @@ body:not([data-tab=today]):not([data-tab=upcoming]) .count{display:none}
 #home>h2,#progress>h2,#money>h2{margin:10px 4px -2px!important}
 #money>.mdots{margin-top:-4px!important}
 #home>.htiles,#money>.mtop{width:100%;min-width:0}
+
+.avt{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:26px;font-weight:700;color:#fff;background-size:cover;background-position:center;flex:0 0 auto}
+.hav{flex:0 0 auto;padding:0;margin-right:12px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.55)}
+button.prof{width:100%;text-align:left;color:var(--txt)}.prof .pav{flex:0 0 54px}.prof .pin{flex:1;min-width:0}.pcb{height:5px;border-radius:3px;background:var(--sep);margin:6px 0 3px;overflow:hidden}.pcb i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),color-mix(in srgb,var(--blue) 55%,#8b5cf6));border-radius:3px}.chev{font-style:normal;font-size:24px;color:var(--sub)}
+.pfx{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0}.pfx .avt{width:84px;height:84px;font-size:44px}.pfx .pcb{width:70%}
+.pol{margin:8px 0;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px}.pol summary{font-weight:600;cursor:pointer}.pol p{margin:8px 0 0;font-size:calc(13px*var(--fs));color:var(--sub);line-height:1.5}
+.faq{margin:8px 0;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px}.faq summary{font-weight:600;cursor:pointer}.faq p{margin:8px 0 0;font-size:calc(14px*var(--fs));color:var(--sub);line-height:1.5}
 </style>
 </head>
 <body>
@@ -618,6 +625,58 @@ body:not([data-tab=today]):not([data-tab=upcoming]) .count{display:none}
   <div class="sm" id="rn-d" style="margin:8px 6px;font-weight:600"></div>
   <h4>Put the difference in folder</h4><div class="seg wrap" id="rn-bk"></div>
   <button class="pbtn" id="rn-go">Record adjustment</button>
+</div>
+
+<div class="sheet" id="pf"><div class="grab"></div><div id="pf-top"></div>
+  <h4>Avatar</h4><div class="seg wrap" id="pf-emo"></div><div class="seg wrap" id="pf-col" style="margin-top:8px"></div>
+  <h4>About you</h4><div class="opts">
+    <div class="srow"><span>Name</span><input class="tin" id="pf-n" maxlength="40" placeholder="Your name"></div>
+    <div class="srow"><span>Mobile number</span><input class="tin" id="pf-p" type="tel" inputmode="numeric" maxlength="14" placeholder="10 digits"></div>
+    <div class="srow"><span>Email</span><input class="tin" id="pf-e" type="email" maxlength="60" placeholder="you@example.com"></div>
+    <div class="srow"><span>Date of birth</span><input class="tin" id="pf-b" type="date"></div></div>
+  <h4>Education and place</h4><div class="opts">
+    <div class="srow"><span>College or school</span><input class="tin" id="pf-c" maxlength="60" placeholder="Where you study"></div>
+    <div class="srow"><span>Course and year</span><input class="tin" id="pf-k" maxlength="40" placeholder="e.g. B.Tech CSE, 2nd year"></div>
+    <div class="srow"><span>City</span><input class="tin" id="pf-y" maxlength="40" placeholder="Your city"></div></div>
+  <h4>About me</h4><textarea class="tin" id="pf-a" rows="3" maxlength="140" placeholder="A goal or a line about you" style="width:100%;box-sizing:border-box;text-align:left"></textarea>
+  <div class="sm" id="pf-err" style="color:var(--red);margin:8px 6px;min-height:18px"></div>
+  <button class="pbtn" id="pf-save">Save profile</button>
+  <p class="sm" style="margin:10px 6px">Your details stay on this phone and in your backup file. They are never sent anywhere.</p>
+  <input id="pf-file" type="file" accept="image/*" hidden>
+</div>
+
+<div class="sheet" id="wz"><div class="grab"></div><div style="text-align:center;font-size:48px">👋</div><h3 style="text-align:center">Welcome to TaskFlow</h3><div class="sm" style="text-align:center">A few quick details to set things up. You can change them any time.</div>
+  <div class="opts" style="margin-top:14px">
+    <div class="srow"><span>Your name</span><input class="tin" id="wz-n" maxlength="40" placeholder="Your name"></div>
+    <div class="srow"><span>Mobile (optional)</span><input class="tin" id="wz-p" type="tel" inputmode="numeric" maxlength="14" placeholder="10 digits"></div>
+    <div class="srow"><span>Email (optional)</span><input class="tin" id="wz-e" type="email" maxlength="60" placeholder="you@example.com"></div>
+    <div class="srow"><span>Month starts on day</span><input class="tin" id="wz-d" type="number" inputmode="numeric" min="1" max="28" placeholder="1"></div>
+    <div class="srow"><span>First account (optional)</span><input class="tin" id="wz-a" maxlength="30" placeholder="e.g. Bank account"></div></div>
+  <div class="sm" id="wz-err" style="color:var(--red);margin:8px 6px;min-height:18px"></div>
+  <button class="pbtn" id="wz-go">Get started</button><button class="tbtn" id="wz-skip">Skip for now</button>
+</div>
+
+<div class="sheet" id="hp"><div class="grab"></div>
+  <div style="text-align:center"><div style="font-size:44px">✅</div><h3 style="margin:4px 0">TaskFlow</h3><div class="sm" id="hp-v"></div><div class="sm">Made by Mohammad Umar Sikandri</div></div>
+  <h4>Quick links</h4><div class="mgrid">
+    <button data-hp="fb"><span class="mi" style="background:#0a84ff">✉</span>Send feedback</button>
+    <button data-hp="sh"><span class="mi" style="background:#34c759">↗</span>Share the app</button>
+    <button data-hp="wn"><span class="mi" style="background:#af52de">✨</span>What's new</button>
+    <button data-hp="pv"><span class="mi" style="background:#ff9500">🔒</span>Privacy and data</button></div>
+  <h4>Questions and answers</h4><div id="hp-faq"></div>
+</div>
+
+<div class="sheet" id="pv"><div class="grab"></div><h3>Privacy and data</h3>
+  <div class="group" style="padding:14px"><b>Your data stays on this phone.</b><p class="sm" style="margin:6px 0 0">There is no account and no tracking. TaskFlow only goes online to check for updates from the link you set. Backups are plain files in Documents/TaskFlow on your phone.</p></div>
+  <h4>Auto-lock</h4><div id="pv-lock"></div>
+  <h4>Your data</h4><div class="mgrid">
+    <button data-pv="csv"><span class="mi" style="background:#34c759">📄</span>Export expenses (CSV)</button>
+    <button data-pv="bk"><span class="mi" style="background:#0a84ff">💾</span>Back up now</button>
+    <button data-pv="dl"><span class="mi" style="background:#5856d6">⬇</span>Download full backup</button>
+    <button data-pv="del"><span class="mi" style="background:#ff3b30">🗑</span>Delete all my data</button></div>
+  <h4>Policies</h4>
+  <details class="pol"><summary>Privacy policy</summary><p>TaskFlow stores everything you enter (tasks, money, profile and settings) only on your device. It does not collect, sell or share your data and has no ads or analytics. The app contacts the internet only to check for updates from the address you provide and, if you enable it, to read public contest schedules. Backups you create are files on your phone that you control. You can export or delete all your data at any time from this screen.</p></details>
+  <details class="pol"><summary>Terms of use</summary><p>TaskFlow is provided as is, without warranty. Keep your own backups, because data on a lost or reset phone cannot be recovered by the developer. Reminders depend on your phone's notification and battery settings. By using the app you agree to use it lawfully and at your own risk.</p></details>
 </div>
 
 <div class="sheet" id="mx"><div class="grab"></div><h3 id="mx-h">Add expense</h3>
@@ -1339,14 +1398,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',rn:'#rn',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',rn:'#rn',pf:'#pf',wz:'#wz',hp:'#hp',pv:'#pv',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='rn')drawRc();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='rn')drawRc();if(top==='pf')drawPf();if(top==='hp')drawHp();if(top==='pv')drawPv();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1496,7 +1555,7 @@ const SWATCH=['#007aff','#af52de','#34c759','#ff9500','#ff2d92','#30b0c7'];
 const BUILD='__BUILD__';
 function settingsTop(){
   const nm=S.name||'You',th=S.theme||'auto',tile=(a,ic,l,on)=>`<button class="qt${on?' on':''}" data-qt="${a}"><span>${ic}</span><b>${l}</b></button>`;
-  return `<div class="prof"><div class="pav">${esc(nm.trim().charAt(0).toUpperCase()||'U')}</div><div class="pin"><b>${esc(nm)}</b><span>TaskFlow 7.6 · ${window.__BV}</span></div></div>
+  return `<button class="prof" data-pf="1">${avHTML('pav')}<div class="pin"><b>${esc(nm)}</b><span>${esc(pfLine())}</span><div class="pcb"><i style="width:${pfPct()}%"></i></div><span>${pfPct()}% complete</span></div><em class="chev">›</em></button>
   <div class="qts">${tile('theme','🌓',th==='auto'?'Auto':th==='dark'?'Dark':'Light',th!=='auto')}${tile('anim','✨','Motion',S.anim!==false)}${tile('haptics','📳','Haptics',S.haptics!==false)}${tile('backup','💾','Back up',false)}</div>
   <input class="tin sq" id="s-q" placeholder="Search settings" autocomplete="off">`;
 }
@@ -1517,11 +1576,11 @@ function renderSettings(){
     grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],SH[o[0]]]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+k('morning','Morning summary')+(S.morning?`<div class="srow"><span>Summary time</span><input class="tin" type="time" data-k="morningTime" value="${S.morningTime}"></div>`:'')+k('weeklyReview','Weekly review (Sunday)')+(S.weeklyReview?`<div class="srow"><span>Review time</span><input class="tin" type="time" data-k="reviewTime" value="${S.reviewTime}"></div>`:'')+btn('notif','Enable notifications'))+
     grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+k('h24','24-hour time')+k('autoPri','Auto high priority when 1 day is left')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+k('showDone','Show completed tasks')+seg('noDate','Tasks with no date go to',[['today','Today'],['anytime','Anytime']])+k('tags','Priority, tags and filters'))+
     grp('Money',k('moneyRemind','Daily reminder to log expenses')+(S.moneyRemind?`<div class="srow"><span>Reminder time</span><input class="tin" type="time" data-k="moneyTime" value="${S.moneyTime}"></div>`:'')+seg('monthStart','Budget month starts on day',[[1,'1'],[5,'5'],[10,'10'],[15,'15'],[20,'20'],[25,'25']])+k('hideAmt','Hide amounts')+seg('dailyLimit','Daily spending limit',[[0,'Off'],[100,'₹100'],[200,'₹200'],[300,'₹300'],[500,'₹500']])+k('udharBal','Count udhar in my budget by default'))+
-    grp('Security',btn('pin',S.pin?'Change or remove the PIN lock':'Set a PIN lock'))+
+    grp('Security',btn('pin',S.pin?'Change or remove the PIN lock':'Set a PIN lock')+btn('privacy','Privacy and data'))+
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
-    grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Clear all data','danger'))+
-    grp('Help',btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.6 · version ${window.__BV}</p>`;
+    grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
+    grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.7 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -1530,6 +1589,8 @@ function act(a,b){
   else if(a==='whatsnew'){WN=CHANGES.slice(0,3);openSheet('wn')}
   else if(a==='bk-now'){if(!FS()){act('dl',b);return}askFsPerm().then(()=>autoBackup(true)).then(ok=>{b.firstElementChild.textContent=ok?'Saved ✓':'Could not save';setTimeout(renderSettings,1500)})}
   else if(a==='intro'){introI=0;openSheet('intro')}
+  else if(a==='privacy')openSheet('pv');else if(a==='help')openSheet('hp');
+  else if(a==='semail'){const v=prompt('Email address that should receive feedback from this app',S.supportEmail||'');if(v!==null){S.supportEmail=v.trim();saveS();renderSettings()}}
   else if(a==='pin')pinFlow();
   else if(a==='dl'){const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([backup()],{type:'application/json'}));l.download='taskflow-backup-'+ymd(new Date())+'.json';l.click()}
   else if(a==='cp'){const sp=b.firstElementChild;navigator.clipboard.writeText(backup()).then(()=>{sp.textContent='Copied ✓';setTimeout(()=>sp.textContent='Copy backup to clipboard',1500)}).catch(()=>prompt('Copy this backup:',backup()))}
@@ -1538,6 +1599,7 @@ function act(a,b){
 $('#settings').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.dataset.qt){const a=b.dataset.qt;if(a==='theme'){S.theme=S.theme==='auto'?'dark':S.theme==='dark'?'light':'auto'}else if(a==='anim'){S.anim=S.anim===false}else if(a==='haptics'){S.haptics=S.haptics===false}else if(a==='backup'){act('bk-now',b);return}saveS();applyTheme();renderSettings();return}
+  if(b.dataset.pf){openProfile();return}
   if(b.dataset.sgt){S.sgo=S.sgo||{};S.sgo[b.dataset.sgt]=!S.sgo[b.dataset.sgt];saveS();b.parentElement.classList.toggle('open');return}
   if(b.dataset.act){act(b.dataset.act,b);return}
   const k=b.dataset.k;if(!k)return;let v=b.dataset.v;
@@ -2098,6 +2160,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.16.15',t:'Your profile, a welcome setup, help and privacy tools',i:["A full Profile: photo or emoji, name, mobile, email, birthday, college, city and a short bio","A welcome setup for new installs","Help and About with FAQs, feedback and sharing","Privacy and data: auto-lock time, export expenses as CSV, delete all data"]},
  {v:'2026.11.16.14',t:'Even spacing, a Tasks tab and a flame streak',i:["Fixed the big gap in the Tasks page: a style clash stretched the week bar","Removed the duplicate greeting; every page now uses the same even spacing","Today is now called Tasks","The streak header on Progress is flame colored"]},
  {v:'2026.11.16.13',t:'Satisfying check-offs, shrinking titles and accent colors',i:["Completing a task pops the circle, sparkles and strikes the title","Page titles shrink into a slim bar as you scroll","Cards, headers and charts now follow the accent color you pick in Settings"]},
  {v:'2026.11.16.12',t:'Tidy Money buttons and a livelier Progress page',i:["Money actions are now grouped into three sections of clear colored buttons","Progress has a streak header, stat cards, a labeled weekly chart, goals and counters, and a framed heatmap"]},
@@ -2251,7 +2314,7 @@ function renderHome(){
   const ds=new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
   const sub=[open?open+(open===1?' task':' tasks')+' to do today':(tt.length?'All done for today 🎉':'No tasks due today')].concat(parts).join(' · ');
   const gi=(k,ic,l)=>`<button data-hq="${k}"><span>${ic}</span>${l}</button>`;
-  el.innerHTML=`<div class="hh"><div class="hht"><div style="min-width:0"><small>${ds}</small><h2>${greet()}${S.name?', '+esc(S.name):''} 👋</h2><p>${sub}</p></div><div class="hring" style="--p:${pct}"><b>${tt.length?dn+'/'+tt.length:'–'}</b><small>today</small></div></div></div>
+  el.innerHTML=`<div class="hh"><div class="hht"><button class="hav" data-pf="1" aria-label="Profile">${avHTML('avt')}</button><div style="min-width:0;flex:1"><small>${ds}</small><h2>${greet()}${S.name?', '+esc(S.name):''} 👋</h2><p>${sub}</p></div><div class="hring" style="--p:${pct}"><b>${tt.length?dn+'/'+tt.length:'–'}</b><small>today</small></div></div></div>
   ${od.length?`<div class="odc"><div><b>${od.length} overdue ${od.length===1?'task':'tasks'}</b><span>Do not let them pile up</span></div><button data-od="today">Move to today</button><button data-od="review">Review</button></div>`:''}
   <div class="htiles">${tiles}</div>
   ${ws.html?ws.html:''}
@@ -2265,6 +2328,7 @@ document.addEventListener('click',e=>{
   if(b=q('[data-log]')){e.stopPropagation();const v=parseFloat(prompt('How many did you finish? It is added to your count.','1'));if(v>0)cntAdd(b.dataset.log,Math.round(v));return}
   if(b=q('[data-hdone]')){e.stopPropagation();const t=tasks.find(x=>x.id===b.dataset.hdone);if(t&&!b.__d){b.__d=1;buzz(12);b.classList.add('on');const c=b.closest('.hc');if(c)c.classList.add('cdone');burst(b);setTimeout(()=>{pushUndo('Task completed');logDone(t);t.done=true;Store.save(tasks);render()},S.anim===false?0:420)}return}
   if(b=q('[data-hq]')){e.stopPropagation();const k=b.dataset.hq;if(k==='task')$('#fab').click();else if(k==='exp')openExp('');else if(k==='cal'){const n=new Date();CAL={y:n.getFullYear(),m:n.getMonth(),sel:ymd(n)};openSheet('cal')}else if(k==='goals'){GE='';fillGoal(null);openSheet('sg')}else if(k==='subs'){SBE='';fillSub(null);openSheet('sb')}else if(k==='cash')openSheet('cs');return}
+  if(b=q('.hav')){e.stopPropagation();openProfile();return}
   if(b=q('[data-od]')){e.stopPropagation();if(b.dataset.od==='review')setTab('today');else{const td=ymd(new Date()),L=tasks.filter(t=>!t.done&&!t.repeat&&t.date&&!t.any&&t.date<td);pushUndo('Overdue tasks moved');L.forEach(t=>{t.date=td;delete t.fired});Store.save(tasks);render();flash(L.length+(L.length===1?' task':' tasks')+' moved to today')}return}
   if(b=q('[data-hsh]')){e.stopPropagation();const k=b.dataset.hsh;if(k==='today'||k==='money')setTab(k);else if(k==='cs')openSheet('cs');else if(k==='ml'){LE=null;fillLoan(null);openSheet('ml')}else if(k==='sb'){SBE='';fillSub(null);openSheet('sb')}else if(k==='sg'){GE='';fillGoal(null);openSheet('sg')}return}
   if(b=q('[data-hgo]')){e.stopPropagation();setTab(b.dataset.hgo);return}
@@ -2312,6 +2376,125 @@ function burst(chk){
     const a=i/8*Math.PI*2,dist=24+Math.random()*14;
     if(d.animate){const an=d.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:`translate(calc(-50% + ${Math.cos(a)*dist}px),calc(-50% + ${Math.sin(a)*dist}px)) scale(.3)`,opacity:0}],{duration:520,easing:'cubic-bezier(.2,.8,.3,1)'});an.onfinish=()=>d.remove()}else d.remove()}
 }
+/* ===== profile, welcome setup, help, privacy ===== */
+const DEV_NAME='Mohammad Umar Sikandri',APP_URL='https://umar1988104.github.io/TaskFlow/';
+const PF_EMO=['🙂','😎','🤓','🧑‍💻','🚀','🦊','🐼','🌟','🎧','⚡'],PF_COL=['#0a84ff','#34c759','#ff9500','#ff2d55','#af52de','#30b0c7','#5856d6','#ff3b30'];
+const pfd=()=>{S.pf=S.pf||{};return S.pf};
+function avHTML(cls){
+  const p=pfd(),nm=(S.name||'U').trim();
+  if(p.photo)return `<div class="${cls==='pav'?'pav':'avt'}" style="background-image:url('${p.photo}');background-size:cover;background-position:center"></div>`;
+  if(p.av&&p.av.k==='emoji')return `<div class="${cls==='pav'?'pav':'avt'}" style="background:${p.av.c||PF_COL[0]}">${p.av.e}</div>`;
+  const c=p.av&&p.av.c;return `<div class="${cls==='pav'?'pav':'avt'}"${c?` style="background:${c}"`:` style="background:linear-gradient(135deg,var(--blue),color-mix(in srgb,var(--blue) 55%,#8b5cf6))"`}>${esc(nm.charAt(0).toUpperCase()||'U')}</div>`;
+}
+function pfPct(){const p=pfd(),f=[S.name,p.phone,p.email,p.dob,p.college,p.course,p.city,p.about,(p.photo||(p.av&&p.av.k))?'1':''];return Math.round(f.filter(Boolean).length/f.length*100)}
+function pfLine(){const p=pfd();return [p.email,p.phone].filter(Boolean).join(' · ')||'Add your details'}
+function okPhone(v){let d=String(v||'').replace(/\D/g,'');if(d.length===12&&d.startsWith('91'))d=d.slice(2);return /^[6-9]\d{9}$/.test(d)?d:null}
+const okEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+function chkContact(ph,em){if(ph&&!okPhone(ph))return 'Enter a valid 10-digit mobile number';if(em&&!okEmail(em))return 'Enter a valid email address';return ''}
+let PFA={k:'initial',e:'',c:'',photo:''};
+function openProfile(){
+  const p=pfd();PFA={k:(p.av&&p.av.k)||'initial',e:(p.av&&p.av.e)||'',c:(p.av&&p.av.c)||'',photo:p.photo||''};
+  $('#pf-n').value=S.name||'';$('#pf-p').value=p.phone||'';$('#pf-e').value=p.email||'';$('#pf-b').value=p.dob||'';$('#pf-c').value=p.college||'';$('#pf-k').value=p.course||'';$('#pf-y').value=p.city||'';$('#pf-a').value=p.about||'';$('#pf-err').textContent='';
+  openSheet('pf');
+}
+function drawPf(){
+  const nm=$('#pf-n').value.trim()||S.name||'U',inner=PFA.photo?`<div class="avt" style="background-image:url('${PFA.photo}');background-size:cover;background-position:center"></div>`:PFA.k==='emoji'?`<div class="avt" style="background:${PFA.c||PF_COL[0]}">${PFA.e}</div>`:`<div class="avt" style="background:${PFA.c||'var(--blue)'}">${esc(nm.charAt(0).toUpperCase())}</div>`;
+  $('#pf-top').innerHTML=`<div class="pfx">${inner}<b>${esc($('#pf-n').value.trim()||S.name||'Your profile')}</b><div class="pcb"><i style="width:${pfPct()}%"></i></div><span class="sm">${pfPct()}% complete</span></div>`;
+  $('#pf-emo').innerHTML=`<button data-pe="initial" class="${PFA.k==='initial'&&!PFA.photo?'on':''}">Aa</button>`+PF_EMO.map(e=>`<button data-pe="${e}" class="${PFA.k==='emoji'&&PFA.e===e&&!PFA.photo?'on':''}">${e}</button>`).join('')+`<label class="chipbtn" for="pf-file" style="padding:8px 12px">Photo</label>`;
+  $('#pf-col').innerHTML=PF_COL.map(c=>`<button data-pc="${c}" class="${PFA.c===c?'on':''}" style="background:${c};width:34px;height:34px;border-radius:50%;padding:0${PFA.c===c?';outline:3px solid var(--txt);outline-offset:2px':''}" aria-label="Color"></button>`).join('');
+}
+$('#pf').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.pe!==undefined){if(b.dataset.pe==='initial'){PFA.k='initial';PFA.e=''}else{PFA.k='emoji';PFA.e=b.dataset.pe;if(!PFA.c)PFA.c=PF_COL[0]}PFA.photo='';drawPf()}
+  else if(b.dataset.pc){PFA.c=b.dataset.pc;drawPf()}
+  else if(b.id==='pf-save'){
+    const n=$('#pf-n').value.trim(),ph=$('#pf-p').value.trim(),em=$('#pf-e').value.trim(),dob=$('#pf-b').value,err=$('#pf-err');
+    if(!n){err.textContent='Please enter your name';$('#pf-n').focus();return}
+    const ce=chkContact(ph,em);if(ce){err.textContent=ce;(ph&&!okPhone(ph)?$('#pf-p'):$('#pf-e')).focus();return}
+    if(dob&&(dob>ymd(new Date())||dob<'1900-01-01')){err.textContent='Enter a valid date of birth';$('#pf-b').focus();return}
+    const p=pfd();S.name=n;p.phone=ph?okPhone(ph):'';p.email=em;p.dob=dob;p.college=$('#pf-c').value.trim();p.course=$('#pf-k').value.trim();p.city=$('#pf-y').value.trim();p.about=$('#pf-a').value.trim();
+    p.av=PFA.k==='initial'&&!PFA.c?null:{k:PFA.k,e:PFA.e,c:PFA.c};p.photo=PFA.photo||'';
+    saveS();renderSettings();render();closeTop();flash('Profile saved');
+  }
+});
+$('#pf').addEventListener('input',e=>{if(e.target.id==='pf-n')drawPf()});
+$('#pf-file').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),z=256,m=Math.min(im.width,im.height),sx=(im.width-m)/2,sy=(im.height-m)/2;c.width=c.height=z;c.getContext('2d').drawImage(im,sx,sy,m,m,0,0,z,z);PFA.photo=c.toDataURL('image/jpeg',.82);PFA.k='initial';drawPf()};im.src=r.result};
+  r.readAsDataURL(f);e.target.value='';
+});
+function maybeWizard(){
+  if(S.setupDone)return;
+  if(tasks.length||M.accounts.length||M.tx.length){S.setupDone=true;saveS();return}
+  let n=0;const iv=setInterval(()=>{if(++n>300){clearInterval(iv);return}
+    if(!stack.includes('intro')&&$('#lock').hidden){clearInterval(iv);if(!S.setupDone){S.setupDone=true;saveS();$('#wz-n').value=S.name||'';$('#wz-d').value=S.monthStart||1;openSheet('wz')}}},700);
+}
+$('#wz').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='wz-skip'){closeTop()}
+  else if(b.id==='wz-go'){
+    const n=$('#wz-n').value.trim(),ph=$('#wz-p').value.trim(),em=$('#wz-e').value.trim(),err=$('#wz-err');
+    if(!n){err.textContent='Please enter your name';$('#wz-n').focus();return}
+    const ce=chkContact(ph,em);if(ce){err.textContent=ce;return}
+    const p=pfd();S.name=n;if(ph)p.phone=okPhone(ph);if(em)p.email=em;
+    const d=Math.round(+$('#wz-d').value||1);S.monthStart=Math.max(1,Math.min(28,d));
+    const a=$('#wz-a').value.trim();if(a&&!M.accounts.length){M.accounts.push({id:uid(),name:a,color:'#007aff'});saveM()}
+    saveS();renderSettings();render();closeTop();flash('You are all set, '+n);
+  }
+});
+const FAQ=[
+ ['How do I add an expense?','On Home or Money tap Add expense, type the amount on the keypad, choose Pay from (My budget, Loan or Cash), pick the account and folder, then Save.'],
+ ['What is a folder?','A folder is a spending pot inside an account, like Food or Travel. You give each folder an amount for the month and the app shows what is used and what is left.'],
+ ['How does the Loan box work?','Add a loan under Money, Loans with the amount, monthly payment and due day. You can keep the money in the Loan box or put it into an account folder, and Pay now records each monthly payment.'],
+ ['How do counter tasks work?','Open a task, set a Target (like 20 questions) and Done so far. Use +1 or Log to add progress. The app shows how many are left and how many a day you need.'],
+ ['Why did a reminder not ring?','Some phones stop apps in the background. Allow notifications for TaskFlow and set its battery use to Unrestricted in your phone settings.'],
+ ['Is my data safe?','Everything stays on your phone. Turn on the daily backup in Settings, Data and keep a copy of the backup file somewhere safe, like Google Drive.'],
+ ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
+ ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
+function drawHp(){
+  $('#hp-v').textContent='Version 7.7 · build '+window.__BV;
+  $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
+}
+$('#hp').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||!b.dataset.hp)return;const k=b.dataset.hp;
+  if(k==='fb'){location.href='mailto:'+encodeURIComponent(S.supportEmail||'').replace('%40','@')+'?subject='+encodeURIComponent('TaskFlow feedback')+'&body='+encodeURIComponent('\n\n---\nTaskFlow '+window.__BV+'\n'+navigator.userAgent)}
+  else if(k==='sh'){const url=S.otaUrl||APP_URL,txt='I use TaskFlow to manage tasks and money. Try it: '+url;if(navigator.share)navigator.share({title:'TaskFlow',text:txt}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>flash('Link copied')).catch(()=>prompt('Copy this:',txt));else prompt('Copy this:',txt)}
+  else if(k==='wn'){WN=CHANGES.slice(0,3);openSheet('wn')}
+  else if(k==='pv')openSheet('pv');
+});
+function drawPv(){
+  const L=[[0,'Instantly'],[30,'30 seconds'],[60,'1 minute'],[300,'5 minutes']],cur=S.lockAfter===undefined?30:S.lockAfter;
+  $('#pv-lock').innerHTML=S.pin?`<div class="seg wrap">${L.map(x=>`<button data-pl="${x[0]}" class="${cur===x[0]?'on':''}">${x[1]}</button>`).join('')}</div><div class="sm" style="margin:6px">Lock the app again after it has been in the background for this long.</div>`:`<div class="sm" style="margin:0 6px">Set a PIN lock first, then you can choose when it locks.</div><button class="chipbtn" data-pv="pin" style="margin:8px 6px">Set a PIN lock</button>`;
+}
+function csvData(){
+  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"',rows=[['Date','Type','Amount','Description','Account','Folder','Source']];
+  M.tx.filter(t=>!t.mv).forEach(t=>{const b=bkOf(t.b||t.ib),a=accOf(t.acc||t.ia);rows.push([t.date,t.kind==='inc'?'Income':'Expense',t.amt,t.desc,a?a.name:'',b?b.name:'','Budget'])});
+  (M.loans||[]).forEach(l=>(l.exp||[]).forEach(e=>{const f=(l.folders||[]).find(y=>y.id===e.f);rows.push([e.date,'Expense',e.amt,e.desc,l.name,f?f.name:'','Loan'])}));
+  cashLog().filter(e=>!e.mv).forEach(e=>rows.push([e.date,e.amt<0?'Expense':'Income',Math.abs(e.amt),e.desc,'','','Cash']));
+  const head=rows.shift();rows.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0);rows.unshift(head);return rows;
+}
+async function exportExpensesCsv(){
+  const rows=csvData(),txt=rows.map(r=>r.map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(',')).join('\n'),name='taskflow-expenses-'+ymd(new Date())+'.csv',fs=FS();
+  if(fs){try{await askFsPerm();await fs.writeFile({path:'TaskFlow/'+name,data:txt,directory:'DOCUMENTS',encoding:'utf8',recursive:true});flash('Saved '+(rows.length-1)+' entries to Documents/TaskFlow');return}catch(e){}}
+  const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([txt],{type:'text/csv'}));l.download=name;l.click();flash('Exported '+(rows.length-1)+' entries');
+}
+async function wipeAll(reload){
+  try{if(FS())await autoBackup(true)}catch(e){}
+  [KEY,SKEY,LOGKEY,CKEY,MKEY].forEach(k=>localStorage.removeItem(k));
+  if(reload!==false)location.reload();
+}
+$('#pv').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.pl!==undefined){S.lockAfter=+b.dataset.pl;saveS();drawPv();flash('Auto-lock set')}
+  else if(b.dataset.pv==='pin'){pinFlow()}
+  else if(b.dataset.pv==='csv')exportExpensesCsv();
+  else if(b.dataset.pv==='bk')act('bk-now',b.firstChild||b);
+  else if(b.dataset.pv==='dl')act('dl',b);
+  else if(b.dataset.pv==='del'){
+    if(!confirm('Delete ALL your tasks, money, profile and settings from this phone? A backup file is saved first if possible.'))return;
+    const v=prompt('Type DELETE to confirm');if(v&&v.trim().toUpperCase()==='DELETE')wipeAll();else flash('Nothing was deleted');
+  }
+});
 /* ===== planned purchases ===== */
 function drawWish(){
   const L=M.wish||[],c=mCalc(mSel),tot=sum(L,w=>+w.amt||0);
@@ -2451,7 +2634,7 @@ $('#lock').addEventListener('click',e=>{
   else if(lockMode==='confirm'){if(v===lockTmp){S.pin=hashPin(v);saveS();$('#lock').hidden=true;renderSettings();flash('PIN lock is on')}else showLock('set','The PINs did not match')}
 });
 const pinFlow=()=>showLock(S.pin?'check':'set');
-document.addEventListener('visibilitychange',()=>{if(document.hidden)lastHide=Date.now();else if(S.pin&&lastHide&&Date.now()-lastHide>30000&&$('#lock').hidden)showLock('unlock')});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)lastHide=Date.now();else if(S.pin&&lastHide&&Date.now()-lastHide>(S.lockAfter===undefined?30:S.lockAfter)*1000&&$('#lock').hidden)showLock('unlock')});
 applyRecur();if(S.pin)showLock('unlock');
 
 
@@ -2499,11 +2682,12 @@ if(!S.nm2){S.nm2=1;if(!S.name)S.name='Umar';saveS()}
 setTab('home',true);tick();sync();setTimeout(()=>autoBackup(false),4000);setTimeout(checkEmptyRestore,1800);setTimeout(checkWhatsNew,2600);setTimeout(()=>checkUpdate(false),7000);
 try{localStorage.setItem('taskflow.ota.ok',window.__BV)}catch(e){}
 if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(()=>openSheet('intro'),450)}}
+maybeWizard();
 
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.14';window.__BV=BV;
+  var BV='2026.11.16.15';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
