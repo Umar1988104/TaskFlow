@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.16.16'-->
-<meta name="app-version" content="2026.11.16.16">
+<!--var BV='2026.11.26.01'-->
+<meta name="app-version" content="2026.11.26.01">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -429,6 +429,21 @@ body[data-tab=notes] #cbtn,body[data-tab=notes] #sbtn,body[data-tab=notes] .dock
 .ngrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ncard{display:flex;flex-direction:column;gap:5px;text-align:left;padding:14px;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);color:var(--txt);min-height:110px;overflow:hidden}.ncard.pin{background:color-mix(in srgb,#ffcc00 16%,var(--card))}.ncard b{font-size:calc(15px*var(--fs));overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}.ncard span{flex:1;color:var(--sub);font-size:calc(13px*var(--fs));white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;word-break:break-word}.ncard small{color:var(--sub);font-size:calc(11px*var(--fs));font-weight:600}.ncard:active{transform:scale(.97)}
 .nth{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.nta{display:flex;gap:2px}.nta button{width:40px;height:40px;border-radius:12px;font-size:19px;color:var(--txt)}.nta button:active{background:var(--sep)}.nta button.on{background:color-mix(in srgb,#ffcc00 28%,transparent)}
 #nt-t{width:100%;box-sizing:border-box;min-height:48vh;border:0;outline:0;background:transparent;font:inherit;font-size:calc(17px*var(--fs));color:var(--txt);resize:none;line-height:1.55;padding:6px 2px}
+/* ===== v7.9 smoothness ===== */
+#home,#money,#settings,#progress,#dash,#list{animation:none}
+#app{overflow-x:clip}
+#list,#notes{position:relative}
+.sheet{overscroll-behavior:contain}
+/* swipe row: snooze zone */
+.trow[data-sw=s]{background:#ff9500}
+.trow[data-sw=s]::after{right:18px}
+/* sliding pill on switches and option buttons */
+.seg{position:relative}
+.seg>button{position:relative;z-index:1}
+.seg.pl::before{content:"";position:absolute;left:0;top:0;width:var(--pw,0);height:var(--ph,0);transform:translate(var(--px,0),var(--py,0));border-radius:9px;background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.2);z-index:0;pointer-events:none}
+.seg.pl.go::before{transition:transform .36s cubic-bezier(.32,1.18,.4,1),width .36s cubic-bezier(.32,1.18,.4,1),height .36s cubic-bezier(.32,1.18,.4,1)}
+.seg.pl>button.on{background:transparent!important;box-shadow:none!important}
+
 </style>
 </head>
 <body>
@@ -779,7 +794,7 @@ const COLORS={Contest:'#af52de',Homework:'#007aff',Assignment:'#ff9500',Exam:'#f
 const PC={high:'#ff3b30',med:'#ff9500',low:'#34c759'},PR={high:0,med:1,low:2},PRL={high:'High',med:'Medium',low:'Low'};
 const KEY='taskflow.v1',SKEY='taskflow.settings',LOGKEY='taskflow.log',CKEY='taskflow.contests';
 const jget=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
-const jset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+var dver=0;const jset=(k,v)=>{dver++;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const Store={load:()=>jget(KEY,[]),save(t){jset(KEY,t);setTimeout(sync,0)}};
 const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,tags:true,morning:true,morningTime:'07:30',autoBackup:'daily',autoPri:true,lastBackup:'',lastBackupErr:'',classCard:true,classRem:true,classMin:10,classNudge:false,addStyle:'button',boxStyle:'comfy',dailyLimit:0,udharBal:false,pin:'',monthStart:1,hideAmt:false,moneyRemind:false,moneyTime:'21:00',noDate:'today',weeklyReview:true,reviewTime:'20:00',pack:'default',textSize:'normal',leftHand:false,view:'list',introDone:false,src:{codeforces:true,leetcode:true,codechef:true,atcoder:true}};
 let S=Object.assign({},DEF,jget(SKEY,{}));S.src=Object.assign({},DEF.src,S.src||{});
@@ -829,7 +844,22 @@ function applyTheme(){
 }
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 applyTheme();
-const buzz=n=>{if(!S.haptics)return;try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
+/* haptics: tap = soft tick, ok = firm success, warn = double buzz. Old calls with numbers still work. */
+const HAP={tap:[6],sel:[9],med:[16],ok:[26],warn:[34,70,34],err:[60,40,60]};
+function buzz(n){
+  if(!S.haptics)return;
+  try{
+    const k=typeof n==='string'?n:Array.isArray(n)?null:n<=9?'tap':n<=11?'sel':n<=14?'ok':'med';
+    const H=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Haptics;
+    if(H&&k&&H.impact){
+      if(k==='ok')H.notification&&H.notification({type:'SUCCESS'});
+      else if(k==='warn'||k==='err')H.notification&&H.notification({type:k==='err'?'ERROR':'WARNING'});
+      else H.impact({style:k==='med'?'MEDIUM':'LIGHT'});
+      return;
+    }
+    navigator.vibrate&&navigator.vibrate(k?HAP[k]:n);
+  }catch(e){}
+}
 
 /* ===== parser ===== */
 /* ---------- natural-language parser ---------- */
@@ -1005,7 +1035,7 @@ const hash=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return Math.a
 let bnTask=null,bnTimer;
 function showBanner(t){
   bnTask=t;$('#bn-t').textContent=t.title;$('#bn-s').textContent=msgFor(t);$('#bn-sn').textContent='Snooze '+S.snooze+' min';
-  $('#banner').classList.add('show');clearTimeout(bnTimer);bnTimer=setTimeout(hideBanner,9000);buzz([120,60,120]);
+  $('#banner').classList.add('show');clearTimeout(bnTimer);bnTimer=setTimeout(hideBanner,9000);buzz('warn');
   try{if(!LN()&&window.Notification&&Notification.permission==='granted')new Notification(t.title,{body:msgFor(t)})}catch(e){}
 }
 const hideBanner=()=>$('#banner').classList.remove('show');
@@ -1209,7 +1239,7 @@ function timelineHTML(){
     (ds===td&&nm>=h0*60&&nm<=h1*60?`<div class="tlnow" style="top:${y(nm)}px"></div>`:'')+`</div>`;
 }
 function render(){
-  updScroll();renderGreet();roll();if(tab==='home')renderHome();drawDash();drawFlt();drawStrip();
+  updScroll();renderGreet();roll();if(tab==='home'&&stale('home'))renderHome();drawDash();drawFlt();drawStrip();
   $('#count').textContent=subtitle();
   if(tab==='money')renderMoney();
   if(tab!=='today'&&tab!=='upcoming')return;
@@ -1246,6 +1276,7 @@ $('#wstrip').addEventListener('click',e=>{
   render();
 });
 function drawFlt(){
+  if(!(tab==='today'||tab==='upcoming')){$('#flt').hidden=true;return}
   const el=$('#flt'),tg=[...new Set(tasks.flatMap(t=>t.tags||[]))].slice(0,12),hasP=tasks.some(t=>t.pri);
   if(flt.t==='tag'&&!tg.includes(flt.v))flt={t:'all',v:null};
   if(!S.tags||(!tg.length&&!hasP)||!(tab==='today'||tab==='upcoming')){el.hidden=true;if(!S.tags)flt={t:'all',v:null};return}
@@ -1316,12 +1347,12 @@ $('#undo-b').addEventListener('click',()=>{if(!uSnap)return;tasks=JSON.parse(uSn
 
 /* ===== complete, delete, swipe, long-press ===== */
 function toggleDone(t,row){
-  buzz(12);row.querySelector('.chk').classList.toggle('on');row.classList.toggle('done');
+  buzz(t.done?'tap':'ok');row.querySelector('.chk').classList.toggle('on');row.classList.toggle('done');
   setTimeout(()=>{pushUndo(t.done?'Marked not done':'Task completed');if(!t.done)logDone(t);t.done=!t.done;Store.save(tasks);render()},300);
   if(!t.done)burst(row.querySelector('.chk'));
 }
 function removeTask(t,row){
-  row.style.maxHeight=row.offsetHeight+'px';
+  buzz('warn');row.style.maxHeight=row.offsetHeight+'px';
   requestAnimationFrame(()=>{row.classList.add('leave');row.style.maxHeight='0'});
   setTimeout(()=>{pushUndo('Task deleted');tasks=tasks.filter(x=>x.id!==t.id);Store.save(tasks);render()},300);
 }
@@ -1345,18 +1376,28 @@ list.addEventListener('pointermove',e=>{
     sw.on=true;sw.row.classList.add('drag');try{sw.row.setPointerCapture(sw.id)}catch(_){}}
   if(sw.row.classList.contains('virt'))return;
   const t=tasks.find(x=>x.id===sw.row.dataset.id);sw.dx=dx;
-  sw.row.style.setProperty('--dx',dx+'px');sw.row.dataset.sw=dx>0?'r':'l';sw.row.dataset.lbl=dx>0?(t&&t.done?'Undo':'Done'):'Delete';
+  const z=swZone(t,dx),zl=dx>0?'r':(z||swZone(t,-91));
+  sw.row.style.setProperty('--dx',dx+'px');sw.row.dataset.sw=dx>0?'r':zl==='s'?'s':'l';sw.row.dataset.lbl=dx>0?(t&&t.done?'Undo':'Done'):zl==='s'?'Snooze':'Delete';
+  if(z!==sw.z){if(z)buzz('tap');sw.z=z}
 });
+function swZone(t,dx){if(dx>90)return 'r';if(dx>-90)return '';if(!t||t.any||t.done||dx<-190)return 'x';return 's'}
+function snoozeTask(t,row){
+  const tm=ymd(addDays(new Date(),1)),nx=t.date?ymd(addDays(new Date(t.date+'T00:00:00'),1)):tm,to=nx>tm?nx:tm;
+  buzz('ok');row.style.maxHeight=row.offsetHeight+'px';
+  requestAnimationFrame(()=>{row.classList.add('leave');row.style.maxHeight='0'});
+  setTimeout(()=>{pushUndo('Snoozed to '+dateTxt(to));shiftTo(t,to);Store.save(tasks);render()},300);
+}
 function endSwipe(){
   clearTimeout(lp);if(!sw)return;const{row,dx,on}=sw;sw=null;if(!on)return;
   justSwiped=Date.now()+400;row.classList.remove('drag');row.style.setProperty('--dx','0px');
   const t=tasks.find(x=>x.id===row.dataset.id);
-  if(t&&!row.classList.contains('virt')&&dx>90)toggleDone(t,row);else if(t&&!row.classList.contains('virt')&&dx<-90)removeTask(t,row);else setTimeout(()=>{delete row.dataset.sw},300);
+  const z=swZone(t,dx),ok=t&&!row.classList.contains('virt');
+  if(ok&&z==='r')toggleDone(t,row);else if(ok&&z==='x')removeTask(t,row);else if(ok&&z==='s')snoozeTask(t,row);else setTimeout(()=>{delete row.dataset.sw},300);
 }
 list.addEventListener('pointerup',endSwipe);list.addEventListener('pointercancel',endSwipe);
 list.addEventListener('contextmenu',e=>e.preventDefault());
 function showLPM(row){
-  const t=tasks.find(x=>x.id===row.dataset.id);if(!t)return;buzz(15);
+  const t=tasks.find(x=>x.id===row.dataset.id);if(!t)return;buzz('med');
   const m=$('#lpm');
   m.innerHTML=`<button data-a="done">${t.done?'Mark not done':'Mark done'}</button><button data-a="resc">Reschedule…</button>${t.any?`<button data-a="plan">${t.plan===ymd(new Date())?'Remove from today':'Plan for today'}</button>`:''}<div class="lpp"><span>Priority</span>${[['','#8e8e93'],['low',PC.low],['med',PC.med],['high',PC.high]].map(p=>`<button data-a="pri" data-v="${p[0]}" style="--c:${p[1]}" class="${(t.pri||'')===p[0]?'on':''}" aria-label="${p[0]||'none'}"></button>`).join('')}</div><button data-a="edit">Edit</button><button data-a="del" class="danger">Delete</button>`;
   m.dataset.id=t.id;
@@ -1433,13 +1474,23 @@ addEventListener('popstate',e=>{closeLPM();const st=e.state||{tab:'home',stack:[
   if(st.root){flash('Press back again to exit');clearTimeout(window.__bk);window.__bk=setTimeout(()=>{if(history.state&&history.state.root)history.pushState({tab:'home',stack:[]},'')},2200)}});
 $('#ov').addEventListener('click',closeTop);
 function setTab(t,np){
+  const prev=tab;
   if(!np&&t!==tab)history.pushState({tab:t,stack:[]},'');
   tab=t;document.body.dataset.tab=t;
   $('#ttl').textContent={home:'Home',today:'Tasks',upcoming:'Upcoming',money:'Money',progress:'Progress',settings:'Profile',notes:'Notepad'}[t];
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.menu!==undefined?(t==='progress'||t==='settings'):b.dataset.tab===t));
   $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';$('#home').hidden=t!=='home';$('#notes').hidden=t!=='notes';
-  if(t==='notes')renderNotes();if(t==='progress')renderProgress();if(t==='settings')renderSettings();if(t==='money'){$('#money').dataset.fresh='1';renderMoney()}
-  render();window.scrollTo(0,0);
+  const dir=setTab.ran?tabDir(prev,t):0;window.scrollTo(0,0);slideIn(dir);lastKey='';switchUntil=performance.now()+520;
+  const tok=++setTab.tok;
+  const go=()=>{if(tok!==setTab.tok)return;
+    if(tab==='notes'&&stale('notes'))renderNotes();
+    if(tab==='progress'&&stale('progress'))renderProgress();
+    if(tab==='settings'&&stale('settings'))renderSettings();
+    if(tab==='money')$('#money').dataset.fresh='1';
+    render();window.scrollTo(0,0);staggerPage();
+  };
+  /* first draw is immediate; later switches paint the tab + slide first, then draw the page */
+  if(!setTab.ran){setTab.ran=1;go()}else requestAnimationFrame(()=>setTimeout(go,0));
 }
 $('.tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){buzz(8);if(b.dataset.menu!==undefined)toggleMenu();else{closeMenu();setTab(b.dataset.tab)}}});
 
@@ -1456,8 +1507,8 @@ function drawDetails(){
   $('#d-done').textContent=t.done?'Mark as not done':'Mark as done';
 }
 $('#d-edit').addEventListener('click',()=>openEdit());
-$('#d-done').addEventListener('click',()=>{const t=tasks.find(x=>x.id===curId);if(!t)return;buzz(12);pushUndo(t.done?'Marked not done':'Task completed');if(!t.done)logDone(t);t.done=!t.done;Store.save(tasks);closeAll();render()});
-$('#d-del').addEventListener('click',()=>{const t=tasks.find(x=>x.id===curId);if(!t||!confirm('Delete this task?'))return;closeAll();pushUndo('Task deleted');tasks=tasks.filter(x=>x.id!==t.id);Store.save(tasks);render();buzz(10)});
+$('#d-done').addEventListener('click',()=>{const t=tasks.find(x=>x.id===curId);if(!t)return;buzz(t.done?'tap':'ok');pushUndo(t.done?'Marked not done':'Task completed');if(!t.done)logDone(t);t.done=!t.done;Store.save(tasks);closeAll();render()});
+$('#d-del').addEventListener('click',()=>{const t=tasks.find(x=>x.id===curId);if(!t||!confirm('Delete this task?'))return;closeAll();pushUndo('Task deleted');tasks=tasks.filter(x=>x.id!==t.id);Store.save(tasks);render();buzz('warn')});
 $('#d-sn').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;const t=tasks.find(x=>x.id===curId);if(!t)return;const m=b.dataset.m;
   t.snooze=m==='tm'?new Date(ymd(addDays(new Date(),1))+'T09:00:00').getTime():Date.now()+ +m*60000;Store.save(tasks);closeAll();render();
@@ -1598,7 +1649,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.8 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.9 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -1682,7 +1733,7 @@ $('#focus-b').addEventListener('click',()=>openSheet('focus'));
 $('#focus').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;const f=focusList()[0];
   if(b.id==='f-x')closeTop();
-  else if(b.id==='f-done'&&f){logDone(f.t);f.t.done=true;Store.save(tasks);buzz(15);render();drawFocus()}
+  else if(b.id==='f-done'&&f){logDone(f.t);f.t.done=true;Store.save(tasks);buzz('ok');render();drawFocus()}
   else if(b.id==='f-open'&&f){curId=f.t.id;openSheet('details')}
 });
 
@@ -2178,6 +2229,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.26.01',t:'Smoother, snappier and easier to swipe',i:["Pages slide in the direction you tap, and you can swipe left or right to change tabs","A highlight glides between choices on switches and option buttons","Lists slide in one after another and deleted items collapse smoothly","Soft ticks for taps, a firmer buzz for success and a double buzz for warnings","Tabs open instantly: only the page you are on is drawn","Drag a sheet down from anywhere to close it; swipe a task left a little to snooze it to tomorrow, or all the way to delete"]},
  {v:'2026.11.16.16',t:'A Notepad, a new bottom bar and a status line',i:["A Notepad tab: write anything, pin, search, checklists and share","The bottom bar is now Tasks, Money, Home, Notepad and Menu, and Menu opens Progress and Profile","A status line tells you when you are offline or an update is ready"]},
  {v:'2026.11.16.15',t:'Your profile, a welcome setup, help and privacy tools',i:["A full Profile: photo or emoji, name, mobile, email, birthday, college, city and a short bio","A welcome setup for new installs","Help and About with FAQs, feedback and sharing","Privacy and data: auto-lock time, export expenses as CSV, delete all data"]},
  {v:'2026.11.16.14',t:'Even spacing, a Tasks tab and a flame streak',i:["Fixed the big gap in the Tasks page: a style clash stretched the week bar","Removed the duplicate greeting; every page now uses the same even spacing","Today is now called Tasks","The streak header on Progress is flame colored"]},
@@ -2345,7 +2397,7 @@ document.addEventListener('click',e=>{
   const q=x=>e.target.closest&&e.target.closest(x);let b;
   if(b=q('[data-inc]')){e.stopPropagation();cntAdd(b.dataset.inc,1);return}
   if(b=q('[data-log]')){e.stopPropagation();const v=parseFloat(prompt('How many did you finish? It is added to your count.','1'));if(v>0)cntAdd(b.dataset.log,Math.round(v));return}
-  if(b=q('[data-hdone]')){e.stopPropagation();const t=tasks.find(x=>x.id===b.dataset.hdone);if(t&&!b.__d){b.__d=1;buzz(12);b.classList.add('on');const c=b.closest('.hc');if(c)c.classList.add('cdone');burst(b);setTimeout(()=>{pushUndo('Task completed');logDone(t);t.done=true;Store.save(tasks);render()},S.anim===false?0:420)}return}
+  if(b=q('[data-hdone]')){e.stopPropagation();const t=tasks.find(x=>x.id===b.dataset.hdone);if(t&&!b.__d){b.__d=1;buzz('ok');b.classList.add('on');const c=b.closest('.hc');if(c)c.classList.add('cdone');burst(b);setTimeout(()=>{pushUndo('Task completed');logDone(t);t.done=true;Store.save(tasks);render()},S.anim===false?0:420)}return}
   if(b=q('[data-hq]')){e.stopPropagation();const k=b.dataset.hq;if(k==='task')$('#fab').click();else if(k==='exp')openExp('');else if(k==='cal'){const n=new Date();CAL={y:n.getFullYear(),m:n.getMonth(),sel:ymd(n)};openSheet('cal')}else if(k==='goals'){GE='';fillGoal(null);openSheet('sg')}else if(k==='subs'){SBE='';fillSub(null);openSheet('sb')}else if(k==='cash')openSheet('cs');else if(k==='notes')setTab('notes');else if(k==='progress')setTab('progress');else if(k==='profile')openProfile();return}
   if(b=q('.hav')){e.stopPropagation();openProfile();return}
   if(b=q('[data-od]')){e.stopPropagation();if(b.dataset.od==='review')setTab('today');else{const td=ymd(new Date()),L=tasks.filter(t=>!t.done&&!t.repeat&&t.date&&!t.any&&t.date<td);pushUndo('Overdue tasks moved');L.forEach(t=>{t.date=td;delete t.fired});Store.save(tasks);render();flash(L.length+(L.length===1?' task':' tasks')+' moved to today')}return}
@@ -2471,7 +2523,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.8 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.9 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -2701,7 +2753,7 @@ $('#lock').addEventListener('click',e=>{
   if(k==='<'){lockBuf=lockBuf.slice(0,-1);drawLock();return}
   if(lockBuf.length>=4)return;lockBuf+=k;buzz(6);drawLock();if(lockBuf.length<4)return;
   const v=lockBuf;
-  if(lockMode==='unlock'){if(hashPin(v)===S.pin)$('#lock').hidden=true;else{buzz([60,40,60]);showLock('unlock','Wrong PIN, try again')}}
+  if(lockMode==='unlock'){if(hashPin(v)===S.pin)$('#lock').hidden=true;else{buzz('err');showLock('unlock','Wrong PIN, try again')}}
   else if(lockMode==='check'){if(hashPin(v)===S.pin){$('#lock').hidden=true;if(confirm('Remove the PIN lock? Press Cancel to choose a new PIN instead.')){S.pin='';saveS();renderSettings();flash('PIN removed')}else showLock('set')}else showLock('check','Wrong PIN')}
   else if(lockMode==='set'){lockTmp=v;showLock('confirm')}
   else if(lockMode==='confirm'){if(v===lockTmp){S.pin=hashPin(v);saveS();$('#lock').hidden=true;renderSettings();flash('PIN lock is on')}else showLock('set','The PINs did not match')}
@@ -2732,14 +2784,188 @@ document.addEventListener('pointerdown',e=>{
   const g=e.target.closest&&e.target.closest('.grab');if(!g)return;const sh=g.closest('.sheet');if(!sh)return;
   dg={sh,y:e.clientY,dy:0};sh.style.transition='none';try{g.setPointerCapture(e.pointerId)}catch(_){}
 });
-document.addEventListener('pointermove',e=>{if(!dg)return;dg.dy=e.clientY-dg.y;dg.sh.style.transform='translateY('+Math.max(0,dg.dy)+'px)'});
+document.addEventListener('pointermove',e=>{if(!dg)return;dg.dy=e.clientY-dg.y;dragVis(dg.sh,Math.max(0,dg.dy))});
 function endDrag(){
-  if(!dg)return;const{sh,dy}=dg;dg=null;sh.style.transition='';sh.style.transform='';
-  if(sh.id==='sheet'&&dy<-50)sh.classList.add('full');
-  else if(sh.id==='sheet'&&sh.classList.contains('full')&&dy>50)sh.classList.remove('full');
-  else if(dy>110)closeTop();
+  if(!dg)return;const{sh,dy}=dg;dg=null;
+  if(sh.id==='sheet'&&dy<-50){dragReset(sh);sh.classList.add('full')}
+  else if(sh.id==='sheet'&&sh.classList.contains('full')&&dy>50){dragReset(sh);sh.classList.remove('full')}
+  else if(dy>110)closeSheetAnim(sh,0);
+  else dragReset(sh);
 }
 document.addEventListener('pointerup',endDrag);document.addEventListener('pointercancel',endDrag);
+
+/* ===== v7.9: smoothness layer (page slides, sliding pills, list motion, swipes, sheet drag) ===== */
+const TABX={today:0,upcoming:0,money:1,home:2,notes:3,progress:4,settings:4};
+const EASE='cubic-bezier(.2,.9,.3,1)';
+const NOANIM=()=>S.anim===false||!Element.prototype.animate||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+setTab.tok=0;
+let lastKey='',switchUntil=0;
+const pageV={};
+/* a page is stale when data was saved (or the minute changed) since it was last drawn */
+function stale(k){const v=dver+':'+Math.floor(Date.now()/6e4);if(pageV[k]===v)return false;pageV[k]=v;return true}
+function tabDir(a,b){if(a===b)return 0;const x=TABX[a]||0,y=TABX[b]||0;return x===y?(b==='upcoming'?1:-1):Math.sign(y-x)}
+
+/* 1. direction-aware page change */
+function slideIn(dir){
+  if(NOANIM())return;
+  const from=dir?'translateX('+(dir>0?36:-36)+'px)':'translateY(12px)';
+  document.querySelectorAll('#app>*:not(header):not(#tseg):not([hidden])').forEach(el=>el.animate([{opacity:0,transform:from},{opacity:1,transform:'none'}],{duration:300,easing:EASE,fill:'backwards'}));
+}
+
+/* 3. one-after-another entrance */
+function cascade(nodes,step){
+  if(NOANIM())return;let i=0;
+  nodes.forEach(el=>{
+    if(el.classList&&el.classList.contains('enter'))return;
+    el.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:340,easing:EASE,delay:Math.min(i,9)*(step||32),fill:'backwards'});i++;
+  });
+}
+function staggerPage(){
+  const q={home:'#home>*',money:'#money>*',progress:'#progress>*',settings:'#settings>*',notes:'#notes .nbar,#notes .ncard'}[tab];
+  if(q)cascade(document.querySelectorAll(q));
+}
+
+/* 3. smooth list changes: rows glide to their new place, deleted ones fade and collapse */
+const FLIPK={list:{sel:'#list .trow[data-id]',id:e=>e.dataset.id,host:'#list'},notes:{sel:'#notes .ncard[data-nid]',id:e=>e.dataset.nid,host:'#notes'}};
+function snap(k){
+  const c=FLIPK[k],m=new Map();
+  document.querySelectorAll(c.sel).forEach(e=>{const r=e.getBoundingClientRect();if(r.width>0&&r.height>4&&!e.hidden)m.set(c.id(e),{e,r})});
+  return m;
+}
+function flipRun(k,old){
+  if(!old||!old.size||NOANIM()||performance.now()<switchUntil)return;
+  const c=FLIPK[k],host=$(c.host);if(!host)return;
+  const hr=host.getBoundingClientRect(),seen=new Set();
+  document.querySelectorAll(c.sel).forEach(e=>{
+    const id=c.id(e),o=old.get(id);seen.add(id);
+    if(!o||e.classList.contains('enter'))return;
+    const r=e.getBoundingClientRect(),dx=o.r.left-r.left,dy=o.r.top-r.top;
+    if(Math.abs(dx)>1||Math.abs(dy)>1)e.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:340,easing:EASE});
+  });
+  old.forEach((o,id)=>{
+    if(seen.has(id)||o.e.classList.contains('leave'))return;
+    const g=o.e;
+    g.style.cssText+=';position:absolute;margin:0;pointer-events:none;max-height:none;z-index:0;left:'+(o.r.left-hr.left)+'px;top:'+(o.r.top-hr.top)+'px;width:'+o.r.width+'px';
+    host.appendChild(g);
+    const a=g.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.92)'}],{duration:240,easing:'ease-out',fill:'forwards'});
+    a.onfinish=()=>g.remove();
+  });
+}
+const _render=render;
+render=function(){
+  const onList=tab==='today'||tab==='upcoming',old=onList?snap('list'):null;
+  const r=_render.apply(this,arguments);
+  if(onList){
+    const key=[tab,selDay,flt.t,flt.v,S.view].join('|');
+    if(key!==lastKey){lastKey=key;cascade(document.querySelectorAll('#list>*'))}
+    else flipRun('list',old);
+  }
+  return r;
+};
+const _renderNotes=renderNotes;
+renderNotes=function(){const old=snap('notes'),r=_renderNotes.apply(this,arguments);flipRun('notes',old);return r};
+
+/* 2. sliding pill on switches and option buttons (drawn with ::before, positioned by CSS variables) */
+const SEGPOS=new Map();
+function segKey(sg){
+  if(sg.id)return '#'+sg.id;
+  const host=sg.closest('.sheet,#settings,#money,#home,#progress,#notes,#wstrip,#list,#dash'),all=host?host.querySelectorAll('.seg'):[],b=sg.querySelector('button'),d=b&&b.dataset||{};
+  return (host&&host.id||'x')+':'+[].indexOf.call(all,sg)+':'+(d.k||d.v||d.t||d.m||d.a||d.b||'');
+}
+function syncSeg(sg){
+  if(sg.classList.contains('multi'))return;
+  const on=[].filter.call(sg.children,c=>c.tagName==='BUTTON'&&c.classList.contains('on'));
+  if(on.length!==1||!sg.offsetWidth){sg.classList.remove('pl','go');return}
+  const b=on[0],g={x:b.offsetLeft,y:b.offsetTop,w:b.offsetWidth,h:b.offsetHeight},k=segKey(sg),st=sg.style;
+  const put=o=>{st.setProperty('--px',o.x+'px');st.setProperty('--py',o.y+'px');st.setProperty('--pw',o.w+'px');st.setProperty('--ph',o.h+'px')};
+  if(!sg.classList.contains('pl')){
+    const prev=SEGPOS.get(k);
+    sg.classList.remove('go');put(prev&&!NOANIM()?prev:g);sg.classList.add('pl');
+    void sg.offsetWidth;sg.classList.add('go');put(g);
+  }else if(!sg.__g||sg.__g.x!==g.x||sg.__g.y!==g.y||sg.__g.w!==g.w||sg.__g.h!==g.h)put(g);
+  sg.__g=g;SEGPOS.set(k,g);
+}
+let segRaf=0;
+function syncSegs(){document.querySelectorAll('.seg').forEach(syncSeg)}
+new MutationObserver(()=>{if(segRaf)return;segRaf=requestAnimationFrame(()=>{segRaf=0;syncSegs()})}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden']});
+addEventListener('resize',()=>{document.querySelectorAll('.seg.pl').forEach(x=>x.__g=null);syncSegs()});
+syncSegs();
+
+/* 6. swipe left / right on the page to change tabs */
+(function(){
+  const ORDER=['today','money','home','notes','progress'];let tx=null;
+  const hscroll=el=>{for(;el&&el!==document.body;el=el.parentElement){if(el.scrollWidth>el.clientWidth+4){const o=getComputedStyle(el).overflowX;if(o==='auto'||o==='scroll')return true}}return false};
+  document.addEventListener('touchstart',e=>{
+    tx=null;if(e.touches.length!==1||stack.length)return;
+    const t=e.touches[0],el=e.target;if(!el.closest||t.clientX<24||t.clientX>innerWidth-24)return;
+    if(el.closest('input,textarea,select,.trow,.tl,.tlb,.mtop,#lpm,#mpop,#lock,.sheet,.tabs,.dock,[data-noswipe]')||hscroll(el))return;
+    tx={x:t.clientX,y:t.clientY,t:Date.now(),dead:false};
+  },{passive:true});
+  document.addEventListener('touchmove',e=>{
+    if(!tx||tx.dead)return;const t=e.touches[0],dx=t.clientX-tx.x,dy=t.clientY-tx.y;
+    if(Math.abs(dy)>16&&Math.abs(dy)>Math.abs(dx))tx.dead=true;
+  },{passive:true});
+  document.addEventListener('touchend',e=>{
+    const s=tx;tx=null;if(!s||s.dead||stack.length)return;
+    const t=e.changedTouches[0],dx=t.clientX-s.x,dy=t.clientY-s.y;
+    if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*1.8||Date.now()-s.t>700)return;
+    const cur=ORDER.indexOf(tab==='upcoming'?'today':tab==='settings'?'progress':tab),to=cur+(dx<0?1:-1);
+    if(cur<0||to<0||to>=ORDER.length)return;
+    closeMenu();buzz('tap');setTab(ORDER[to]);
+  },{passive:true});
+  document.addEventListener('touchcancel',()=>{tx=null},{passive:true});
+})();
+
+/* 6. sheets follow your finger: drag down from anywhere (or the handle) to close */
+function dragVis(sh,dy){
+  sh.style.transition='none';sh.style.transform='translateY('+dy+'px)';
+  const ov=$('#ov');if(ov){ov.style.transition='none';ov.style.opacity=String(Math.max(.15,1-dy/Math.max(240,sh.offsetHeight)))}
+}
+function dragReset(sh){
+  sh.style.transition='';sh.style.transform='';
+  const ov=$('#ov');if(ov){ov.style.transition='';ov.style.opacity=''}
+}
+function closeSheetAnim(sh,v){
+  buzz('tap');
+  sh.style.transition='transform '+(v>1?.16:.24)+'s cubic-bezier(.3,0,.8,.6)';sh.style.transform='translateY(110%)';
+  const ov=$('#ov');if(ov){ov.style.transition='opacity .24s';ov.style.opacity='0'}
+  setTimeout(closeTop,v>1?120:190);
+}
+const _showSheets=showSheets;
+showSheets=function(){
+  const r=_showSheets.apply(this,arguments);
+  Object.keys(SHEETS).forEach(k=>{const el=$(SHEETS[k]);if(el&&!el.classList.contains('show')&&(el.style.transform||el.style.transition)){el.style.transform='';el.style.transition=''}});
+  const ov=$('#ov');if(ov){ov.style.opacity='';ov.style.transition=''}
+  return r;
+};
+(function(){
+  let d=null;
+  const vscroll=(el,top)=>{for(;el&&el!==top;el=el.parentElement){if(el.scrollHeight>el.clientHeight+2){const o=getComputedStyle(el).overflowY;if(o==='auto'||o==='scroll')return true}}return false};
+  document.querySelectorAll('.sheet').forEach(sh=>{
+    sh.addEventListener('touchstart',e=>{
+      d=null;if(e.touches.length!==1||!sh.classList.contains('show'))return;
+      const el=e.target;if(el.closest('.grab,input,textarea,select')||vscroll(el,sh)||sh.scrollTop>0)return;
+      d={y:e.touches[0].clientY,x:e.touches[0].clientX,on:false,lt:Date.now(),ly:e.touches[0].clientY,v:0,tick:false};
+    },{passive:true});
+    sh.addEventListener('touchmove',e=>{
+      if(!d)return;const t=e.touches[0],dy=t.clientY-d.y,dx=t.clientX-d.x,n=Date.now();
+      if(!d.on){
+        if(dy>8&&dy>Math.abs(dx)*1.2&&sh.scrollTop<=0)d.on=true;
+        else if(dy<-8||Math.abs(dx)>14){d=null;return}
+        else return;
+      }
+      if(e.cancelable)e.preventDefault();
+      if(n>d.lt){d.v=(t.clientY-d.ly)/(n-d.lt);d.lt=n;d.ly=t.clientY}
+      d.dy=Math.max(0,dy);dragVis(sh,d.dy);
+      if(d.dy>110&&!d.tick){d.tick=true;buzz('tap')}else if(d.dy<=110)d.tick=false;
+    },{passive:false});
+    const end=()=>{
+      if(!d)return;const s=d;d=null;if(!s.on)return;
+      if(s.dy>110||(s.v>.7&&s.dy>40))closeSheetAnim(sh,s.v>.7?2:0);else dragReset(sh);
+    };
+    sh.addEventListener('touchend',end,{passive:true});sh.addEventListener('touchcancel',end,{passive:true});
+  });
+})();
 
 /* ===== start ===== */
 const IS_NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
@@ -2760,7 +2986,7 @@ maybeWizard();updStatus();
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.16';window.__BV=BV;
+  var BV='2026.11.26.01';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
