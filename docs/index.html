@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.26.01'-->
-<meta name="app-version" content="2026.11.26.01">
+<!--var BV='2026.11.26.02'-->
+<meta name="app-version" content="2026.11.26.02">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -444,6 +444,53 @@ body[data-tab=notes] #cbtn,body[data-tab=notes] #sbtn,body[data-tab=notes] .dock
 .seg.pl.go::before{transition:transform .36s cubic-bezier(.32,1.18,.4,1),width .36s cubic-bezier(.32,1.18,.4,1),height .36s cubic-bezier(.32,1.18,.4,1)}
 .seg.pl>button.on{background:transparent!important;box-shadow:none!important}
 
+/* ===== v7.10 look ===== */
+:root{--b2:color-mix(in srgb,var(--blue) 55%,#8b5cf6)}
+.mhero{background:linear-gradient(135deg,var(--blue),var(--b2))}
+#home .hh:not(.ph){background:linear-gradient(135deg,var(--hh1,var(--blue)),var(--hh2,var(--b2)))}
+#home .hh:not(.ph) .hring::before{background:var(--hhr,color-mix(in srgb,var(--blue) 76%,var(--b2)))}
+/* 7. big numbers */
+.mtot,.mrow b,.macc b,.mbs b,.ht b,.wsh b,.hmoney b{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:-.01em}
+.mtot{letter-spacing:-.02em}
+x-cur{font-size:.58em;font-weight:600;opacity:.8;margin-right:.1em;vertical-align:.2em;letter-spacing:0}
+x-dec{font-size:.58em;font-weight:600;opacity:.75;margin-left:.04em;vertical-align:.04em;letter-spacing:0}
+/* 12. drawn empty states */
+.eart-s svg{width:68px;height:68px}
+/* 14. auto accent swatch */
+.dots button.au{background:conic-gradient(#ff3b30,#ff9500,#ffcc00,#34c759,#30b0c7,#0a84ff,#af52de,#ff3b30)}
+.dots button.au.on{outline-color:var(--blue)}
+/* 11. more theme packs */
+:root[data-pack=sunset]{--bg:#fff3ea;--card:#fffaf5;--txt:#3a2218;--sub:#a98472;--sep:rgba(150,70,30,.14);--bar:rgba(255,246,238,.97);--shadow:0 1px 2px rgba(190,90,40,.06),0 6px 16px rgba(190,90,40,.09);--b2:color-mix(in srgb,var(--blue) 55%,#ff2d6f)}
+:root[data-pack=forest]{--bg:#0d1a14;--card:#14271e;--txt:#e6f4ea;--sub:#86a898;--sep:rgba(150,230,190,.16);--bar:rgba(13,26,20,.97);--b2:color-mix(in srgb,var(--blue) 55%,#0ea5a0)}
+:root[data-pack=ocean]{--bg:#eaf6fb;--card:#fbfeff;--txt:#0e2a38;--sub:#6b93a6;--sep:rgba(20,90,130,.14);--bar:rgba(238,248,252,.97);--shadow:0 1px 2px rgba(10,100,150,.06),0 6px 16px rgba(10,100,150,.08);--b2:color-mix(in srgb,var(--blue) 55%,#5b6cff)}
+:root[data-pack=mono]{--bg:#f2f2f2;--card:#fff;--txt:#111;--sub:#8a8a8a;--sep:rgba(0,0,0,.12);--bar:rgba(246,246,246,.97);--shadow:0 1px 2px rgba(0,0,0,.05),0 4px 12px rgba(0,0,0,.05);--b2:color-mix(in srgb,var(--blue) 70%,#666)}
+/* 9. glass theme */
+:root[data-pack=glass]{--bg:#e9efff;--card:rgba(255,255,255,.58);--sep:rgba(255,255,255,.8);--bar:rgba(244,247,255,.6);--shadow:0 8px 28px rgba(80,90,160,.14)}
+:root[data-pack=glass][data-theme=dark]{--bg:#0d1020;--card:rgba(255,255,255,.09);--txt:#f2f4ff;--sub:#9aa2c8;--sep:rgba(255,255,255,.16);--bar:rgba(16,18,36,.6);--shadow:0 8px 28px rgba(0,0,0,.35)}
+:root[data-pack=glass] body{background:radial-gradient(1100px 700px at 10% -5%,#b9d2ff 0,transparent 58%),radial-gradient(900px 700px at 100% 22%,#ecc7ff 0,transparent 58%),radial-gradient(900px 800px at 25% 100%,#ffd0dc 0,transparent 58%),#eef2ff;background-attachment:fixed}
+:root[data-pack=glass][data-theme=dark] body{background:radial-gradient(1100px 700px at 10% -5%,#27408f 0,transparent 58%),radial-gradient(900px 700px at 100% 22%,#5b2a8c 0,transparent 58%),radial-gradient(900px 800px at 25% 100%,#7a2a55 0,transparent 58%),#0d1020;background-attachment:fixed}
+:root[data-pack=glass] :is(.group,.hc,.hmoney,.hgrid button,.qt,.prof,.sgh,.macc,.wsum,.ncard,.odc,.task,.cu){-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);border:1px solid var(--sep)}
+:root[data-pack=glass] .sheet{background:rgba(247,249,255,.8);-webkit-backdrop-filter:blur(30px) saturate(1.6);backdrop-filter:blur(30px) saturate(1.6)}
+:root[data-pack=glass][data-theme=dark] .sheet{background:rgba(20,22,42,.82)}
+/* 10. calm mode */
+body.calm{--shadow:none}
+body.calm :is(.mhero,.lhero,.chero,.hh,.ph,#home .hh:not(.ph)){background:var(--blue)!important;box-shadow:none!important}
+body.calm .hring::before,body.calm #home .hh:not(.ph) .hring::before,body.calm .ph .hring::before{background:var(--blue)!important}
+body.calm .fab{background:var(--blue)!important;box-shadow:none}
+body.calm :is(.group,.hc,.hmoney,.ht,.hgrid button,.macc,.wsum,.ncard,.task,.cu,.odc){box-shadow:none;border:.5px solid var(--sep)}
+body.calm .sheet{box-shadow:none}
+body.calm .mhero{padding:24px 20px}
+body.calm .hh{padding:22px 20px}
+body.calm .trow{margin-bottom:12px}
+body.calm .hc,body.calm .hmoney{margin-bottom:14px}
+body.calm .hgrid,body.calm .htiles{gap:14px}
+body.calm #app h2{margin-top:28px;margin-bottom:12px}
+body.calm .srow{padding-top:14px;padding-bottom:14px}
+
+/* greeting stays white on the Home header (a global h2 rule made it grey) */
+.hh h2{color:#fff}
+:root[data-pack=glass] .ht{background:rgba(255,255,255,.72);border:1px solid var(--sep)}
+:root[data-pack=glass][data-theme=dark] .ht{background:rgba(255,255,255,.12)}
 </style>
 </head>
 <body>
@@ -796,10 +843,10 @@ const KEY='taskflow.v1',SKEY='taskflow.settings',LOGKEY='taskflow.log',CKEY='tas
 const jget=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
 var dver=0;const jset=(k,v)=>{dver++;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const Store={load:()=>jget(KEY,[]),save(t){jset(KEY,t);setTimeout(sync,0)}};
-const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,tags:true,morning:true,morningTime:'07:30',autoBackup:'daily',autoPri:true,lastBackup:'',lastBackupErr:'',classCard:true,classRem:true,classMin:10,classNudge:false,addStyle:'button',boxStyle:'comfy',dailyLimit:0,udharBal:false,pin:'',monthStart:1,hideAmt:false,moneyRemind:false,moneyTime:'21:00',noDate:'today',weeklyReview:true,reviewTime:'20:00',pack:'default',textSize:'normal',leftHand:false,view:'list',introDone:false,src:{codeforces:true,leetcode:true,codechef:true,atcoder:true}};
+const DEF={theme:'auto',accent:'#007aff',anim:true,haptics:true,rem:[60,10],snooze:10,name:'',h24:false,ampm:'contest',showDone:true,tags:true,morning:true,morningTime:'07:30',autoBackup:'daily',autoPri:true,lastBackup:'',lastBackupErr:'',classCard:true,classRem:true,classMin:10,classNudge:false,addStyle:'button',boxStyle:'comfy',dailyLimit:0,udharBal:false,pin:'',monthStart:1,hideAmt:false,moneyRemind:false,moneyTime:'21:00',noDate:'today',weeklyReview:true,reviewTime:'20:00',pack:'default',calm:false,todHdr:true,accentAuto:false,textSize:'normal',leftHand:false,view:'list',introDone:false,src:{codeforces:true,leetcode:true,codechef:true,atcoder:true}};
 let S=Object.assign({},DEF,jget(SKEY,{}));S.src=Object.assign({},DEF.src,S.src||{});
 const saveS=()=>jset(SKEY,S);
-const PACKS={default:{n:'Default'},amoled:{n:'AMOLED',mode:'dark',acc:'#0a84ff',bg:'#000',cd:'#1c1c1e'},paper:{n:'Paper',mode:'light',acc:'#b8733a',bg:'#f6f1e7',cd:'#fffaf0'},midnight:{n:'Midnight',mode:'dark',acc:'#5b8cff',bg:'#0b1020',cd:'#141b33'},sakura:{n:'Sakura',mode:'light',acc:'#e8548a',bg:'#fff1f5',cd:'#fffafc'}};
+const PACKS={default:{n:'Default'},amoled:{n:'AMOLED',mode:'dark',acc:'#0a84ff',bg:'#000',cd:'#1c1c1e'},paper:{n:'Paper',mode:'light',acc:'#b8733a',bg:'#f6f1e7',cd:'#fffaf0'},midnight:{n:'Midnight',mode:'dark',acc:'#5b8cff',bg:'#0b1020',cd:'#141b33'},sakura:{n:'Sakura',mode:'light',acc:'#e8548a',bg:'#fff1f5',cd:'#fffafc'},sunset:{n:'Sunset',mode:'light',acc:'#ff6a3d',bg:'#fff3ea',cd:'#fffaf5'},forest:{n:'Forest',mode:'dark',acc:'#3ddc84',bg:'#0d1a14',cd:'#14271e'},ocean:{n:'Ocean',mode:'light',acc:'#0a9fd6',bg:'#eaf6fb',cd:'#fbfeff'},mono:{n:'Mono',mode:'light',acc:'#1c1c1e',bg:'#f2f2f2',cd:'#ffffff'},glass:{n:'Glass',bg:'linear-gradient(135deg,#bcd3ff,#ecc9ff 55%,#ffd2de)',cd:'rgba(255,255,255,.75)'}};
 function applyBackup(j){
   tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
   if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[],notes:[]},j.money);saveM()}
@@ -836,9 +883,9 @@ async function checkUpdate(manual){
 function applyTheme(){
   const pk=PACKS[S.pack]||{};
   const dark=pk.mode?pk.mode==='dark':(S.theme==='dark'||(S.theme==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));
-  document.documentElement.dataset.theme=dark?'dark':'light';document.documentElement.dataset.pack=S.pack||'default';
+  document.documentElement.dataset.theme=dark?'dark':'light';document.documentElement.dataset.pack=(S.calm&&S.pack==='glass')?'default':(S.pack||'default');
   document.documentElement.style.setProperty('--fs',({normal:1,large:1.12,xl:1.25})[S.textSize]||1);document.body.classList.toggle('lh',!!S.leftHand);
-  document.documentElement.style.setProperty('--blue',S.accent);
+  document.documentElement.style.setProperty('--blue',(S.accentAuto&&S.pf&&S.pf.av&&S.pf.av.c)||S.accent);document.body.classList.toggle('calm',!!S.calm);
   const m=document.querySelector('meta[name=theme-color]');if(m){let bg='';try{bg=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()}catch(e){}m.content=bg||(dark?'#000000':'#f2f2f7')}
   document.body.classList.toggle('noanim',!S.anim);document.body.classList.toggle('bs-compact',S.boxStyle==='compact');document.body.classList.toggle('bs-detail',S.boxStyle==='detail');document.body.dataset.add=S.addStyle;
 }
@@ -1219,6 +1266,19 @@ const ART={
  list:'<svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="22" y="12" width="52" height="68" rx="9"/><path d="M34 32h28M34 46h28M34 60h14"/><circle cx="68" cy="68" r="15" fill="var(--bg)"/><path d="M61 68l5 5 9-11"/></svg>',
  cal:'<svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="20" width="68" height="60" rx="10"/><path d="M14 38h68M32 12v14M64 12v14M30 54h8M44 54h8M58 54h8M30 66h8M44 66h8"/></svg>',
  search:'<svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="42" cy="42" r="22"/><path d="M58 58l20 20M33 42h18"/></svg>'};
+const L='<svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">';
+Object.assign(ART,{
+ goal:L+'<circle cx="44" cy="52" r="28"/><circle cx="44" cy="52" r="17"/><circle cx="44" cy="52" r="5"/><path d="M44 52L76 20M66 20h10v10"/></svg>',
+ bank:L+'<path d="M12 38L48 16l36 22z"/><path d="M22 44v24M38 44v24M58 44v24M74 44v24M12 74h72M8 84h80"/></svg>',
+ cash:L+'<rect x="10" y="26" width="76" height="44" rx="8"/><circle cx="48" cy="48" r="11"/><path d="M22 48h.01M74 48h.01"/></svg>',
+ folder:L+'<path d="M12 30a6 6 0 0 1 6-6h18l8 9h34a6 6 0 0 1 6 6v31a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6z"/></svg>',
+ note:L+'<path d="M22 21a9 9 0 0 1 9-9h34a9 9 0 0 1 9 9v54a9 9 0 0 1-9 9H31a9 9 0 0 1-9-9z"/><path d="M34 30h28M34 44h28M34 58h12"/><path d="M58 72l16-16 6 6-16 16-8 2z"/></svg>',
+ repeat:L+'<path d="M20 42a28 28 0 0 1 50-12M76 18v14H62"/><path d="M76 54a28 28 0 0 1-50 12M20 78V64h14"/></svg>',
+ bag:L+'<path d="M20 34h56l-5 46H25z"/><path d="M36 34v-6a12 12 0 0 1 24 0v6"/></svg>',
+ receipt:L+'<path d="M24 12h48v72l-8-6-8 6-8-6-8 6-8-6-8 6z"/><path d="M36 30h24M36 44h24M36 58h12"/></svg>',
+ wallet:L+'<rect x="12" y="30" width="72" height="48" rx="10"/><path d="M20 30v-6a6 6 0 0 1 6-6h40"/><path d="M62 54h22"/><path d="M68 54h.01"/></svg>',
+ zen:L+'<circle cx="48" cy="48" r="32"/><path d="M33 49l11 11 20-23"/></svg>'});
+const EMO2ART={'🎯':'goal','🏦':'bank','💵':'cash','📁':'folder','📂':'folder','📅':'cal','📝':'note','🔁':'repeat','🛍️':'bag','🧾':'receipt','💰':'wallet'};
 const emptyHTML=(a,b,s)=>`<div class="empty"><div class="eart">${ART[a]}</div><b>${b}</b>${s}</div>`;
 function timelineHTML(){
   const ds=selDay,td=ymd(new Date()),wd=new Date(ds+'T00:00:00').getDay(),fl=tasks.filter(passF),H=60;
@@ -1640,8 +1700,8 @@ function renderSettings(){
   const grp=(h,x)=>`<div class="sgrp${S.sgo&&S.sgo[h]?' open':''}"><button class="sgh" data-sgt="${h}"><span class="sgic" style="background:${(SGI[h]||['⚙️','#8e8e93'])[1]}">${(SGI[h]||['⚙️'])[0]}</span><span class="sgt">${h}</span><i>›</i></button><div class="sgb"><div class="sgi"><div class="group">${x}</div></div></div></div>`;
   const k=(n,l)=>sw(`data-k="${n}"`,l,S[n]);
   $('#settings').innerHTML=settingsTop()+
-    grp('Appearance',packRow()+(S.pack==='default'?seg('theme','Theme',[['auto','Auto'],['dark','Dark'],['light','Light']]):'')+
-      `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c?'on':''}" aria-label="Accent color"></button>`).join('')}</div></div>`+seg('boxStyle','Task box style',[['compact','Compact'],['comfy','Comfortable'],['detail','Detailed']])+seg('addStyle','Add tasks with',[['button','Big + button'],['bar','Input bar']])+k('anim','Animations')+k('haptics','Haptic feedback')+seg('textSize','Text size',[['normal','Normal'],['large','Large'],['xl','Extra large']])+k('leftHand','Left-handed mode'))+
+    grp('Appearance',k('calm','Calm mode')+packRow()+(S.pack==='default'||S.pack==='glass'?seg('theme','Theme',[['auto','Auto'],['dark','Dark'],['light','Light']]):'')+
+      `<div class="srow col"><span>Accent color</span><div class="dots">${SWATCH.map(c=>`<button data-k="accent" data-v="${c}" style="--c:${c}" class="${S.accent===c&&!S.accentAuto?'on':''}" aria-label="Accent color"></button>`).join('')}<button data-k="accentAuto" data-v="1" class="au${S.accentAuto?' on':''}" aria-label="Auto accent from avatar" title="Auto: follow my avatar color"></button></div>${S.accentAuto&&!(S.pf&&S.pf.av&&S.pf.av.c)?'<span class="sm">Auto uses your avatar color. Pick one in your profile.</span>':''}</div>`+k('todHdr','Time-of-day Home header')+seg('boxStyle','Task box style',[['compact','Compact'],['comfy','Comfortable'],['detail','Detailed']])+seg('addStyle','Add tasks with',[['button','Big + button'],['bar','Input bar']])+k('anim','Animations')+k('haptics','Haptic feedback')+seg('textSize','Text size',[['normal','Normal'],['large','Large'],['xl','Extra large']])+k('leftHand','Left-handed mode'))+
     grp('Reminders',seg('rem','Default reminders for new tasks',OPTS.map(o=>[o[0],SH[o[0]]]),true)+seg('snooze','Snooze length',[[10,'10 min'],[30,'30 min'],[60,'1 hour']])+k('morning','Morning summary')+(S.morning?`<div class="srow"><span>Summary time</span><input class="tin" type="time" data-k="morningTime" value="${S.morningTime}"></div>`:'')+k('weeklyReview','Weekly review (Sunday)')+(S.weeklyReview?`<div class="srow"><span>Review time</span><input class="tin" type="time" data-k="reviewTime" value="${S.reviewTime}"></div>`:'')+btn('notif','Enable notifications'))+
     grp('Tasks',`<div class="srow"><span>Your name</span><input class="tin" id="s-name" placeholder="Optional" value="${esc(S.name)}"></div>`+k('h24','24-hour time')+k('autoPri','Auto high priority when 1 day is left')+seg('ampm','Times like 7:30 with no am/pm',[['contest','PM for contests'],['pm','Always PM'],['am','Always AM']])+k('showDone','Show completed tasks')+seg('noDate','Tasks with no date go to',[['today','Today'],['anytime','Anytime']])+k('tags','Priority, tags and filters'))+
     grp('Money',k('moneyRemind','Daily reminder to log expenses')+(S.moneyRemind?`<div class="srow"><span>Reminder time</span><input class="tin" type="time" data-k="moneyTime" value="${S.moneyTime}"></div>`:'')+seg('monthStart','Budget month starts on day',[[1,'1'],[5,'5'],[10,'10'],[15,'15'],[20,'20'],[25,'25']])+k('hideAmt','Hide amounts')+seg('dailyLimit','Daily spending limit',[[0,'Off'],[100,'₹100'],[200,'₹200'],[300,'₹300'],[500,'₹500']])+k('udharBal','Count udhar in my budget by default'))+
@@ -1649,7 +1709,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.9 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.10 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -1674,7 +1734,7 @@ $('#settings').addEventListener('click',e=>{
   const k=b.dataset.k;if(!k)return;let v=b.dataset.v;
   if(k==='rem'){v=+v;S.rem=S.rem.includes(v)?S.rem.filter(x=>x!==v):S.rem.concat(v).sort((x,y)=>y-x)}
   else S[k]=(k==='snooze'||k==='classMin'||k==='monthStart'||k==='dailyLimit')?+v:v;if(k==='monthStart')mSel=mkey();
-  if(k==='pack'&&PACKS[v]&&PACKS[v].acc)S.accent=PACKS[v].acc;
+  if(k==='pack'&&PACKS[v]&&PACKS[v].acc){S.accent=PACKS[v].acc;S.accentAuto=false}if(k==='accent')S.accentAuto=false;if(k==='accentAuto')S.accentAuto=true;
   buzz(8);saveS();applyTheme();renderSettings();setTimeout(sync,0);render();
   if(k==='autoBackup'&&v!=='off')askFsPerm().then(()=>autoBackup(true)).then(()=>renderSettings());
 });
@@ -1756,7 +1816,7 @@ function mCalc(k){
 }
 const chkTxt=un=>Math.abs(un)<.5?'Budget balanced ✓':un>0?inr(un)+' not assigned to a bucket yet':'Over-allocated by '+inr(-un);
 const txRow=t=>t.mv?`<div class="mtx"><span>${esc(t.desc)}<small>${fmd(t.date)} · moved, not spent</small></span><b>${t.amt<0?'−':'+'}${inr(Math.abs(t.amt))}</b></div>`:`<button class="mtx" data-tx="${t.id}"><span>${esc(t.desc||'Expense')}<small>${t.b&&bkOf(t.b)?esc(bkOf(t.b).name)+' · ':''}${fmd(t.date)}</small></span><b>${t.kind==='inc'?'+':''}${inr(t.amt)}</b></button>`;
-const emptyBox=(ic,t,tx,b)=>`<div class="empty" style="margin-top:6px;padding:22px 16px"><div class="eart" style="font-size:calc(40px*var(--fs))">${ic}</div><b>${t}</b>${tx||''}${b?'<div style="margin-top:12px">'+b+'</div>':''}</div>`;
+const emptyBox=(ic,t,tx,b)=>{const a=t==='Nothing urgent'?'zen':EMO2ART[ic],art=a&&ART[a]?ART[a]:ic;return `<div class="empty" style="margin-top:6px;padding:22px 16px"><div class="eart eart-s">${art}</div><b>${t}</b>${tx||''}${b?'<div style="margin-top:12px">'+b+'</div>':''}</div>`};
 const bkRow=x=>{
   const left=x.al-x.sp,p=x.al>0?x.sp/x.al*100:(x.sp>0?101:0),rc=p>100?'var(--red)':p>=80?'#ff9500':x.bk.color;
   return `<button class="mb mbr" data-bk="${x.bk.id}"><div class="ring" style="--p:${Math.min(100,p).toFixed(0)};--rc:${rc}"><span>${Math.round(p)}%</span></div><div class="mbi"><div class="mbn"><i class="sd" style="background:${x.bk.color}"></i>${esc(x.bk.name)}${x.bk.locked?' 🔒':''}</div><div class="mbs"><span><small>Used</small><b>${inr(x.sp)}</b></span><span><small>Total</small><b>${inr(x.al)}</b></span><span><small>Left</small><b style="color:${left<0?'var(--red)':'inherit'}">${left<0?'−'+inr(-left):inr(left)}</b></span></div></div></button>`};
@@ -1773,7 +1833,7 @@ function renderMoney(){
   const k=mSel,c=mCalc(k),mo=M.months[k],el=$('#money');
   const nav=`<div class="wk"><button id="mo-prev" aria-label="Previous month">‹</button><b>${mlabel(k)}</b><button id="mo-next" aria-label="Next month">›</button></div>`;
   if(!mo){
-    el.innerHTML=nav+`<div class="empty" style="margin-top:26px"><div class="eart" style="font-size:calc(54px*var(--fs))">💰</div><b>Set up this month</b>Enter your monthly salary or pocket money to start.</div><div class="opts"><div class="srow"><span>Monthly income</span><input class="tin" id="mo-inc" type="number" inputmode="decimal" placeholder="0"></div></div><button class="pbtn" data-ma="create">Create month</button>${M.months[prevKey(k)]?'<button class="tbtn" data-ma="copy" style="color:var(--blue)">Copy last month’s budget</button>':''}${!M.accounts.length&&!M.buckets.length?'<button class="tbtn" data-ma="quick" style="color:var(--blue)">Use a quick-start template</button>':''}`;
+    el.innerHTML=nav+`<div class="empty" style="margin-top:26px"><div class="eart">${ART.wallet}</div><b>Set up this month</b>Enter your monthly salary or pocket money to start.</div><div class="opts"><div class="srow"><span>Monthly income</span><input class="tin" id="mo-inc" type="number" inputmode="decimal" placeholder="0"></div></div><button class="pbtn" data-ma="create">Create month</button>${M.months[prevKey(k)]?'<button class="tbtn" data-ma="copy" style="color:var(--blue)">Copy last month’s budget</button>':''}${!M.accounts.length&&!M.buckets.length?'<button class="tbtn" data-ma="quick" style="color:var(--blue)">Use a quick-start template</button>':''}`;
     return;
   }
   const tdc=todayHTML(c),sp=pct(c.spent,c.income),un=c.unassigned,recent=c.tx.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0).slice(0,8);
@@ -2205,16 +2265,19 @@ function onReveal(el,fn){
 }
 const fmtN=n=>(n<0?'-':'')+'₹'+Math.abs(n).toLocaleString('en-IN');
 function animNums(root){
+  bigify(root);
   if(S.anim===false||!window.requestAnimationFrame)return;
   const re=/-?₹\s?-?[\d,]+(\.\d+)?/;
   root.querySelectorAll('.mtot,.mrow b,.macc b,.mbs b').forEach((el,i)=>{
-    const tn=[...el.childNodes].find(n=>n.nodeType===3&&re.test(n.nodeValue));if(!tn)return;
-    const txt=tn.nodeValue,v=parseFloat(txt.match(re)[0].replace(/[^\d.\-]/g,''))||0,k=el.className+'|'+i,from=NP[k]===undefined?0:NP[k];
+    const cu=el.querySelector(':scope>x-cur'),tn=cu?cu.nextSibling:[...el.childNodes].find(n=>n.nodeType===3&&re.test(n.nodeValue));
+    if(!tn||tn.nodeType!==3)return;
+    const txt=tn.nodeValue,v=parseFloat((cu?txt:txt.match(re)[0]).replace(/[^\d.\-]/g,''))||0,k=el.className+'|'+i,from=NP[k]===undefined?0:NP[k];
+    const show=n=>cu?(n<0?'-':'')+Math.abs(n).toLocaleString('en-IN'):txt.replace(re,fmtN(n));
     if(from===v){NP[k]=v;return}
-    tn.nodeValue=txt.replace(re,fmtN(from));
+    tn.nodeValue=show(from);
     onReveal(el,()=>{NP[k]=v;const t0=performance.now();
       (function step(t){const p=Math.min(1,(t-t0)/600),e=1-Math.pow(1-p,3),cur=Math.round(from+(v-from)*e);
-        tn.nodeValue=p>=1?txt:txt.replace(re,fmtN(cur));
+        tn.nodeValue=p>=1?txt:show(cur);
         if(p<1&&tn.isConnected)requestAnimationFrame(step)})(t0)});
   });
 }
@@ -2229,6 +2292,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.26.02',t:'A calmer, crisper look',i:["Money amounts use equal-width digits with a smaller rupee sign and decimals","The Home header changes colour through the day","New Glass theme, plus Sunset, Forest, Ocean and Mono packs","Calm mode: no gradients, one accent colour and more space","Line drawings replace emoji on empty screens","Scroll on Money to see how much is left in the top bar","Auto accent colour that follows your avatar colour"]},
  {v:'2026.11.26.01',t:'Smoother, snappier and easier to swipe',i:["Pages slide in the direction you tap, and you can swipe left or right to change tabs","A highlight glides between choices on switches and option buttons","Lists slide in one after another and deleted items collapse smoothly","Soft ticks for taps, a firmer buzz for success and a double buzz for warnings","Tabs open instantly: only the page you are on is drawn","Drag a sheet down from anywhere to close it; swipe a task left a little to snooze it to tomorrow, or all the way to delete"]},
  {v:'2026.11.16.16',t:'A Notepad, a new bottom bar and a status line',i:["A Notepad tab: write anything, pin, search, checklists and share","The bottom bar is now Tasks, Money, Home, Notepad and Menu, and Menu opens Progress and Profile","A status line tells you when you are offline or an update is ready"]},
  {v:'2026.11.16.15',t:'Your profile, a welcome setup, help and privacy tools',i:["A full Profile: photo or emoji, name, mobile, email, birthday, college, city and a short bio","A welcome setup for new installs","Help and About with FAQs, feedback and sharing","Privacy and data: auto-lock time, export expenses as CSV, delete all data"]},
@@ -2438,7 +2502,7 @@ let scTick=false;
 function updScroll(){
   const y=window.scrollY||document.documentElement.scrollTop||0,sp=Math.max(0,Math.min(1,(y-8)/72));
   document.documentElement.style.setProperty('--sp',sp.toFixed(3));
-  const t=$('#ttl'),m=$('#mbt');if(t&&m&&m.textContent!==t.textContent)m.textContent=t.textContent;
+  const t=$('#ttl'),m=$('#mbt'),want=(sp>.5&&mctx())||(t?t.textContent:'');if(m&&m.textContent!==want)m.textContent=want;
 }
 addEventListener('scroll',()=>{if(scTick)return;scTick=true;requestAnimationFrame(()=>{scTick=false;updScroll()})},{passive:true});
 function burst(chk){
@@ -2485,7 +2549,7 @@ $('#pf').addEventListener('click',e=>{
     if(dob&&(dob>ymd(new Date())||dob<'1900-01-01')){err.textContent='Enter a valid date of birth';$('#pf-b').focus();return}
     const p=pfd();S.name=n;p.phone=ph?okPhone(ph):'';p.email=em;p.dob=dob;p.college=$('#pf-c').value.trim();p.course=$('#pf-k').value.trim();p.city=$('#pf-y').value.trim();p.about=$('#pf-a').value.trim();
     p.av=PFA.k==='initial'&&!PFA.c?null:{k:PFA.k,e:PFA.e,c:PFA.c};p.photo=PFA.photo||'';
-    saveS();renderSettings();render();closeTop();flash('Profile saved');
+    saveS();applyTheme();renderSettings();render();closeTop();flash('Profile saved');
   }
 });
 $('#pf').addEventListener('input',e=>{if(e.target.id==='pf-n')drawPf()});
@@ -2523,7 +2587,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.9 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.10 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -2967,6 +3031,51 @@ showSheets=function(){
   });
 })();
 
+/* ===== v7.10: look layer (big numbers, time-of-day header, money bar context) ===== */
+/* 7. big numbers: smaller rupee sign and decimals, equal-width digits */
+const MRE=/(-?)₹(\s?)(-?)([\d,]+)(\.\d+)?/;
+function bigify(root){
+  if(!root)return;
+  root.querySelectorAll('.mtot,.mrow b,.macc b,.mbs b,.ht b,.wsh b,.hmoney b').forEach(el=>{
+    if(el.querySelector(':scope>x-cur'))return;
+    const tn=[...el.childNodes].find(n=>n.nodeType===3&&MRE.test(n.nodeValue));if(!tn)return;
+    const m=tn.nodeValue.match(MRE),pre=tn.nodeValue.slice(0,m.index),post=tn.nodeValue.slice(m.index+m[0].length),f=document.createDocumentFragment();
+    if(pre)f.appendChild(document.createTextNode(pre));
+    const cu=document.createElement('x-cur');cu.textContent='₹';f.appendChild(cu);
+    f.appendChild(document.createTextNode((m[1]||m[3]||'')+m[4]));
+    if(m[5]){const d=document.createElement('x-dec');d.textContent=(m[5]+'0').slice(0,3);f.appendChild(d)}
+    if(post)f.appendChild(document.createTextNode(post));
+    el.replaceChild(f,tn);
+  });
+}
+/* 8. Home header follows the time of day: warm at sunrise, bright by day, deep blue at night */
+const TOD=[{h:6.5,c:['#ff8f7a','#ff5e8a']},{h:8,c:['#f5709a','#a85ce0']},{h:10,c:['#7a74f0','#37a8e8']},{h:12.5,c:['#2d8cff','#1fa5d8']},{h:16,c:['#2f86f5','#2fb0d0']},{h:17.5,c:['#7a6ae0','#e0709a']},{h:18.5,c:['#ff7a45','#d94a8a']},{h:20,c:['#6d3a9c','#2b2a7a']},{h:22,c:['#1a2160','#2b1f6e']},{h:23.5,c:['#101a4a','#2b1f6e']},{h:29.5,c:['#101a4a','#2b1f6e']},{h:30.5,c:['#ff8f7a','#ff5e8a']}];
+const hx=s=>[1,3,5].map(i=>parseInt(s.slice(i,i+2),16));
+/* blend between the two nearest stops of the day (night is flat from 23:30 to 05:30) */
+function todColors(){
+  const d=new Date();let x=d.getHours()+d.getMinutes()/60;if(x<6.5)x+=24;
+  let i=0;while(i<TOD.length-2&&x>=TOD[i+1].h)i++;
+  const a=TOD[i],b=TOD[i+1],t=Math.max(0,Math.min(1,(x-a.h)/(b.h-a.h)));
+  const m=a.c.map((c,j)=>{const p=hx(c),q=hx(b.c[j]);return p.map((v,k)=>Math.round(v+(q[k]-v)*t))});
+  const ring=m[0].map((v,k)=>Math.round(v*.6+m[1][k]*.4));
+  return [m[0],m[1],ring].map(c=>'rgb('+c.join(',')+')');
+}
+function todHdr(h){
+  const hh=h&&h.querySelector('.hh');if(!hh)return;
+  if(!S.todHdr||S.calm){['--hh1','--hh2','--hhr'].forEach(p=>hh.style.removeProperty(p));return}
+  const c=todColors();hh.style.setProperty('--hh1',c[0]);hh.style.setProperty('--hh2',c[1]);hh.style.setProperty('--hhr',c[2]);
+}
+const _renderHome=renderHome;
+renderHome=function(){const r=_renderHome.apply(this,arguments),h=$('#home');bigify(h);todHdr(h);return r};
+/* 13. Money: the slim top bar shows what is left once you scroll */
+var MCTX='';const MC={k:'',v:''};
+function mctx(){
+  if(tab!=='money')return '';
+  const k=dver+'|'+mkey()+'|'+S.hideAmt;
+  if(MC.k!==k){MC.k=k;try{const c=mCalc(mkey());MC.v=c.income>0?(c.remaining<0?inr(-c.remaining)+' over':inr(c.remaining)+' left'):''}catch(e){MC.v=''}}
+  return MC.v;
+}
+
 /* ===== start ===== */
 const IS_NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
@@ -2986,7 +3095,7 @@ maybeWizard();updStatus();
 </script>
 <script>
 (function(){
-  var BV='2026.11.26.01';window.__BV=BV;
+  var BV='2026.11.26.02';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
