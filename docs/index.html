@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.16.15'-->
-<meta name="app-version" content="2026.11.16.15">
+<!--var BV='2026.11.16.16'-->
+<meta name="app-version" content="2026.11.16.16">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -407,8 +407,8 @@ body[data-tab=money] .dock,body[data-tab=money] #cbtn,body[data-tab=money] #sbtn
 /* even spacing */
 header{padding-bottom:8px}
 body:not([data-tab=today]):not([data-tab=upcoming]) .count{display:none}
-#home:not([hidden]),#progress:not([hidden]),#money:not([hidden]),#settings:not([hidden]){display:flex;flex-direction:column;gap:10px}
-#home>*,#progress>*,#money>*,#settings>*{margin:0!important}
+#home:not([hidden]),#progress:not([hidden]),#money:not([hidden]),#settings:not([hidden]),#notes:not([hidden]){display:flex;flex-direction:column;gap:10px}
+#home>*,#progress>*,#money>*,#settings>*,#notes>*{margin:0!important}
 #home>h2,#progress>h2,#money>h2{margin:10px 4px -2px!important}
 #money>.mdots{margin-top:-4px!important}
 #home>.htiles,#money>.mtop{width:100%;min-width:0}
@@ -419,6 +419,16 @@ button.prof{width:100%;text-align:left;color:var(--txt)}.prof .pav{flex:0 0 54px
 .pfx{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0}.pfx .avt{width:84px;height:84px;font-size:44px}.pfx .pcb{width:70%}
 .pol{margin:8px 0;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px}.pol summary{font-weight:600;cursor:pointer}.pol p{margin:8px 0 0;font-size:calc(13px*var(--fs));color:var(--sub);line-height:1.5}
 .faq{margin:8px 0;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px}.faq summary{font-weight:600;cursor:pointer}.faq p{margin:8px 0 0;font-size:calc(14px*var(--fs));color:var(--sub);line-height:1.5}
+
+body[data-tab=notes] #cbtn,body[data-tab=notes] #sbtn,body[data-tab=notes] .dock{display:none}
+#mpop:not([hidden]){display:block}#mpop{position:fixed;right:12px;bottom:calc(var(--tabh) + 10px + env(safe-area-inset-bottom));background:var(--card);border-radius:18px;box-shadow:0 14px 44px rgba(0,0,0,.28);padding:6px;z-index:7;min-width:178px;transform-origin:bottom right;animation:mpIn .2s var(--spring)}
+#mpop button{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:13px;font-size:calc(16px*var(--fs));font-weight:600;color:var(--txt);text-align:left}#mpop button:active{background:var(--sep)}#mpop button span{font-size:20px}
+@keyframes mpIn{from{opacity:0;transform:scale(.85) translateY(8px)}to{opacity:1;transform:none}}
+#stat:not([hidden]){display:block}#stat{position:fixed;top:calc(max(env(safe-area-inset-top,0px),28px) + 6px);left:50%;transform:translateX(-50%);padding:6px 14px;border-radius:999px;font-size:calc(12px*var(--fs));font-weight:700;z-index:8;box-shadow:0 6px 18px rgba(0,0,0,.2);color:#fff;white-space:nowrap;animation:fadeUp .3s var(--spring)}#stat.up{background:var(--blue);cursor:pointer}#stat.off{background:#8e8e93}
+.nbar{display:flex;gap:8px}.nbar .tin{flex:1;min-width:0;text-align:left;padding:12px 14px;border-radius:14px;background:var(--card);box-shadow:var(--shadow)}.nnew{padding:0 16px;border-radius:14px;background:var(--blue);color:#fff;font-weight:700;box-shadow:0 6px 16px color-mix(in srgb,var(--blue) 30%,transparent)}
+.ngrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ncard{display:flex;flex-direction:column;gap:5px;text-align:left;padding:14px;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);color:var(--txt);min-height:110px;overflow:hidden}.ncard.pin{background:color-mix(in srgb,#ffcc00 16%,var(--card))}.ncard b{font-size:calc(15px*var(--fs));overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}.ncard span{flex:1;color:var(--sub);font-size:calc(13px*var(--fs));white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;word-break:break-word}.ncard small{color:var(--sub);font-size:calc(11px*var(--fs));font-weight:600}.ncard:active{transform:scale(.97)}
+.nth{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.nta{display:flex;gap:2px}.nta button{width:40px;height:40px;border-radius:12px;font-size:19px;color:var(--txt)}.nta button:active{background:var(--sep)}.nta button.on{background:color-mix(in srgb,#ffcc00 28%,transparent)}
+#nt-t{width:100%;box-sizing:border-box;min-height:48vh;border:0;outline:0;background:transparent;font:inherit;font-size:calc(17px*var(--fs));color:var(--txt);resize:none;line-height:1.55;padding:6px 2px}
 </style>
 </head>
 <body>
@@ -439,6 +449,7 @@ button.prof{width:100%;text-align:left;color:var(--txt)}.prof .pav{flex:0 0 54px
   <section id="progress" hidden></section>
     <section id="money" hidden></section>
     <section id="home" hidden></section>
+    <section id="notes" hidden></section>
   <section id="settings" hidden></section>
 </div>
 <div class="dock"><div class="dock-in">
@@ -447,12 +458,14 @@ button.prof{width:100%;text-align:left;color:var(--txt)}.prof .pav{flex:0 0 54px
   <div class="field"><input id="in" type="text" placeholder="tomorrow 7:30-10:30 contest on Codeforces" enterkeyhint="done" autocomplete="off"><button id="add" aria-label="Add task">+</button></div>
 </div></div>
 <div id="mbar"><span id="mbt"></span></div>
+<div id="mpop" hidden><button data-mn="progress"><span>📊</span>Progress</button><button data-mn="settings"><span>👤</span>Profile</button></div>
+<div id="stat" hidden></div>
 <nav class="tabs">
   <button data-tab="today"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M16 2v3M3 9h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg><span>Tasks</span></button>
   <button data-tab="money"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13a2 2 0 012 2v2H5a2 2 0 01-2-2zM3 7v11a2 2 0 002 2h14a2 2 0 002-2v-2M21 9v4h-4a2 2 0 010-4z"/></svg><span>Money</span></button>
   <button data-tab="home"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg><span>Home</span></button>
-  <button data-tab="progress"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V11M12 20V4M18 20v-6"/></svg><span>Progress</span></button>
-  <button data-tab="settings"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>Settings</span></button>
+  <button data-tab="notes"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1zM14 3v5h5M8 12h8M8 16h6"/></svg><span>Notepad</span></button>
+  <button data-menu="1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="19" cy="12" r="1.7" fill="currentColor"/></svg><span>Menu</span></button>
 </nav>
 <div class="ov" id="ov"></div>
 <button class="fab" id="fab" aria-label="Add task"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -679,6 +692,11 @@ button.prof{width:100%;text-align:left;color:var(--txt)}.prof .pav{flex:0 0 54px
   <details class="pol"><summary>Terms of use</summary><p>TaskFlow is provided as is, without warranty. Keep your own backups, because data on a lost or reset phone cannot be recovered by the developer. Reminders depend on your phone's notification and battery settings. By using the app you agree to use it lawfully and at your own risk.</p></details>
 </div>
 
+<div class="sheet" id="npad"><div class="grab"></div>
+  <div class="nth"><span id="nt-d" class="sm"></span><div class="nta"><button id="nt-cl" aria-label="Checklist item">☐</button><button id="nt-ck" aria-label="Tick or untick">☑</button><button id="nt-pin" aria-label="Pin">📌</button><button id="nt-sh" aria-label="Share">↗</button><button id="nt-del" aria-label="Delete">🗑</button></div></div>
+  <textarea id="nt-t" placeholder="Start writing…"></textarea>
+</div>
+
 <div class="sheet" id="mx"><div class="grab"></div><h3 id="mx-h">Add expense</h3>
   <div class="seg" id="mx-k" style="margin-top:12px"><button data-k="exp">Expense</button><button data-k="inc">Income</button></div>
   <div class="field q" style="margin-top:12px"><input id="mx-nl" type="text" placeholder="ammi 1000 · chai 20 misc · gpay 250 shopping" autocomplete="off"></div><div class="qrow" id="mx-fq"></div>
@@ -769,7 +787,7 @@ const saveS=()=>jset(SKEY,S);
 const PACKS={default:{n:'Default'},amoled:{n:'AMOLED',mode:'dark',acc:'#0a84ff',bg:'#000',cd:'#1c1c1e'},paper:{n:'Paper',mode:'light',acc:'#b8733a',bg:'#f6f1e7',cd:'#fffaf0'},midnight:{n:'Midnight',mode:'dark',acc:'#5b8cff',bg:'#0b1020',cd:'#141b33'},sakura:{n:'Sakura',mode:'light',acc:'#e8548a',bg:'#fff1f5',cd:'#fffafc'}};
 function applyBackup(j){
   tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
-  if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[]},j.money);saveM()}
+  if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[],notes:[]},j.money);saveM()}
   if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}
   render();renderSettings();
 }
@@ -796,7 +814,7 @@ async function checkUpdate(manual){
       const code=app.textContent;d.body.querySelectorAll('script').forEach(x=>x.remove());
       await autoBackup(true);
       localStorage.setItem('taskflow.ota',JSON.stringify({v:m[1],code,body:d.body.innerHTML,css:[...d.head.querySelectorAll('style')].map(x=>x.textContent).join('\n')}));
-      flash('Update '+m[1]+' is ready','Restart now',()=>location.reload());
+      flash('Update '+m[1]+' is ready','Restart now',()=>location.reload());updStatus();
     }else if(manual)flash('You already have the latest version');
   }catch(e){if(manual)flash("Couldn't check for updates. Check the link and your internet.")}
 }
@@ -1044,7 +1062,7 @@ async function askFsPerm(){try{const f=FS();if(f&&f.requestPermissions)await f.r
 const subj=()=>null; /* old tasks may carry a subject id; ignored */
 /* ===== money data ===== */
 const MKEY='taskflow.money';
-let M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[]},jget(MKEY,{}));
+let M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[],notes:[]},jget(MKEY,{}));
 const saveM=()=>jset(MKEY,M);
 const inr=n=>S.hideAmt?'₹ ••••':'₹'+(Math.round(+n*100)/100).toLocaleString('en-IN');
 function mkey(d){const x=new Date(d||new Date());if(x.getDate()<(S.monthStart||1))x.setMonth(x.getMonth()-1,1);return x.getFullYear()+'-'+pad(x.getMonth()+1)}
@@ -1096,7 +1114,7 @@ async function autoBackup(force){
 async function restore(f){
   try{const j=JSON.parse(await f.text());if(!Array.isArray(j.tasks))throw 0;
     if(confirm('Replace your current tasks with this backup ('+j.tasks.length+' tasks)?')){tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
-      if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[]},j.money);saveM()}
+      if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[],notes:[]},j.money);saveM()}
       if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}render();renderSettings()}}
   catch(_){alert('That file is not a TaskFlow backup.')}
 }
@@ -1398,14 +1416,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',rn:'#rn',pf:'#pf',wz:'#wz',hp:'#hp',pv:'#pv',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',rn:'#rn',npad:'#npad',pf:'#pf',wz:'#wz',hp:'#hp',pv:'#pv',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='rn')drawRc();if(top==='pf')drawPf();if(top==='hp')drawHp();if(top==='pv')drawPv();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='rn')drawRc();if(top!=='npad'&&tab==='notes')renderNotes();if(top==='pf')drawPf();if(top==='hp')drawHp();if(top==='pv')drawPv();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1417,13 +1435,13 @@ $('#ov').addEventListener('click',closeTop);
 function setTab(t,np){
   if(!np&&t!==tab)history.pushState({tab:t,stack:[]},'');
   tab=t;document.body.dataset.tab=t;
-  $('#ttl').textContent={home:'Home',today:'Tasks',upcoming:'Upcoming',money:'Money',progress:'Progress',settings:'Settings'}[t];
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
-  $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';$('#home').hidden=t!=='home';
-  if(t==='progress')renderProgress();if(t==='settings')renderSettings();if(t==='money'){$('#money').dataset.fresh='1';renderMoney()}
+  $('#ttl').textContent={home:'Home',today:'Tasks',upcoming:'Upcoming',money:'Money',progress:'Progress',settings:'Profile',notes:'Notepad'}[t];
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.menu!==undefined?(t==='progress'||t==='settings'):b.dataset.tab===t));
+  $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';$('#home').hidden=t!=='home';$('#notes').hidden=t!=='notes';
+  if(t==='notes')renderNotes();if(t==='progress')renderProgress();if(t==='settings')renderSettings();if(t==='money'){$('#money').dataset.fresh='1';renderMoney()}
   render();window.scrollTo(0,0);
 }
-$('.tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){buzz(8);setTab(b.dataset.tab)}});
+$('.tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){buzz(8);if(b.dataset.menu!==undefined)toggleMenu();else{closeMenu();setTab(b.dataset.tab)}}});
 
 /* ===== task details ===== */
 function drawDetails(){
@@ -1580,7 +1598,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.7 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.8 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -2160,6 +2178,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.16.16',t:'A Notepad, a new bottom bar and a status line',i:["A Notepad tab: write anything, pin, search, checklists and share","The bottom bar is now Tasks, Money, Home, Notepad and Menu, and Menu opens Progress and Profile","A status line tells you when you are offline or an update is ready"]},
  {v:'2026.11.16.15',t:'Your profile, a welcome setup, help and privacy tools',i:["A full Profile: photo or emoji, name, mobile, email, birthday, college, city and a short bio","A welcome setup for new installs","Help and About with FAQs, feedback and sharing","Privacy and data: auto-lock time, export expenses as CSV, delete all data"]},
  {v:'2026.11.16.14',t:'Even spacing, a Tasks tab and a flame streak',i:["Fixed the big gap in the Tasks page: a style clash stretched the week bar","Removed the duplicate greeting; every page now uses the same even spacing","Today is now called Tasks","The streak header on Progress is flame colored"]},
  {v:'2026.11.16.13',t:'Satisfying check-offs, shrinking titles and accent colors',i:["Completing a task pops the circle, sparkles and strikes the title","Page titles shrink into a slim bar as you scroll","Cards, headers and charts now follow the accent color you pick in Settings"]},
@@ -2320,14 +2339,14 @@ function renderHome(){
   ${ws.html?ws.html:''}
   <h2>Focus${L.length?' <em class="cn">'+L.length+'</em>':''}</h2>${L.length?L.map(t=>`<div class="hc" data-hid="${t.id}"><button class="chk" data-hdone="${t.id}" aria-label="Done"></button><div class="hcm"><b>${esc(t.title)}</b>${dlTag(t)}${cntRow(t)}</div></div>`).join(''):emptyBox('🎯','Nothing urgent','Add a task with a date or a counter and it will show up here.','<button class="chipbtn" data-hq="task">Add a task</button>')}
   ${soon.length?'<h2>Coming up</h2><div class="group">'+soon.map(t=>{const d=tDays(t.date);return `<button class="cu" data-hid="${t.id}"><span class="cud"><b>${new Date(t.date+'T00:00:00').getDate()}</b>${new Date(t.date+'T00:00:00').toLocaleDateString('en-IN',{month:'short'})}</span><span class="cut">${esc(t.title)}</span><em>${d===0?'today':d===1?'tomorrow':'in '+d+' days'}</em></button>`}).join('')+'</div>':''}
-  <h2>Shortcuts</h2><div class="hgrid">${gi('task','➕','Add task')}${gi('exp','💸','Add expense')}${gi('cal','📅','Calendar')}${gi('goals','🎯','Goals')}${gi('subs','🔁','Subscriptions')}${gi('cash','💵','Cash')}</div>`;
+  <h2>Shortcuts</h2><div class="hgrid">${gi('task','➕','Add task')}${gi('exp','💸','Add expense')}${gi('cal','📅','Calendar')}${gi('goals','🎯','Goals')}${gi('subs','🔁','Subscriptions')}${gi('cash','💵','Cash')}${gi('notes','📝','Notepad')}${gi('progress','📊','Progress')}${gi('profile','👤','Profile')}</div>`;
 }
 document.addEventListener('click',e=>{
   const q=x=>e.target.closest&&e.target.closest(x);let b;
   if(b=q('[data-inc]')){e.stopPropagation();cntAdd(b.dataset.inc,1);return}
   if(b=q('[data-log]')){e.stopPropagation();const v=parseFloat(prompt('How many did you finish? It is added to your count.','1'));if(v>0)cntAdd(b.dataset.log,Math.round(v));return}
   if(b=q('[data-hdone]')){e.stopPropagation();const t=tasks.find(x=>x.id===b.dataset.hdone);if(t&&!b.__d){b.__d=1;buzz(12);b.classList.add('on');const c=b.closest('.hc');if(c)c.classList.add('cdone');burst(b);setTimeout(()=>{pushUndo('Task completed');logDone(t);t.done=true;Store.save(tasks);render()},S.anim===false?0:420)}return}
-  if(b=q('[data-hq]')){e.stopPropagation();const k=b.dataset.hq;if(k==='task')$('#fab').click();else if(k==='exp')openExp('');else if(k==='cal'){const n=new Date();CAL={y:n.getFullYear(),m:n.getMonth(),sel:ymd(n)};openSheet('cal')}else if(k==='goals'){GE='';fillGoal(null);openSheet('sg')}else if(k==='subs'){SBE='';fillSub(null);openSheet('sb')}else if(k==='cash')openSheet('cs');return}
+  if(b=q('[data-hq]')){e.stopPropagation();const k=b.dataset.hq;if(k==='task')$('#fab').click();else if(k==='exp')openExp('');else if(k==='cal'){const n=new Date();CAL={y:n.getFullYear(),m:n.getMonth(),sel:ymd(n)};openSheet('cal')}else if(k==='goals'){GE='';fillGoal(null);openSheet('sg')}else if(k==='subs'){SBE='';fillSub(null);openSheet('sb')}else if(k==='cash')openSheet('cs');else if(k==='notes')setTab('notes');else if(k==='progress')setTab('progress');else if(k==='profile')openProfile();return}
   if(b=q('.hav')){e.stopPropagation();openProfile();return}
   if(b=q('[data-od]')){e.stopPropagation();if(b.dataset.od==='review')setTab('today');else{const td=ymd(new Date()),L=tasks.filter(t=>!t.done&&!t.repeat&&t.date&&!t.any&&t.date<td);pushUndo('Overdue tasks moved');L.forEach(t=>{t.date=td;delete t.fired});Store.save(tasks);render();flash(L.length+(L.length===1?' task':' tasks')+' moved to today')}return}
   if(b=q('[data-hsh]')){e.stopPropagation();const k=b.dataset.hsh;if(k==='today'||k==='money')setTab(k);else if(k==='cs')openSheet('cs');else if(k==='ml'){LE=null;fillLoan(null);openSheet('ml')}else if(k==='sb'){SBE='';fillSub(null);openSheet('sb')}else if(k==='sg'){GE='';fillGoal(null);openSheet('sg')}return}
@@ -2452,7 +2471,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.7 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.8 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -2494,6 +2513,60 @@ $('#pv').addEventListener('click',e=>{
     if(!confirm('Delete ALL your tasks, money, profile and settings from this phone? A backup file is saved first if possible.'))return;
     const v=prompt('Type DELETE to confirm');if(v&&v.trim().toUpperCase()==='DELETE')wipeAll();else flash('Nothing was deleted');
   }
+});
+/* ===== menu, status line, notepad ===== */
+function toggleMenu(){const m=$('#mpop');m.hidden=!m.hidden}
+function closeMenu(){const m=$('#mpop');if(m)m.hidden=true}
+document.addEventListener('click',e=>{const m=$('#mpop');if(!m||m.hidden)return;const b=e.target.closest&&e.target.closest('[data-mn]');if(b){setTab(b.dataset.mn);closeMenu();return}if(!e.target.closest('#mpop,[data-menu]'))closeMenu()});
+function updStatus(){
+  const el=$('#stat');if(!el)return;let m='',k='',o='';
+  try{const x=JSON.parse(localStorage.getItem('taskflow.ota')||'null');if(x&&x.v>window.__BV)o=x.v}catch(e){}
+  if(o){m='⬆ Update ready · tap to restart';k='up'}else if(navigator.onLine===false){m='📡 Offline · everything still works';k='off'}
+  el.hidden=!m;el.className=k;el.dataset.k=k;el.textContent=m;
+}
+addEventListener('online',updStatus);addEventListener('offline',updStatus);
+$('#stat').addEventListener('click',()=>{if($('#stat').dataset.k==='up')location.reload()});
+let NT=null,NQ='';
+const ntDate=ts=>{const d=new Date(ts),n=new Date();return d.toDateString()===n.toDateString()?d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'}):d.toLocaleDateString('en-IN',{day:'numeric',month:'short'})};
+function renderNotes(){
+  const el=$('#notes');if(!el)return;M.notes=(M.notes||[]).filter(n=>(n.t||'').trim());
+  const L=M.notes.slice().sort((a,b)=>(b.pin?1:0)-(a.pin?1:0)||b.u-a.u);
+  el.innerHTML=`<div class="nbar"><input class="tin" id="nt-q" placeholder="Search notes" value="${esc(NQ)}" autocomplete="off"><button class="nnew" data-nn="new">＋ New</button></div>`
+   +(L.length?`<div class="ngrid">${L.map(n=>{const ln=n.t.split('\n').filter(x=>x.trim());return `<button class="ncard${n.pin?' pin':''}" data-nid="${n.id}"><b>${esc((ln[0]||'').slice(0,80))}</b><span>${esc(ln.slice(1).join('\n').slice(0,160))}</span><small>${n.pin?'📌 ':''}${ntDate(n.u)}</small></button>`}).join('')}</div>`:emptyBox('📝','Your notepad is empty','Write anything: ideas, lists, links, reminders.','<button class="chipbtn" data-nn="new">Write a note</button>'));
+  filterNotes();
+}
+function filterNotes(){const q=NQ.trim().toLowerCase();document.querySelectorAll('#notes .ncard').forEach(c=>c.hidden=!!q&&!c.textContent.toLowerCase().includes(q))}
+$('#notes').addEventListener('input',e=>{if(e.target.id==='nt-q'){NQ=e.target.value;filterNotes()}});
+$('#notes').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.nn==='new')openNote(null);else if(b.dataset.nid)openNote(b.dataset.nid);
+});
+function openNote(id){
+  NT=id;const n=id&&(M.notes||[]).find(x=>x.id===id);
+  $('#nt-t').value=n?n.t:'';$('#nt-d').textContent=n?'Edited '+ntDate(n.u):'New note';$('#nt-pin').classList.toggle('on',!!(n&&n.pin));
+  openSheet('npad');setTimeout(()=>{const t=$('#nt-t');t.focus();t.setSelectionRange(t.value.length,t.value.length)},350);
+}
+function ntSave(){
+  const v=$('#nt-t').value;M.notes=M.notes||[];let n=NT&&M.notes.find(x=>x.id===NT);
+  if(!n){if(!v.trim())return null;n={id:uid(),t:'',c:Date.now(),u:Date.now(),pin:false};M.notes.unshift(n);NT=n.id}
+  n.t=v;n.u=Date.now();saveM();$('#nt-d').textContent='Saved '+ntDate(n.u);return n;
+}
+function ntLine(fn){
+  const t=$('#nt-t'),v=t.value,p=t.selectionStart,a=v.lastIndexOf('\n',p-1)+1;let z=v.indexOf('\n',p);if(z<0)z=v.length;
+  const nl=fn(v.slice(a,z));t.value=v.slice(0,a)+nl+v.slice(z);const c=a+nl.length;t.setSelectionRange(c,c);t.focus();ntSave();
+}
+$('#nt-t').addEventListener('input',ntSave);
+$('#nt-t').addEventListener('keydown',e=>{
+  if(e.key!=='Enter'||e.shiftKey)return;const t=e.target,v=t.value,p=t.selectionStart,a=v.lastIndexOf('\n',p-1)+1,ln=v.slice(a,p);
+  if(/^[☐☑] /.test(ln)){e.preventDefault();if(ln.length<=2){t.value=v.slice(0,a)+v.slice(p);t.setSelectionRange(a,a)}else{t.value=v.slice(0,p)+'\n☐ '+v.slice(p);t.setSelectionRange(p+3,p+3)}ntSave()}
+});
+$('#npad').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='nt-cl')ntLine(l=>/^[☐☑] /.test(l)?l.slice(2):'☐ '+l);
+  else if(b.id==='nt-ck')ntLine(l=>l.startsWith('☐ ')?'☑ '+l.slice(2):l.startsWith('☑ ')?'☐ '+l.slice(2):'☑ '+l);
+  else if(b.id==='nt-pin'){const n=ntSave();if(!n){flash('Write something first');return}n.pin=!n.pin;saveM();b.classList.toggle('on',n.pin);flash(n.pin?'Pinned to the top':'Unpinned')}
+  else if(b.id==='nt-sh'){const v=$('#nt-t').value.trim();if(!v)return;if(navigator.share)navigator.share({text:v}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(v).then(()=>flash('Note copied')).catch(()=>prompt('Copy this note:',v));else prompt('Copy this note:',v)}
+  else if(b.id==='nt-del'){const n=NT&&M.notes.find(x=>x.id===NT);if(!n){closeTop();return}if(confirm('Delete this note?')){M.notes=M.notes.filter(x=>x.id!==NT);NT=null;saveM();closeTop();flash('Note deleted')}}
 });
 /* ===== planned purchases ===== */
 function drawWish(){
@@ -2682,12 +2755,12 @@ if(!S.nm2){S.nm2=1;if(!S.name)S.name='Umar';saveS()}
 setTab('home',true);tick();sync();setTimeout(()=>autoBackup(false),4000);setTimeout(checkEmptyRestore,1800);setTimeout(checkWhatsNew,2600);setTimeout(()=>checkUpdate(false),7000);
 try{localStorage.setItem('taskflow.ota.ok',window.__BV)}catch(e){}
 if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(()=>openSheet('intro'),450)}}
-maybeWizard();
+maybeWizard();updStatus();
 
 </script>
 <script>
 (function(){
-  var BV='2026.11.16.15';window.__BV=BV;
+  var BV='2026.11.16.16';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
