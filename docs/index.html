@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.26.02'-->
-<meta name="app-version" content="2026.11.26.02">
+<!--var BV='2026.11.26.03'-->
+<meta name="app-version" content="2026.11.26.03">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
 <link rel="manifest" href="manifest.webmanifest">
@@ -491,6 +491,111 @@ body.calm .srow{padding-top:14px;padding-bottom:14px}
 .hh h2{color:#fff}
 :root[data-pack=glass] .ht{background:rgba(255,255,255,.72);border:1px solid var(--sep)}
 :root[data-pack=glass][data-theme=dark] .ht{background:rgba(255,255,255,.12)}
+/* ===== v7.11 features ===== */
+.ico{width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+.ht>span .ico{width:24px;height:24px;color:var(--blue)}
+.hgrid button>span .ico{width:26px;height:26px;color:var(--blue)}
+.sgic .ico{width:18px;height:18px;color:#fff}
+.qt>span .ico{width:22px;height:22px}
+.ncard .ico{width:13px;height:13px}
+/* 16. add anything */
+.aab{margin:12px 0 4px}
+.aai{display:flex;gap:8px;align-items:center;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:6px 6px 6px 14px}
+.aai input{flex:1;min-width:0;background:none;border:0;outline:0;font-size:calc(16px*var(--fs));color:var(--txt);padding:8px 0}
+.aai button{width:38px;height:38px;border-radius:12px;background:var(--blue);color:#fff;display:grid;place-items:center;flex:none}
+.aai button .ico{width:20px;height:20px}
+.aap{display:flex;align-items:center;gap:8px;margin:8px 4px 0;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--blue) 12%,var(--card));color:var(--blue);font-size:calc(14px*var(--fs));font-weight:600;max-width:100%;text-align:left}
+.aap[hidden]{display:none}
+.aap span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aap em{font-style:normal;opacity:.65;font-weight:500}
+/* EMI, insights, habits on Home */
+.hx{display:flex;flex-direction:column;gap:10px;margin:8px 0 0}
+.emic,.fcast{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:var(--card);box-shadow:var(--shadow)}
+.emic.late,.fcast.bad{background:color-mix(in srgb,var(--red) 12%,var(--card))}
+.emic-i,.fci{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--blue) 14%,transparent);color:var(--blue)}
+.fcast.bad .fci{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.emic div,.fcast div{flex:1;min-width:0}
+.emic b,.fcast b{display:block}
+.emic small,.fcast small{color:var(--sub);display:block;font-size:calc(13px*var(--fs))}
+.emic button{background:var(--blue);color:#fff;padding:9px 14px;border-radius:12px;font-weight:600;font-size:calc(14px*var(--fs));flex:none}
+.fcast{margin:10px 0}
+.ins{display:flex;flex-direction:column;gap:8px}
+.inscd{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);font-size:calc(14px*var(--fs));font-weight:500}
+.inscd span{color:var(--blue);display:grid}
+.hbr{display:flex;flex-wrap:wrap;gap:8px}
+.hbc{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);font-weight:600;font-size:calc(14px*var(--fs));color:var(--txt)}
+.hbc i{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--sub);display:grid;place-items:center;color:transparent}
+.hbc i .ico{width:11px;height:11px;stroke-width:3.2}
+.hbc.on i{background:var(--green,#34c759);border-color:var(--green,#34c759);color:#fff}
+.hbc em{font-style:normal;color:var(--sub);font-size:12px}
+.hbc.on em{color:var(--green,#34c759)}
+.hbm{padding:9px 13px;color:var(--blue);font-weight:600;font-size:calc(14px*var(--fs))}
+/* habits sheet */
+.hbrow{gap:8px;flex-wrap:wrap}
+.hbd{display:flex;gap:5px}
+.hbd button{width:28px;height:28px;border-radius:50%;background:var(--sep);font-size:11px;font-weight:700;color:var(--sub)}
+.hbd button.on{background:var(--green,#34c759);color:#fff}
+.hbd button.td{outline:2px solid var(--blue);outline-offset:1px}
+/* focus timer */
+.ftr{position:relative;width:220px;height:220px;margin:18px auto}
+.ftr svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ftr circle{fill:none;stroke-width:8}
+.ftr .bg{stroke:var(--sep)}
+.ftr .fg{stroke:var(--blue);stroke-linecap:round;stroke-dasharray:327;stroke-dashoffset:0;transition:stroke-dashoffset .5s linear}
+.ftr b{position:absolute;inset:0;display:grid;place-items:center;font-size:44px;font-weight:700;font-variant-numeric:tabular-nums}
+#ft-pill{position:fixed;left:14px;bottom:calc(var(--tabh,56px) + env(safe-area-inset-bottom,0px) + 14px);z-index:40;padding:9px 14px;border-radius:99px;background:var(--blue);color:#fff;font-weight:700;font-variant-numeric:tabular-nums;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+#ft-pill[hidden]{display:none}
+/* split */
+.stp{display:flex;align-items:center;gap:14px}
+.stp button{width:34px;height:34px;border-radius:50%;background:var(--sep);font-size:20px;color:var(--txt)}
+.stp b{min-width:22px;text-align:center}
+.spb{margin:14px 6px;padding:16px;border-radius:18px;background:color-mix(in srgb,var(--blue) 10%,var(--card));text-align:center}
+.spb b{display:block;font-size:34px;margin:2px 0}
+.spb small{display:block;color:var(--sub)}
+.repbtn{display:block;width:100%;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--blue) 12%,var(--card));color:var(--blue);font-weight:600;text-align:left}
+.repbtn[hidden]{display:none}
+/* 20. week view */
+.pwk{margin-top:4px}
+.wkt{display:flex;align-items:center;justify-content:space-between;margin:6px 2px 10px}
+.wkt b{font-size:calc(15px*var(--fs))}
+.wkt button{width:36px;height:36px;border-radius:50%;background:var(--card);box-shadow:var(--shadow);font-size:20px;color:var(--txt)}
+.wkg{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.wkd{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 7px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);min-height:74px;color:var(--txt)}
+.wkd small{font-size:11px;color:var(--sub);font-weight:600}
+.wkd b{font-size:17px}
+.wkd span{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;max-width:34px;min-height:10px}
+.wkd.td b{color:var(--blue)}
+.wkd.sel{outline:2px solid var(--blue);outline-offset:-2px}
+.wkd em{font-style:normal;font-size:9px;color:var(--sub)}
+.pwdot{width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.pwdot.hi{background:var(--red)}
+.pwdot.md{background:#ff9500}
+.pwdot.dn{background:var(--sep)}
+.wkh2{margin-top:16px}
+.wkr{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;text-align:left;border-bottom:.5px solid var(--sep);color:var(--txt)}
+.wkr:last-child{border:0}
+.wkr span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.wkr.dn span{text-decoration:line-through;color:var(--sub)}
+.wkr em{font-style:normal;color:var(--sub);font-size:13px}
+.wkn{color:var(--sub);font-size:13px;margin:2px 8px}
+/* 19. notes that connect */
+.nth{flex-wrap:wrap}
+.nta button{width:34px}
+.nta button .ico{width:20px;height:20px}
+.nta button.on{color:var(--blue)}
+.ntc{display:flex;gap:10px;padding:8px 6px}
+.ntc[hidden],.ntp[hidden]{display:none}
+.ntc button{width:26px;height:26px;border-radius:50%;border:2px solid transparent;background:var(--sep)}
+.ntc button.on{border-color:var(--blue)}
+.ntls{display:flex;flex-wrap:wrap;gap:6px;padding:0 6px}
+.ntl{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:12px;background:color-mix(in srgb,var(--blue) 12%,var(--card));color:var(--blue);font-size:13px;font-weight:600}
+.ntl i{font-style:normal;opacity:.7;margin-left:2px}
+/* 23. sticky save bar */
+.pbtn.stk{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 6px);z-index:6;box-shadow:0 -12px 16px 10px var(--bg),0 0 0 6px var(--bg)}
+:root[data-pack=glass] .pbtn.stk{box-shadow:0 8px 20px rgba(0,0,0,.18)}
+body.calm .pbtn.stk{box-shadow:0 -12px 16px 10px var(--bg),0 0 0 6px var(--bg)}
+
+#wstrip.isweek>.wk,#wstrip.isweek>.wdays{display:none}
 </style>
 </head>
 <body>
@@ -850,7 +955,7 @@ const PACKS={default:{n:'Default'},amoled:{n:'AMOLED',mode:'dark',acc:'#0a84ff',
 function applyBackup(j){
   tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
   if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[],notes:[]},j.money);saveM()}
-  if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}
+  if(j.habits)jset('tf_habits',j.habits);if(j.focuslog)jset('tf_focuslog',j.focuslog);if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}
   render();renderSettings();
 }
 async function checkEmptyRestore(){
@@ -1175,7 +1280,7 @@ function reviewAlerts(){
 }
 
 /* ===== backup ===== */
-const backup=()=>JSON.stringify({app:'taskflow',v:7,tasks,log:loadLog(),settings:S,money:M},null,1);
+const backup=()=>JSON.stringify({app:'taskflow',v:7,tasks,log:loadLog(),settings:S,habits:jget('tf_habits',[]),focuslog:jget('tf_focuslog',[]),money:M},null,1);
 async function autoBackup(force){
   const fs=FS();if(!fs)return false;
   const td=ymd(new Date());
@@ -1192,7 +1297,7 @@ async function restore(f){
   try{const j=JSON.parse(await f.text());if(!Array.isArray(j.tasks))throw 0;
     if(confirm('Replace your current tasks with this backup ('+j.tasks.length+' tasks)?')){tasks=j.tasks;Store.save(tasks);saveLog(j.log||[]);
       if(j.money){M=Object.assign({accounts:[],buckets:[],months:{},tx:[],plans:{},udhar:[],loans:[],wish:[],cash:{log:[]},goals:[],subs:[],notes:[]},j.money);saveM()}
-      if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}render();renderSettings()}}
+      if(j.habits)jset('tf_habits',j.habits);if(j.focuslog)jset('tf_focuslog',j.focuslog);if(j.settings){S=Object.assign({},DEF,j.settings);S.src=Object.assign({},DEF.src,S.src||{});saveS();applyTheme()}render();renderSettings()}}
   catch(_){alert('That file is not a TaskFlow backup.')}
 }
 
@@ -1303,6 +1408,7 @@ function render(){
   $('#count').textContent=subtitle();
   if(tab==='money')renderMoney();
   if(tab!=='today'&&tab!=='upcoming')return;
+  if(tab==='today'&&S.view==='week'){list.innerHTML=weekHTML();return}
   if(tab==='today'&&S.view==='timeline'){list.innerHTML=timelineHTML();return}
   const td=ymd(new Date()),g={},push=(k,t,v)=>(g[k]=g[k]||[]).push([t,v]),floor=ymd(addDays(new Date(),-3)),other=tab==='today'&&selDay!==td;
   if(other){
@@ -1327,7 +1433,7 @@ function drawStrip(){
   $('#wstrip').innerHTML=`<div class="wk"><button id="ws-prev" aria-label="Previous week">‹</button><div class="wmid"><b>${fm(days[0])} – ${fm(days[6])}</b>${selDay!==td?'<button class="tdy" id="ws-today">Today</button>':''}</div><button id="ws-next" aria-label="Next week">›</button></div>
    <div class="wdays">${days.map(d=>{const ds=ymd(d),h=null,has=tasks.some(t=>!t.done&&t.date===ds);
      return `<button class="wd${ds===selDay?' on':''}${ds===td?' td':''}" data-date="${ds}"><small>${DOWN[d.getDay()][0]}</small><b>${d.getDate()}</b><i class="${h?'h':has?'n':''}"></i></button>`}).join('')}</div>
-   <div class="seg" style="margin-top:10px"><button data-v="list" class="${S.view!=='timeline'?'on':''}">List</button><button data-v="timeline" class="${S.view==='timeline'?'on':''}">Timeline</button></div>`;
+   <div class="seg" style="margin-top:10px"><button data-v="list" class="${S.view!=='timeline'&&S.view!=='week'?'on':''}">List</button><button data-v="timeline" class="${S.view==='timeline'?'on':''}">Timeline</button><button data-v="week" class="${S.view==='week'?'on':''}">Week</button></div>`;
 }
 $('#wstrip').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;const sel=new Date(selDay+'T00:00:00');
@@ -1709,7 +1815,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.10 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.11 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -2054,7 +2160,7 @@ function loanCards(){
 }
 function saveLoanExp(){
   const l=loanOf(X.ls);if(!l){flash('Choose a loan');return}l.exp=l.exp||[];
-  l.exp.push({id:uid(),amt:X.amt,desc:X.desc,date:X.date,f:X.lf||''});saveM();buzz(10);renderMoney();closeTop();
+  if(X.leid&&l.exp.find(y=>y.id===X.leid))Object.assign(l.exp.find(y=>y.id===X.leid),{amt:X.amt,desc:X.desc,date:X.date,f:X.lf||''});else l.exp.push({id:uid(),amt:X.amt,desc:X.desc,date:X.date,f:X.lf||''});saveM();buzz(10);renderMoney();closeTop();
   const f=(l.folders||[]).find(y=>y.id===X.lf);if(f){const sp=sum(l.exp.filter(e=>e.f===f.id),e=>+e.amt||0);if(sp>(+f.amt||0))flash(f.name+': over by '+inr(sp-(+f.amt||0)))}
 }
 function drawLoanF(){
@@ -2092,7 +2198,7 @@ function loanAlerts(){
 }
 function loanPaid(t){
   const l=(M.loans||[]).find(x=>x.id===t.lid);if(!l)return;l.paid=l.paid||[];
-  if(!l.paid.some(p=>p.tx===t.id))l.paid.push({m:t.lm,tx:t.id,amt:t.amt});
+  if(!l.paid.some(p=>p.tx===t.id))l.paid.push({m:t.lm,tx:t.id,amt:t.amt});else l.paid.find(p=>p.tx===t.id).amt=t.amt;
   saveM();if(stack.includes('ml'))drawLoans();renderMoney();
 }
 let LD={acc:'',b:''};
@@ -2292,6 +2398,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.26.03',t:'Add anything, habits, focus timer and more',i:["One smart bar on Home: chai 20 becomes an expense, call Rahul tomorrow 5pm a task, anything else a note","Monthly recap picture you can share","Insight cards, a Pay EMI card and a month-end forecast","Habit tracker, focus timer and split bills","Planner week view on the Tasks tab","Notes can become tasks, link to tasks, take a colour or a PIN lock","Edit cash entries and loan expenses, repeat your last expense, and a Save button that stays on screen","One line-icon set, and confetti when a goal or loan is completed"]},
  {v:'2026.11.26.02',t:'A calmer, crisper look',i:["Money amounts use equal-width digits with a smaller rupee sign and decimals","The Home header changes colour through the day","New Glass theme, plus Sunset, Forest, Ocean and Mono packs","Calm mode: no gradients, one accent colour and more space","Line drawings replace emoji on empty screens","Scroll on Money to see how much is left in the top bar","Auto accent colour that follows your avatar colour"]},
  {v:'2026.11.26.01',t:'Smoother, snappier and easier to swipe',i:["Pages slide in the direction you tap, and you can swipe left or right to change tabs","A highlight glides between choices on switches and option buttons","Lists slide in one after another and deleted items collapse smoothly","Soft ticks for taps, a firmer buzz for success and a double buzz for warnings","Tabs open instantly: only the page you are on is drawn","Drag a sheet down from anywhere to close it; swipe a task left a little to snooze it to tomorrow, or all the way to delete"]},
  {v:'2026.11.16.16',t:'A Notepad, a new bottom bar and a status line',i:["A Notepad tab: write anything, pin, search, checklists and share","The bottom bar is now Tasks, Money, Home, Notepad and Menu, and Menu opens Progress and Profile","A status line tells you when you are offline or an update is ready"]},
@@ -2587,7 +2694,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.10 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.11 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -3076,6 +3183,412 @@ function mctx(){
   return MC.v;
 }
 
+/* ===== v7.11: features (add-anything bar, insights, habits, timer, split, recap, EMI card, forecast, week view, connected notes, edits, icons) ===== */
+(function(){
+const TODAY=()=>ymd(new Date());
+const tm12=s=>{if(!s)return '';const[h,m]=s.split(':').map(Number);if(S.h24)return s;return ((h%12)||12)+':'+String(m).padStart(2,'0')+(h<12?' am':' pm')};
+const wd=d=>d.toLocaleDateString('en-IN',{weekday:'short'});
+const dN=ds=>new Date(ds+'T00:00:00');
+
+/* ---------- 15. one line-icon set ---------- */
+const ICN={
+ check:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 9.5"/>',wallet:'<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/>',
+ cash:'<rect x="2.5" y="6.5" width="19" height="11" rx="2.5"/><circle cx="12" cy="12" r="2.6"/>',bank:'<path d="M3 9.5L12 4l9 5.5M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3 20h18"/>',
+ repeat:'<path d="M4 11a6 6 0 0 1 6-6h7M14 2l3 3-3 3M20 13a6 6 0 0 1-6 6H7M10 22l-3-3 3-3"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',spend:'<circle cx="12" cy="12" r="9"/><path d="M9 15l6-6M10 9h5v5"/>',cal:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+ note:'<path d="M6 3.5h9l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M9 12h6M9 16h4"/>',chart:'<path d="M5 20V10M12 20V4M19 20v-7"/>',
+ user:'<circle cx="12" cy="8.5" r="3.7"/><path d="M4.5 20c.8-3.6 3.8-5.5 7.5-5.5s6.7 1.9 7.5 5.5"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/>',
+ palette:'<path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.3 0 2-.8 2-1.7 0-1.4-1.2-1.6-1.2-2.8 0-.9.7-1.5 1.6-1.5H17a3.5 3.5 0 0 0 3.5-3.5C20.5 6.7 16.7 3.5 12 3.5z"/><circle cx="7.8" cy="11" r=".9"/><circle cx="10.5" cy="7.6" r=".9"/><circle cx="15" cy="7.8" r=".9"/>',
+ bell:'<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0"/>',lock:'<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+ trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4.5a3 3 0 0 0 3 4M16 6h3.5a3 3 0 0 1-3 4M12 13v4M8.5 20.5h7M10 17h4"/>',save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',
+ moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/>',
+ spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',vib:'<rect x="8" y="4" width="8" height="16" rx="2"/><path d="M4.5 9v6M19.5 9v6M2 11v2M22 11v2"/>',
+ timer:'<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 1.5M9.5 3h5"/>',split:'<path d="M12 4v16M6 8l-3 4 3 4M18 8l3 4-3 4"/>',recap:'<rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M8 15l2.5-3 2.5 2 3-4"/>',
+ habit:'<path d="M4 12l5 5L20 6"/>',link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+ trend:'<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',flame:'<path d="M12 21c-3.9 0-7-2.8-7-6.6 0-3 2-5 3.5-6.5C10 6.5 10.8 5 11 3c3.5 2 6.5 5.5 6.5 9.5.5-.5 1-1.5 1-2.5 1 1.5 1.5 3 1.5 4.4C20 18.2 16.4 21 12 21z"/>'};
+const ic=n=>ICN[n]?'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'+ICN[n]+'</svg>':'';
+const EMO={'✅':'check','💰':'wallet','💵':'cash','🏦':'bank','🔁':'repeat','🎯':'target','➕':'plus','💸':'spend','📅':'cal','📝':'note','📊':'chart','👤':'user','⚙':'gear','🎨':'palette','🔔':'bell','🔒':'lock','🏆':'trophy','💾':'save','🌓':'moon','🌗':'moon','🌑':'moon','🌙':'moon','🌕':'moon','☀':'sun','✨':'spark','📳':'vib'};
+function lineify(root){
+  if(!root)return;
+  root.querySelectorAll('.ht>span,.hgrid button>span,.sgic,.qt>span').forEach(el=>{
+    if(el.querySelector('svg'))return;const k=EMO[el.textContent.replace(/\uFE0F/g,'').trim()];if(k)el.innerHTML=ic(k);
+  });
+}
+const _renderSettings=renderSettings;
+renderSettings=function(){const r=_renderSettings.apply(this,arguments);lineify($('#settings'));return r};
+
+/* ---------- 15. confetti when a goal or loan is completed ---------- */
+function confetti(){
+  if(S.anim===false||!document.body)return;
+  const cv=document.createElement('canvas'),dp=Math.min(2,devicePixelRatio||1),W=cv.width=innerWidth*dp,H=cv.height=innerHeight*dp;
+  cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:99';document.body.appendChild(cv);
+  const g=cv.getContext('2d'),cols=['#ff9500','#34c759','#0a84ff','#ff2d55','#af52de','#ffcc00'];
+  const P=Array.from({length:90},()=>({x:W/2+(Math.random()-.5)*W*.3,y:H*.38,vx:(Math.random()-.5)*16*dp,vy:(-Math.random()*15-5)*dp,s:(4+Math.random()*5)*dp,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[Math.random()*cols.length|0]}));
+  const t0=performance.now();
+  (function f(t){const e=t-t0;g.clearRect(0,0,W,H);P.forEach(p=>{p.vy+=.45*dp;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;g.save();g.translate(p.x,p.y);g.rotate(p.r);g.globalAlpha=Math.max(0,1-e/1900);g.fillStyle=p.c;g.fillRect(-p.s/2,-p.s/3,p.s,p.s*.66);g.restore()});
+    if(e<1900)requestAnimationFrame(f);else cv.remove()})(t0);
+}
+window.confetti=confetti;
+function doneSet(){const s=new Set();(M.goals||[]).forEach(g=>{try{if(goalPct(g)>=100)s.add('g'+g.id)}catch(e){}});(M.loans||[]).forEach(l=>{try{if((l.paid||[]).length&&loanLeft(l)<=0)s.add('l'+l.id)}catch(e){}});return s}
+function checkDone(){
+  let seen=null;try{seen=JSON.parse(localStorage.getItem('tf_seen')||'null')}catch(e){}
+  const cur=doneSet(),save=()=>{try{localStorage.setItem('tf_seen',JSON.stringify([...cur]))}catch(e){}};
+  if(!seen){save();return}
+  const fresh=[...cur].filter(x=>!seen.includes(x));
+  if(fresh.length){const id=fresh[0],o=id[0]==='g'?(M.goals||[]).find(x=>'g'+x.id===id):(M.loans||[]).find(x=>'l'+x.id===id);
+    confetti();buzz('ok');flash((id[0]==='g'?'Goal reached: ':'Loan fully paid: ')+(o?o.name:''))}
+  save();
+}
+
+/* ---------- 25. month-end forecast (Money) ---------- */
+function forecast(){
+  try{
+    const k=mkey(),c=mCalc(k),[a,b]=mrange(k),td=TODAY();if(td<a||td>b||!(c.income>0))return null;
+    const total=Math.round((dN(b)-dN(a))/864e5)+1,el=Math.round((dN(td)-dN(a))/864e5)+1,left=total-el;
+    if(el<3||left<0)return null;
+    const pace=c.spent/el,proj=c.spent+pace*left,end=c.income-proj;
+    let out=null;if(pace>0&&c.remaining>=0&&c.remaining/pace<left)out=ymd(addDays(dN(td),Math.floor(c.remaining/pace)));
+    return{pace,end,left,out,c};
+  }catch(e){return null}
+}
+function forecastCard(){
+  const el=$('#money');if(!el)return;const old=el.querySelector('.fcast');if(old)old.remove();
+  const f=forecast();if(!f)return;
+  const bad=f.end<0,d=document.createElement('div');d.className='fcast'+(bad?' bad':'');
+  d.innerHTML=`<span class="fci">${ic(bad?'trend':'target')}</span><div><b>${bad?(f.out?'You may run out around '+fmd(f.out):'You may overspend this month'):'On track for the month'}</b><small>${bad?'At this pace you will be '+inr(-f.end)+' over by month end':'At this pace you will end the month with '+inr(f.end)+' left'} · ${inr(Math.round(f.pace))} a day · ${f.left} ${f.left===1?'day':'days'} to go</small></div>`;
+  const top=el.querySelector('.mtop'),nx=top&&top.nextElementSibling,anchor=nx&&/dot|pag/.test(nx.className)?nx:top;
+  if(anchor)anchor.after(d);else el.prepend(d);
+}
+const _renderMoney=renderMoney;
+renderMoney=function(){const r=_renderMoney.apply(this,arguments);try{forecastCard();checkDone()}catch(e){}return r};
+
+/* ---------- habits ---------- */
+const HB=()=>jget('tf_habits',[]),HBS=a=>jset('tf_habits',a);
+const hbDone=(h,ds)=>(h.d||[]).includes(ds);
+function hbStreak(h){let n=0,d=TODAY();if(!hbDone(h,d))d=ymd(addDays(new Date(),-1));while(hbDone(h,d)){n++;d=ymd(addDays(dN(d),-1))}return n}
+function hbBest(h){const s=[...(h.d||[])].sort();let b=0,c=0,p=null;s.forEach(d=>{c=p&&ymd(addDays(dN(p),1))===d?c+1:1;p=d;if(c>b)b=c});return b}
+function hbToggle(id,ds){const a=HB(),h=a.find(x=>x.id===id);if(!h)return;h.d=h.d||[];if(h.d.includes(ds))h.d=h.d.filter(x=>x!==ds);else{h.d.push(ds);buzz('ok')}HBS(a);if(stack.includes('hb'))drawHabits();render()}
+function drawHabits(){
+  const a=HB(),days=[...Array(7)].map((_,i)=>ymd(addDays(new Date(),i-6)));
+  $('#hb-list').innerHTML=a.length?`<div class="group">${a.map(h=>`<div class="srow hbrow"><span style="min-width:0"><b>${esc(h.name)}</b><br><small style="color:var(--sub)">${hbStreak(h)} day streak · best ${hbBest(h)}</small></span><span class="hbd">${days.map(d=>`<button class="${hbDone(h,d)?'on':''}${d===TODAY()?' td':''}" data-hx="hbt|${h.id}|${d}" aria-label="${d}">${wd(dN(d)).slice(0,1)}</button>`).join('')}</span><button data-hx="hbx|${h.id}" style="color:var(--red)" aria-label="Delete habit">✕</button></div>`).join('')}</div>`:'<div class="sm" style="margin:12px 6px">No habits yet. Add one below, like “Read 10 pages”.</div>';
+}
+function openHabits(){drawHabits();openSheet('hb')}
+
+/* ---------- focus timer ---------- */
+const FT={min:25,end:0,left:0,run:false,task:'',tot:25*60};
+function ftLoad(){try{const s=JSON.parse(localStorage.getItem('tf_ft')||'null');if(!s)return;FT.min=s.min;FT.tot=s.min*60;FT.task=s.task||'';if(s.end){FT.end=s.end;FT.run=true;if(Date.now()>=s.end)ftDone(true)}else if(s.left){FT.left=s.left}}catch(e){}}
+function ftSave(){try{localStorage.setItem('tf_ft',JSON.stringify(FT.run?{min:FT.min,end:FT.end,task:FT.task}:FT.left?{min:FT.min,left:FT.left,task:FT.task}:null))}catch(e){}}
+const ftRemain=()=>FT.run?Math.max(0,Math.round((FT.end-Date.now())/1000)):(FT.left||FT.min*60);
+const ftFmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+function ftDone(silent){
+  const log=jget('tf_focuslog',[]);log.push({d:TODAY(),min:FT.min,task:FT.task});jset('tf_focuslog',log);
+  FT.run=false;FT.end=0;FT.left=0;ftSave();buzz('ok');if(!silent)confetti();flash('Focus session done · '+FT.min+' min');ftDraw();try{render()}catch(e){}
+}
+function ftDraw(){
+  const r=ftRemain(),pill=$('#ft-pill');
+  if($('#ft-t')){$('#ft-t').textContent=ftFmt(r);$('#ft-c').style.strokeDashoffset=String(327*(1-r/FT.tot));
+    $('#ft-go').textContent=FT.run?'Pause':(FT.left?'Resume':'Start');
+    $('#ft-p').querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.m===FT.min));
+    const lg=jget('tf_focuslog',[]).filter(x=>x.d===TODAY()),m=lg.reduce((s,x)=>s+x.min,0);$('#ft-log').textContent=m?'Focused today: '+m+' min in '+lg.length+(lg.length===1?' session':' sessions'):'No sessions yet today';
+    const ts=tasks.filter(t=>!t.done&&t.date===TODAY()).slice(0,6);$('#ft-k').innerHTML=[['','Nothing specific']].concat(ts.map(t=>[t.id,t.title])).map(x=>`<button data-hx="ftk|${x[0]}" class="${FT.task===x[0]?'on':''}">${esc(x[1].slice(0,24))}</button>`).join('');}
+  if(pill){const show=FT.run||(FT.left&&FT.left<FT.tot);pill.hidden=!show||stack.length>0;pill.textContent=ftFmt(r)}
+}
+setInterval(()=>{if(FT.run){if(Date.now()>=FT.end)ftDone();else ftDraw()}},500);
+function ftToggle(){if(FT.run){FT.left=ftRemain();FT.run=false;FT.end=0}else{const s=FT.left||FT.min*60;FT.end=Date.now()+s*1000;FT.run=true;FT.left=0;buzz('tap')}ftSave();ftDraw()}
+function ftReset(){FT.run=false;FT.end=0;FT.left=0;ftSave();ftDraw()}
+function openTimer(){ftDraw();openSheet('ft')}
+
+/* ---------- split bills ---------- */
+const SPL={n:2,who:'me'};
+function spShares(){const tot=+($('#sp-a').value)||0,n=SPL.n,each=Math.floor(tot/n*100)/100;return{tot,n,each,mine:Math.round((tot-each*(n-1))*100)/100}}
+function spNames(){const w=($('#sp-w').value||'').split(',').map(x=>x.trim()).filter(Boolean),o=[];for(let i=0;i<SPL.n-1;i++)o.push(w[i]||'Friend '+(i+1));return o}
+function spDraw(){
+  const s=spShares();$('#sp-n').textContent=SPL.n;$('#sp-who').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.w===SPL.who));
+  $('#sp-r').innerHTML=s.tot>0?`<div class="spb"><small>Each person pays</small><b>${inr(s.each)}</b>${s.mine!==s.each?`<small>Your share ${inr(s.mine)} (includes the rounding)</small>`:''}</div>`:'<div class="sm" style="margin:10px 6px">Enter the bill to see each share.</div>';
+  $('#sp-ud').textContent=SPL.who==='me'?'Add what others owe me to Udhar':'Add my share to Udhar (I owe them)';
+}
+function spUdhar(){
+  const s=spShares();if(!(s.tot>0)){flash('Enter the bill first');return}
+  M.udhar=M.udhar||[];const td=TODAY();
+  if(SPL.who==='me')spNames().forEach(w=>M.udhar.push({id:uid(),who:w,amt:s.each,dir:'owed',date:td,due:'',note:'Split bill',pays:[],done:false,cnt:false}));
+  else M.udhar.push({id:uid(),who:($('#sp-w').value.split(',')[0]||'Friend').trim()||'Friend',amt:s.mine,dir:'owe',date:td,due:'',note:'Split bill',pays:[],done:false,cnt:false});
+  saveM();setTimeout(sync,0);renderMoney();buzz('ok');flash(SPL.who==='me'?'Added to Udhar for '+spNames().length+(spNames().length===1?' person':' people'):'Added to Udhar');
+}
+function openSplit(){SPL.n=2;SPL.who='me';$('#sp-a').value='';$('#sp-w').value='';spDraw();openSheet('sp')}
+
+/* ---------- monthly recap ---------- */
+function recapKey(){const d=new Date();if(d.getDate()<=5){const p=new Date(d.getFullYear(),d.getMonth()-1,1);return p.getFullYear()+'-'+String(p.getMonth()+1).padStart(2,'0')}return mkey()}
+function recapData(k){
+  const c=mCalc(k),[a,b]=mrange(k),top=c.bs.slice().sort((x,y)=>y.sp-x.sp)[0],log=loadLog().filter(x=>x.ok&&x.d>=a&&x.d<=b),days=[...new Set(log.map(x=>x.d))].sort();
+  let best=0,cur=0,p=null;days.forEach(d=>{cur=p&&ymd(addDays(dN(p),1))===d?cur+1:1;p=d;if(cur>best)best=cur});
+  const [y,m]=k.split('-').map(Number);
+  return{label:new Date(y,m-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'}),spent:c.spent,income:c.income,top:top&&top.sp>0?top:null,done:log.length,best};
+}
+function mixHex(c,t,p){const h=x=>{x=x.trim();if(x[0]==='#'){if(x.length===4)x='#'+x[1]+x[1]+x[2]+x[2]+x[3]+x[3];return[1,3,5].map(i=>parseInt(x.slice(i,i+2),16))}const m=x.match(/\d+/g)||[10,132,255];return m.slice(0,3).map(Number)};const a=h(c);return 'rgb('+a.map((v,i)=>Math.round(v*(1-p)+t[i]*p)).join(',')+')'}
+function drawRecap(){
+  const cv=$('#rc-cv'),g=cv.getContext('2d'),d=recapData(recapKey()),acc=getComputedStyle(document.documentElement).getPropertyValue('--blue')||'#0a84ff';
+  const gr=g.createLinearGradient(0,0,1080,1350);gr.addColorStop(0,mixHex(acc,[255,255,255],.05));gr.addColorStop(1,mixHex(acc,[40,20,90],.55));g.fillStyle=gr;g.fillRect(0,0,1080,1350);
+  g.fillStyle='rgba(255,255,255,.08)';g.beginPath();g.arc(930,170,260,0,7);g.fill();g.beginPath();g.arc(120,1220,300,0,7);g.fill();
+  const F='-apple-system,Roboto,"Segoe UI",system-ui,sans-serif';g.textBaseline='alphabetic';
+  g.fillStyle='rgba(255,255,255,.8)';g.font='600 40px '+F;g.fillText('YOUR MONTH IN TASKFLOW',80,130);
+  g.fillStyle='#fff';g.font='800 96px '+F;g.fillText(d.label.split(' ')[0],80,250);g.font='600 44px '+F;g.fillStyle='rgba(255,255,255,.85)';g.fillText(d.label.split(' ')[1]||'',80,310);
+  const card=(y,lbl,val,sub)=>{g.fillStyle='rgba(255,255,255,.16)';g.beginPath();g.roundRect?g.roundRect(80,y,920,220,36):g.rect(80,y,920,220);g.fill();
+    g.fillStyle='rgba(255,255,255,.85)';g.font='600 36px '+F;g.fillText(lbl,120,y+72);g.fillStyle='#fff';g.font='800 84px '+F;g.fillText(val,120,y+160);if(sub){g.font='500 34px '+F;g.fillStyle='rgba(255,255,255,.85)';g.textAlign='right';g.fillText(sub,960,y+160);g.textAlign='left'}};
+  const n=v=>'₹'+Math.round(v).toLocaleString('en-IN');
+  card(400,'Spent',S.hideAmt?'₹ ••••':n(d.spent),d.income>0&&!S.hideAmt?'of '+n(d.income):'');
+  card(650,'Top folder',d.top?d.top.bk.name.slice(0,16):'None yet',d.top&&!S.hideAmt?n(d.top.sp):'');
+  card(900,'Tasks done',String(d.done),d.best>1?d.best+' day best streak':'');
+  g.fillStyle='rgba(255,255,255,.75)';g.font='600 36px '+F;g.fillText('Made with TaskFlow',80,1250);
+}
+function recapShare(save){
+  $('#rc-cv').toBlob(b=>{if(!b)return;const f=new File([b],'taskflow-recap.png',{type:'image/png'});
+    if(!save&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:'My month in TaskFlow'}).catch(()=>{});return}
+    const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='taskflow-recap.png';document.body.appendChild(a);a.click();a.remove();flash('Image saved to your downloads');
+  },'image/png');
+}
+function openRecap(){drawRecap();openSheet('rc')}
+
+/* ---------- 24. repeat last expense ---------- */
+const lastExp=()=>{for(let i=M.tx.length-1;i>=0;i--){const t=M.tx[i];if(t.kind==='exp'&&!t.lid&&!t.ref&&!t.adj&&!t.mv&&!t.rid&&!t.pid&&!t.sid)return t}return null};
+const _openExp=openExp;
+openExp=function(id){
+  _openExp.apply(this,arguments);
+  const b=$('#mx-rep');if(!b)return;const l=!id&&lastExp();b.hidden=!l;if(l)b.textContent='Repeat last: '+(l.desc||'Expense')+' · '+inr(l.amt);
+};
+function repeatLast(){const l=lastExp();if(!l){flash('No expense to repeat yet');return}X.amt=l.amt;X.desc=l.desc||'';X.b=l.b||'';X.acc=l.acc||'';X.kind='exp';$('#mx-amt').value=l.amt;$('#mx-desc').value=l.desc||'';drawExp()}
+
+/* ---------- 16. add anything ---------- */
+const AA={ov:''};
+const DTW=/\b(today|tonight|tomorrow|tmrw|tmr|monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tue|tues|wed|thu|thur|thurs|fri|sat|sun|next|week|weekend|morning|evening|noon|midnight|am|pm|at\s+\d|\d{1,2}:\d{2}|\d{1,2}(st|nd|rd|th))\b|\d\s?(am|pm)\b/i;
+function aaClassify(t){
+  t=(t||'').trim();if(!t)return null;
+  const mAmt=t.match(/^(.*?)\s*(?:₹|rs\.?\s?)\s?(\d+(?:\.\d{1,2})?)\s*$/i)||t.match(/^(.*?)\s+(\d+(?:\.\d{1,2})?)\s*$/)||t.match(/^(?:₹|rs\.?\s?)?(\d+(?:\.\d{1,2})?)\s+(.+)$/i),exp=(()=>{if(!mAmt)return null;const num=/^\d/.test(mAmt[1]||'')&&mAmt[2]&&!/^\d/.test(mAmt[2])?{a:+mAmt[1],d:mAmt[2]}:{a:+mAmt[2],d:mAmt[1]};return num.a>0&&num.d&&num.d.trim()?{a:num.a,d:num.d.trim()}:null})();
+  const isTask=DTW.test(t);
+  const auto=isTask?'task':exp?'expense':'note';
+  let type=AA.ov||auto;if(type==='expense'&&!exp)type=auto;
+  return{type,exp,auto};
+}
+function aaPreview(){
+  const pv=$('#aa-pv'),i=$('#aa-in');if(!pv||!i)return;const c=aaClassify(i.value);
+  if(!c){pv.hidden=true;return}
+  pv.hidden=false;pv.innerHTML=c.type==='expense'?`${ic('spend')}<span>Expense · ${inr(c.exp.a)} · ${esc(c.exp.d)}</span><em>change</em>`:c.type==='task'?`${ic('check')}<span>Task · ${esc(i.value.trim())}</span><em>change</em>`:`${ic('note')}<span>Note</span><em>change</em>`;
+}
+function aaCycle(){const i=$('#aa-in'),c=aaClassify(i.value);if(!c)return;const order=['expense','task','note'].filter(x=>x!=='expense'||c.exp),k=order.indexOf(c.type);AA.ov=order[(k+1)%order.length];aaPreview();buzz('tap')}
+function aaCommit(){
+  const i=$('#aa-in');if(!i)return;const txt=i.value.trim(),c=aaClassify(txt);if(!c){i.focus();return}
+  if(c.type==='task'){$('#in').value=txt;const tk=addTask(null,null,true);flash(tk?'Task added':'Could not add the task')}
+  else if(c.type==='expense'){
+    const key=c.exp.d.toLowerCase(),prev=M.tx.slice().reverse().find(t=>t.kind==='exp'&&(t.desc||'').toLowerCase()===key&&!t.lid&&!t.ref);
+    M.tx.push({id:uid(),amt:c.exp.a,desc:c.exp.d,b:prev?prev.b||'':'',acc:prev?prev.acc||'':'',date:TODAY(),kind:'exp'});saveM();renderMoney();flash('Expense added · '+inr(c.exp.a)+' · '+c.exp.d)}
+  else{M.notes=M.notes||[];M.notes.unshift({id:uid(),t:txt,c:Date.now(),u:Date.now(),pin:false});saveM();flash('Saved as a note')}
+  buzz('ok');i.value='';AA.ov='';aaPreview();render();
+}
+
+/* ---------- 18. insight cards ---------- */
+function insights(){
+  const out=[];
+  try{
+    const agg=off=>{const by={};for(let i=0;i<7;i++)spendOnDay(ymd(new Date(Date.now()-(off+i)*864e5))).forEach(e=>{const f=e.f||e.s;if(f)by[f]=(by[f]||0)+e.a});return by},a=agg(0),b=agg(7);
+    let up=null,dn=null;Object.keys(a).forEach(k=>{if(b[k]>0){const p=Math.round((a[k]-b[k])/b[k]*100);if(p>=25&&a[k]-b[k]>=100&&(!up||p>up.p))up={k,p};if(p<=-30&&b[k]-a[k]>=200&&(!dn||p<dn.p))dn={k,p}}});
+    if(up)out.push({i:'trend',t:up.k+' is '+up.p+'% higher than last week'});
+    if(dn&&out.length<2)out.push({i:'trend',t:dn.k+' is '+(-dn.p)+'% lower than last week'});
+    const subs=(M.subs||[]).filter(x=>{const d=subDays(x);return d>=0&&d<=7});
+    if(subs.length)out.push({i:'repeat',t:subs.length+(subs.length===1?' subscription renews':' subscriptions renew')+' this week · '+inr(sum(subs,x=>+x.amt||0))});
+    const f=forecast();if(f&&f.end<0)out.push({i:'target',t:'At this pace you will overspend by '+inr(-f.end)+' this month'});
+    const hs=HB().map(h=>({h,s:hbStreak(h)})).sort((x,y)=>y.s-x.s)[0];if(hs&&hs.s>=3)out.push({i:'flame',t:hs.s+' day streak on '+hs.h.name});
+    const fm=jget('tf_focuslog',[]).filter(x=>x.d===TODAY()).reduce((s,x)=>s+x.min,0);if(fm)out.push({i:'timer',t:'You focused '+fm+' min today'});
+  }catch(e){}
+  return out.slice(0,3);
+}
+function emiHTML(){
+  const c=(M.loans||[]).map(l=>({l,u:loanDue(l)})).filter(x=>x.u&&loanDays(x.u.date)<=7).sort((a,b)=>a.u.date-b.u.date)[0];if(!c)return '';
+  const d=loanDays(c.u.date),w=d<0?'overdue by '+(-d)+(d===-1?' day':' days'):d===0?'due today':d===1?'due tomorrow':'due in '+d+' days';
+  return `<div class="emic${d<0?' late':''}"><span class="emic-i">${ic('bank')}</span><div><b>EMI · ${esc(c.l.name)}</b><small>${inr(c.l.emi)} ${w}</small></div><button data-hx="emi|${c.l.id}">Pay EMI</button></div>`;
+}
+function habitsHTML(){
+  const a=HB();if(!a.length)return '';
+  return `<h2>Habits</h2><div class="hbr">${a.map(h=>{const dn=hbDone(h,TODAY()),s=hbStreak(h);return `<button class="hbc${dn?' on':''}" data-hx="hbt|${h.id}|${TODAY()}"><i>${ic('habit')}</i>${esc(h.name.slice(0,18))}${s?`<em>${s}</em>`:''}</button>`}).join('')}<button class="hbm" data-hx="hb">Manage</button></div>`;
+}
+function homeExtras(keep){
+  const h=$('#home'),hh=h&&h.querySelector('.hh');if(!hh)return;
+  const aab=document.createElement('div');aab.className='aab';
+  aab.innerHTML=`<div class="aai"><input id="aa-in" placeholder="Try &quot;chai 20&quot; or &quot;call Rahul 5pm&quot;" autocomplete="off" enterkeyhint="done"><button id="aa-go" aria-label="Add">${ic('plus')}</button></div><button class="aap" id="aa-pv" hidden></button>`;
+  hh.after(aab);
+  if(keep){const i=$('#aa-in');i.value=keep.v;aaPreview();if(keep.f)i.focus()}
+  const ins=insights(),html=emiHTML()+(ins.length?`<div class="ins">${ins.map(x=>`<div class="inscd"><span>${ic(x.i)}</span>${esc(x.t)}</div>`).join('')}</div>`:'')+habitsHTML();
+  if(html){const d=document.createElement('div');d.className='hx';d.innerHTML=html;(h.querySelector('.htiles')||aab).after(d)}
+  const g=h.querySelector('.hgrid');
+  if(g)g.insertAdjacentHTML('beforeend',[['hb','habit','Habits'],['ft','timer','Focus timer'],['sp','split','Split bill'],['rc','recap','Monthly recap'],['rep','repeat','Repeat expense']].map(x=>`<button data-hx="${x[0]}"><span>${ic(x[1])}</span>${x[2]}</button>`).join(''));
+  lineify(h);
+}
+const _renderHome=renderHome;
+renderHome=function(){
+  const o=$('#aa-in'),keep=o?{v:o.value,f:document.activeElement===o}:null;
+  const r=_renderHome.apply(this,arguments);
+  try{homeExtras(keep)}catch(e){console.error(e)}
+  return r;
+};
+
+/* ---------- 20. planner week view ---------- */
+function weekHTML(){
+  const base=dN(selDay),mon=addDays(base,-((base.getDay()+6)%7)),days=[...Array(7)].map((_,i)=>ymd(addDays(mon,i))),td=TODAY();
+  const by=ds=>tasks.filter(t=>t.date===ds&&!t.any).sort((a,b)=>(a.start||'99')<(b.start||'99')?-1:1);
+  const dot=t=>`<i class="pwdot ${t.done?'dn':t.pri==='high'?'hi':t.pri==='med'?'md':''}"></i>`;
+  const head=`${fmd(days[0])} – ${fmd(days[6])}`;
+  const grid=days.map(ds=>{const L=by(ds);return `<button class="wkd${ds===td?' td':''}${ds===selDay?' sel':''}" data-wkd="${ds}"><small>${wd(dN(ds)).slice(0,1)}</small><b>${dN(ds).getDate()}</b><span>${L.slice(0,4).map(dot).join('')}${L.length>4?'<em>+'+(L.length-4)+'</em>':''}</span></button>`}).join('');
+  const rows=days.map(ds=>{const L=by(ds);return `<h2 class="wkh2">${wd(dN(ds))} ${dN(ds).getDate()}${ds===td?' · Today':''}</h2>`+(L.length?`<div class="group">${L.map(t=>`<button class="wkr${t.done?' dn':''}" data-wkh="${t.id}">${dot(t)}<span>${esc(t.title)}</span><em>${tm12(t.start)}</em></button>`).join('')}</div>`:'<div class="wkn">Nothing planned</div>')}).join('');
+  return `<div class="pwk"><div class="wkt"><button data-wkn="-7" aria-label="Previous week">‹</button><b>${head}</b><button data-wkn="7" aria-label="Next week">›</button></div><div class="wkg">${grid}</div>${rows}</div>`;
+}
+window.weekHTML=weekHTML;
+
+/* ---------- 19. notes that connect ---------- */
+const NCOL=['','#ffd60a','#ff9f0a','#30d158','#64d2ff','#bf5af2','#ff375f'];
+const noteCur=()=>NT&&(M.notes||[]).find(x=>x.id===NT);
+function ntBars(){
+  const n=noteCur();$('#nt-cols').innerHTML=NCOL.map((c,i)=>`<button data-nc="${i}" class="${(n?n.col|0:0)===i?'on':''}" style="${c?'background:'+c:''}" aria-label="Color ${i}"></button>`).join('');
+  const links=(n&&n.tl||[]).map(id=>tasks.find(t=>t.id===id)).filter(Boolean);
+  $('#nt-links').innerHTML=links.map(t=>`<button class="ntl" data-ntg="${t.id}">${ic('link')}${esc(t.title.slice(0,28))}<i data-ntu="${t.id}">✕</i></button>`).join('');
+  $('#nt-lk').classList.toggle('on',!!links.length);$('#nt-lc').classList.toggle('on',!!(n&&n.lock));$('#nt-co').classList.toggle('on',!!(n&&n.col));
+}
+function ntPick(){const ns=tasks.filter(t=>!t.done).sort((a,b)=>(a.date||'9')<(b.date||'9')?-1:1).slice(0,8),n=ntSave();if(!n){flash('Write something first');return}
+  $('#nt-lp').innerHTML=ns.length?ns.map(t=>`<button data-ntp="${t.id}" class="${(n.tl||[]).includes(t.id)?'on':''}">${esc(t.title.slice(0,26))}</button>`).join(''):'<span class="sm">No open tasks to link.</span>';$('#nt-lp').hidden=!$('#nt-lp').hidden}
+const _openNote=openNote;
+openNote=function(id){
+  const n=id&&(M.notes||[]).find(x=>x.id===id);
+  if(n&&n.lock){if(!S.pin){flash('Set a PIN lock in Settings → Security to open locked notes');return}const v=prompt('Enter your PIN to open this note');if(v===null)return;if(hashPin(v)!==S.pin){buzz('err');flash('Wrong PIN');return}}
+  _openNote.apply(this,arguments);$('#nt-lp').hidden=true;ntBars();
+};
+function ntToTask(){
+  const t=$('#nt-t'),v=t.value,p=t.selectionStart,a=v.lastIndexOf('\n',p-1)+1;let z=v.indexOf('\n',p);if(z<0)z=v.length;
+  let line=v.slice(a,z),title=line.replace(/^[☐☑]\s?/,'').replace(/\s*↗$/,'').trim();
+  if(!title){flash('Put the cursor on a line first');return}
+  const n=ntSave();if(!n){return}
+  $('#in').value=title;const tk=addTask(null,null,true),id=tk&&tk.id;
+  if(id){n.tl=(n.tl||[]).concat(id);const nl=(/^[☐☑]/.test(line)?'☑ '+title:'☑ '+title)+' ↗';t.value=v.slice(0,a)+nl+v.slice(z);ntSave();n.tl=[...new Set(n.tl)];saveM();ntBars();flash('Task created from this line')}
+}
+$('#npad').addEventListener('click',e=>{
+  const b=e.target.closest('button,i[data-ntu]');if(!b)return;const n=noteCur();
+  if(b.id==='nt-tk'){e.stopPropagation();ntToTask()}
+  else if(b.id==='nt-lk'){e.stopPropagation();ntPick()}
+  else if(b.id==='nt-co'){e.stopPropagation();const w=$('#nt-cols');w.hidden=!w.hidden}
+  else if(b.id==='nt-lc'){e.stopPropagation();const nn=ntSave();if(!nn){flash('Write something first');return}if(!S.pin){flash('Set a PIN lock in Settings → Security first');return}nn.lock=!nn.lock;saveM();ntBars();flash(nn.lock?'Locked. The PIN is needed to open it':'Unlocked')}
+  else if(b.dataset.nc!==undefined){e.stopPropagation();const nn=ntSave();if(!nn)return;nn.col=+b.dataset.nc;saveM();ntBars();$('#nt-cols').hidden=true}
+  else if(b.dataset.ntp){e.stopPropagation();const nn=ntSave();if(!nn)return;nn.tl=nn.tl||[];nn.tl=nn.tl.includes(b.dataset.ntp)?nn.tl.filter(x=>x!==b.dataset.ntp):nn.tl.concat(b.dataset.ntp);saveM();ntBars();ntPick();ntPick()}
+  else if(b.dataset.ntu){e.stopPropagation();const nn=noteCur();if(nn){nn.tl=(nn.tl||[]).filter(x=>x!==b.dataset.ntu);saveM();ntBars()}}
+  else if(b.dataset.ntg){e.stopPropagation();curId=b.dataset.ntg;openSheet('details')}
+},true);
+const _renderNotes3=renderNotes;
+renderNotes=function(){
+  const r=_renderNotes3.apply(this,arguments);
+  document.querySelectorAll('#notes .ncard').forEach(c=>{const n=(M.notes||[]).find(x=>x.id===c.dataset.nid);if(!n)return;
+    if(n.col)c.style.background='color-mix(in srgb,'+NCOL[n.col]+' 22%,var(--card))';
+    if(n.lock){c.innerHTML=`<b>${ic('lock')} Locked note</b><span>Enter your PIN to open</span><small>${ntDate(n.u)}</small>`}
+    else if((n.tl||[]).length){const s=c.querySelector('small');if(s)s.insertAdjacentHTML('afterbegin',ic('link')+' ')}});
+  return r;
+};
+
+/* ---------- edits: cash entries and loan expenses ---------- */
+let CSE='';
+const csReset=()=>{CSE='';const b=$('#cs-in');if(b)b.textContent='Add cash'};
+$('#cs-list').addEventListener('click',e=>{
+  const row=e.target.closest('.srow');if(!row||e.target.closest('button'))return;
+  const kd=row.querySelector('[data-kd]'),en=kd&&cashLog().find(x=>x.id===kd.dataset.kd);if(!en)return;
+  if(en.mv){flash('Moves between cash and an account cannot be edited. Delete and add again.');return}
+  CSE=en.id;$('#cs-a').value=Math.abs(en.amt);$('#cs-n').value=en.desc||'';$('#cs-in').textContent='Save changes';$('#cs-a').focus();flash('Editing this cash entry');
+});
+$('#cs').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||b.id!=='cs-in'||!CSE)return;
+  e.stopPropagation();const en=cashLog().find(x=>x.id===CSE),a=+$('#cs-a').value||0;if(!en||!(a>0)){$('#cs-a').focus();return}
+  en.amt=(en.amt<0?-1:1)*a;en.desc=$('#cs-n').value.trim()||en.desc;saveM();csReset();$('#cs-a').value='';$('#cs-n').value='';drawCash();renderMoney();buzz('ok');flash('Cash entry updated');
+},true);
+$('#mf').addEventListener('click',e=>{
+  const row=e.target.closest('.srow');if(!row||e.target.closest('button:not([data-ed])')||e.target.closest('[data-ed]'))return;
+  const ed=row.querySelector('[data-ed]'),l=loanOf(LF),en=ed&&l&&(l.exp||[]).find(x=>x.id===ed.dataset.ed);if(!en)return;
+  openExp('');X.src='loan';X.ls=LF;X.leid=en.id;X.lf=en.f||'';X.amt=en.amt;X.desc=en.desc||'';X.date=en.date;
+  $('#mx-amt').value=en.amt;$('#mx-desc').value=en.desc||'';drawExp();$('#mx-h').textContent='Edit loan expense';
+},true);
+
+/* ---------- 23. sticky save bar ---------- */
+function markStk(sh){if(sh.__stk)return;sh.__stk=1;if(['sheet','focus','intro','wz','srch','qa'].includes(sh.id))return;const b=[...sh.querySelectorAll('.pbtn')].filter(x=>!x.closest('.seg'));if(b.length)b[b.length-1].classList.add('stk')}
+const _showSheets3=showSheets;
+showSheets=function(){
+  const r=_showSheets3.apply(this,arguments);
+  document.querySelectorAll('.sheet.show').forEach(markStk);
+  if(!stack.includes('cs'))csReset();
+  if(stack.includes('hb'))drawHabits();
+  ftDraw();
+  return r;
+};
+
+/* in Week view the planner grid replaces the day strip */
+const _render3=render;
+render=function(){const r=_render3.apply(this,arguments),w=$('#wstrip');if(w)w.classList.toggle('isweek',tab==='today'&&S.view==='week');return r};
+
+/* ---------- wiring ---------- */
+['hb','ft','sp','rc'].forEach(k=>{SHEETS[k]='#'+k});
+document.addEventListener('input',e=>{if(e.target.id==='aa-in'){AA.ov='';aaPreview()}else if(e.target.id==='sp-a'||e.target.id==='sp-w')spDraw()});
+document.addEventListener('keydown',e=>{if(e.target.id==='aa-in'&&e.key==='Enter'){e.preventDefault();aaCommit()}});
+document.addEventListener('click',e=>{
+  const b=e.target.closest&&e.target.closest('[data-hx],#aa-go,#aa-pv,#hb-add,#ft-go,#ft-rs,#ft-pill,#sp-m,#sp-p,#sp-ex,#sp-ud,#rc-sh,#rc-sv,#mx-rep,#ft-p button,#sp-who button');if(!b)return;
+  const id=b.id,[k,x,y]=(b.dataset.hx||'').split('|');
+  if(id==='aa-go'){aaCommit();return}
+  if(id==='aa-pv'){aaCycle();return}
+  if(id==='hb-add'){const v=$('#hb-n').value.trim();if(!v){$('#hb-n').focus();return}const a=HB();a.push({id:uid(),name:v,d:[],c:Date.now()});HBS(a);$('#hb-n').value='';drawHabits();render();buzz('ok');return}
+  if(id==='ft-go'){ftToggle();return}
+  if(id==='ft-rs'){ftReset();return}
+  if(id==='ft-pill'){openTimer();return}
+  if(b.closest('#ft-p')){if(!FT.run&&!FT.left){FT.min=+b.dataset.m;FT.tot=FT.min*60;ftSave();ftDraw()}else flash('Reset the timer to change the length');return}
+  if(id==='sp-m'){SPL.n=Math.max(2,SPL.n-1);spDraw();return}
+  if(id==='sp-p'){SPL.n=Math.min(20,SPL.n+1);spDraw();return}
+  if(b.closest('#sp-who')){SPL.who=b.dataset.w;spDraw();return}
+  if(id==='sp-ex'){const s=spShares();if(!(s.tot>0)){flash('Enter the bill first');return}openExp('');X.amt=s.mine;X.desc='Split bill';$('#mx-amt').value=s.mine;$('#mx-desc').value='Split bill';drawExp();return}
+  if(id==='sp-ud'){spUdhar();return}
+  if(id==='rc-sh'){recapShare(false);return}
+  if(id==='rc-sv'){recapShare(true);return}
+  if(id==='mx-rep'){repeatLast();return}
+  e.stopPropagation();
+  if(k==='hb'){openHabits()}
+  else if(k==='ft'){openTimer()}
+  else if(k==='sp'){openSplit()}
+  else if(k==='rc'){openRecap()}
+  else if(k==='rep'){openExp('');repeatLast()}
+  else if(k==='emi'){const l=(M.loans||[]).find(z=>z.id===x),u=l&&loanDue(l);if(!u)return;openExp('');X.amt=+l.emi||'';X.desc='EMI · '+l.name;X.lid=l.id;X.lm=u.k;$('#mx-amt').value=X.amt;$('#mx-desc').value=X.desc;drawExp()}
+  else if(k==='hbt'){hbToggle(x,y||TODAY())}
+  else if(k==='hbx'){if(confirm('Delete this habit and its history?')){HBS(HB().filter(h=>h.id!==x));drawHabits();render()}}
+  else if(k==='ftk'){FT.task=x;ftSave();ftDraw()}
+},true);
+$('#list').addEventListener('click',e=>{
+  const b=e.target.closest('[data-wkd],[data-wkn],[data-wkh]');if(!b)return;e.stopPropagation();
+  if(b.dataset.wkd){selDay=b.dataset.wkd;buzz('tap');render()}
+  else if(b.dataset.wkn){selDay=ymd(addDays(dN(selDay),+b.dataset.wkn));buzz('tap');render()}
+  else if(b.dataset.wkh){curId=b.dataset.wkh;openSheet('details')}
+},true);
+/* sheets and bits of markup the new features need */
+document.body.insertAdjacentHTML('beforeend',`
+<div class="sheet" id="hb"><div class="grab"></div><h3>Habits</h3><div class="sm">Tick a habit each day to build a streak. Tap an earlier day to fill it in.</div><div id="hb-list" style="margin-top:12px"></div>
+  <div class="opts" style="margin-top:12px"><div class="srow"><span>New habit</span><input class="tin" id="hb-n" maxlength="40" placeholder="Read 10 pages" autocomplete="off"></div></div><button class="pbtn" id="hb-add">Add habit</button></div>
+<div class="sheet" id="ft"><div class="grab"></div><h3>Focus timer</h3><div class="sm" id="ft-log"></div>
+  <div class="seg" id="ft-p" style="margin-top:12px"><button data-m="15">15 min</button><button data-m="25" class="on">25 min</button><button data-m="50">50 min</button></div>
+  <div class="ftr"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="ft-c" cx="60" cy="60" r="52"/></svg><b id="ft-t">25:00</b></div>
+  <h4>Focusing on (optional)</h4><div class="seg wrap" id="ft-k"></div>
+  <button class="pbtn" id="ft-go">Start</button><button class="tbtn" id="ft-rs">Reset</button></div>
+<div class="sheet" id="sp"><div class="grab"></div><h3>Split a bill</h3><div class="sm">Divide a bill equally and keep track of who owes whom.</div>
+  <div class="opts" style="margin-top:12px"><div class="srow"><span>Total bill (₹)</span><input class="tin" id="sp-a" type="number" inputmode="decimal" placeholder="0"></div>
+  <div class="srow"><span>People, including you</span><span class="stp"><button id="sp-m" aria-label="Fewer">−</button><b id="sp-n">2</b><button id="sp-p" aria-label="More">＋</button></span></div>
+  <div class="srow"><span>Names</span><input class="tin" id="sp-w" placeholder="Others, comma separated" autocomplete="off"></div></div>
+  <div class="seg" id="sp-who" style="margin-top:12px"><button data-w="me" class="on">I paid</button><button data-w="other">Someone else paid</button></div>
+  <div id="sp-r"></div><button class="pbtn" id="sp-ex">Log my share as an expense</button><button class="tbtn" id="sp-ud">Add to Udhar</button></div>
+<div class="sheet" id="rc"><div class="grab"></div><h3>Monthly recap</h3><div class="sm">A picture of your month you can share.</div>
+  <canvas id="rc-cv" width="1080" height="1350" style="width:100%;border-radius:20px;margin-top:12px"></canvas><button class="pbtn" id="rc-sh">Share</button><button class="tbtn" id="rc-sv">Save image</button></div>
+<button id="ft-pill" hidden aria-label="Focus timer"></button>`);
+/* note toolbar additions */
+$('.nta').insertAdjacentHTML('afterbegin',`<button id="nt-tk" aria-label="Make this line a task">${ic('check')}</button><button id="nt-lk" aria-label="Link to a task">${ic('link')}</button><button id="nt-co" aria-label="Color">${ic('palette')}</button><button id="nt-lc" aria-label="Lock">${ic('lock')}</button>`);
+$('#npad .nth').insertAdjacentHTML('afterend','<div id="nt-cols" class="ntc" hidden></div><div id="nt-lp" class="seg wrap ntp" hidden></div><div id="nt-links" class="ntls"></div>');
+/* repeat chip in the expense sheet */
+$('#mx .opts').insertAdjacentHTML('beforebegin','<button class="repbtn" id="mx-rep" hidden style="margin-top:12px"></button>');
+ftLoad();ftDraw();
+})();
+
 /* ===== start ===== */
 const IS_NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
@@ -3095,7 +3608,7 @@ maybeWizard();updStatus();
 </script>
 <script>
 (function(){
-  var BV='2026.11.26.02';window.__BV=BV;
+  var BV='2026.11.26.03';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
