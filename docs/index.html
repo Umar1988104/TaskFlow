@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.27.01'-->
+<!--var BV='2026.11.27.02'-->
 <meta name="app-version" content="2026.11.26.03">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
@@ -622,6 +622,16 @@ body[data-tab=wallet] #cbtn,body[data-tab=wallet] .dock,body[data-tab=wallet] #s
 .wlo-a,.wl-fx{display:flex;gap:10px;justify-content:center;margin-top:12px}.wlo-a button,.wl-fx button{padding:11px 20px;border-radius:999px;background:#1c1c1e;font-weight:600;font-size:15px}.wl-fx button.on{background:var(--blue)}
 .wl-crop{position:relative;border-radius:12px;overflow:hidden;background:#000}.wl-crop canvas{display:block;width:100%;height:auto}.wl-crop svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 #wl-pg{fill:rgba(0,122,255,.14);stroke:#fff;stroke-width:2.5;vector-effect:non-scaling-stroke}#wl-sv circle{fill:rgba(255,255,255,.3);stroke:#fff;stroke-width:3;vector-effect:non-scaling-stroke}
+/* v7.13 wallet */
+.wl-menu{flex-wrap:wrap;overflow:visible}
+.wl-warn{display:block;width:100%;margin-top:10px;padding:10px 14px;border-radius:14px;background:rgba(255,159,10,.16);color:#ff9f0a;font-weight:700;font-size:calc(14px*var(--fs));text-align:left}
+.wlc-x{position:absolute;right:10px;top:9px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;color:#fff}.wlc-x.soon{background:#ff9f0a}.wlc-x.bad{background:#ff453a}
+.wlx.soon{color:#ff9f0a}.wlx.bad{color:#ff453a}
+body.wl-priv #wallet,body.wl-priv #wlo{filter:blur(28px)}
+.wl-in{color-scheme:dark}.wl-r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.wl-r2 label{font-size:12px;color:#8e8e93;display:flex;flex-direction:column;gap:6px}.wl-r2 .wl-in{min-width:0}
+textarea.wl-in{resize:none;font-family:inherit}
+.wlo-n{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:6px;font-size:17px;letter-spacing:.5px}.wlo-n button{padding:6px 12px;border-radius:999px;background:#1c1c1e;font-size:13px;font-weight:600}
+.wlo-note{color:#c7c7cc;font-size:14px;text-align:center;margin:8px 0;white-space:pre-wrap}.wlo-a{flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -662,7 +672,7 @@ body[data-tab=wallet] #cbtn,body[data-tab=wallet] .dock,body[data-tab=wallet] #s
   <button data-menu="1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="19" cy="12" r="1.7" fill="currentColor"/></svg><span>Menu</span></button>
 </nav>
 <div class="ov" id="ov"></div>
-<div id="wlo" hidden></div><input type="file" id="wl-file" accept="image/*" hidden>
+<div id="wlo" hidden></div><input type="file" id="wl-file" accept="image/*" hidden><input type="file" id="wl-rf" hidden>
 <button class="fab" id="fab" aria-label="Add task"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
 <div class="undo" id="undo" hidden><span id="undo-m"></span><button id="undo-b">Undo</button></div>
 <div id="lpo" hidden></div><div id="lpm" hidden></div>
@@ -1845,7 +1855,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.12 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.13 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -2428,6 +2438,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.27.02',t:'Wallet: lock, expiry and backup',i:['Wallet photos are now encrypted on your phone, protected by your Wallet PIN','Auto-lock choices, a blurred app switcher and screenshot block in the Android app','Expiry date on each card, with a reminder added to your tasks','Card number kept masked with Show and Copy, plus notes','Share a card as a watermarked image with a reason and date','Encrypted wallet backup and restore with a password']},
  {v:'2026.11.27.01',t:'Wallet for your cards',i:["A Wallet in the Menu: keep photos of Aadhaar, PAN, voter ID, licence, college ID, ATM cards and more","Crop each card with auto-detect and four draggable corners, with Enhance and B&W looks","Front and back sides: tap a card to flip it","Stacked wallet view, search, favourites and type filters","Its own 4-digit Wallet PIN, separate from the app lock"]},
  {v:'2026.11.26.03',t:'Add anything, habits, focus timer and more',i:["One smart bar on Home: chai 20 becomes an expense, call Rahul tomorrow 5pm a task, anything else a note","Monthly recap picture you can share","Insight cards, a Pay EMI card and a month-end forecast","Habit tracker, focus timer and split bills","Planner week view on the Tasks tab","Notes can become tasks, link to tasks, take a colour or a PIN lock","Edit cash entries and loan expenses, repeat your last expense, and a Save button that stays on screen","One line-icon set, and confetti when a goal or loan is completed"]},
  {v:'2026.11.26.02',t:'A calmer, crisper look',i:["Money amounts use equal-width digits with a smaller rupee sign and decimals","The Home header changes colour through the day","New Glass theme, plus Sunset, Forest, Ocean and Mono packs","Calm mode: no gradients, one accent colour and more space","Line drawings replace emoji on empty screens","Scroll on Money to see how much is left in the top bar","Auto accent colour that follows your avatar colour"]},
@@ -2725,7 +2736,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.12 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.13 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -3637,7 +3648,8 @@ if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(
 maybeWizard();updStatus();
 
 
-/* ===== v7.12: Wallet (photo cards, crop, flip, own PIN) ===== */
+
+/* ===== v7.13: Wallet (photo cards, crop, flip, encrypted, own PIN) ===== */
 const WT=[['aadhaar','Aadhaar','🪪','#e8590c'],['pan','PAN','💳','#1c7ed6'],['voter','Voter ID','🗳️','#7048e8'],['dl','Licence','🚗','#2f9e44'],['passport','Passport','📕','#0b7285'],['college','College ID','🎓','#c2255c'],['atm','Debit / ATM','💳','#364fc7'],['credit','Credit card','💎','#9c36b5'],['ins','Insurance','🛡️','#e67700'],['other','Other','📄','#495057']];
 const wtOf=k=>WT.find(x=>x[0]===k)||WT[9];
 const WDB={db:null,open(){return this.db?Promise.resolve(this.db):new Promise((ok,no)=>{const r=indexedDB.open('tf_wallet',1);r.onupgradeneeded=()=>r.result.createObjectStore('cards',{keyPath:'id'});r.onsuccess=()=>{this.db=r.result;ok(r.result)};r.onerror=()=>no(r.error)})},
@@ -3647,8 +3659,33 @@ const WL={cards:[],q:'',f:'all',unlocked:false,buf:'',mode:'',tmp:'',menu:false}
 const wPin=()=>{try{return localStorage.getItem('tf_wpin')||''}catch(e){return ''}};
 const wHash=p=>hashPin('w'+p);
 const wImg=s=>s?`<img src="${s}" alt="">`:'';
-async function wlLoad(){try{WL.cards=(await WDB.all()).sort((a,b)=>(b.fav?1:0)-(a.fav?1:0)||b.u-a.u)}catch(e){WL.cards=[];flash('Wallet storage is not available')}}
-function wlLock(){WL.unlocked=false;WL.mode='';WL.buf='';WL.menu=false;WL.cards=[];wlHide()}
+/* v7.13 encryption: random data key, wrapped by a key derived from the Wallet PIN */
+const CR=()=>window.crypto&&window.crypto.subtle;
+const B64=b=>{let s='';const u=new Uint8Array(b);for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};
+const UB=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const TE=new TextEncoder(),TD=new TextDecoder();
+async function wKek(pw,salt,use){const k=await CR().importKey('raw',TE.encode(pw),'PBKDF2',false,['deriveKey']);return CR().deriveKey({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,use)}
+async function wSeal(key,data){const iv=crypto.getRandomValues(new Uint8Array(12)),ct=await CR().encrypt({name:'AES-GCM',iv},key,data);return{iv:B64(iv),ct:B64(ct)}}
+const wOpen=(key,o)=>CR().decrypt({name:'AES-GCM',iv:UB(o.iv)},key,UB(o.ct));
+async function wlUseRaw(raw){WL.raw=raw;WL.key=await CR().importKey('raw',raw,'AES-GCM',false,['encrypt','decrypt'])}
+async function wlSetKey(pin,raw){const salt=crypto.getRandomValues(new Uint8Array(16)),kek=await wKek(pin,salt,['encrypt']);localStorage.setItem('tf_wkey',JSON.stringify({s:B64(salt),w:await wSeal(kek,raw)}))}
+async function wlUnlock(pin){try{const m=JSON.parse(localStorage.getItem('tf_wkey')||'null');if(!m)return false;const kek=await wKek(pin,UB(m.s),['decrypt']);await wlUseRaw(new Uint8Array(await wOpen(kek,m.w)));return true}catch(e){return false}}
+async function wlPut(c){const{id,u,...rest}=c;await WDB.put({id,u,enc:await wSeal(WL.key,TE.encode(JSON.stringify(rest)))})}
+async function wlCheck(v){
+  if(localStorage.getItem('tf_wkey'))return wlUnlock(v);
+  if(wHash(v)!==wPin())return false;
+  const raw=crypto.getRandomValues(new Uint8Array(32));await wlSetKey(v,raw);await wlUseRaw(raw);try{localStorage.setItem('tf_wpin','k')}catch(e){}
+  try{for(const r of await WDB.all())if(!r.enc){const{id,u,...rest}=r;await WDB.put({id,u,enc:await wSeal(WL.key,TE.encode(JSON.stringify(rest)))})}}catch(e){}
+  return true;
+}
+async function wlLoad(){
+  try{const out=[];if(WL.key)for(const r of await WDB.all()){try{out.push(r.enc?{...JSON.parse(TD.decode(await wOpen(WL.key,r.enc))),id:r.id,u:r.u}:r)}catch(e){}}
+    WL.cards=out.sort((a,b)=>(b.fav?1:0)-(a.fav?1:0)||b.u-a.u)}catch(e){WL.cards=[];flash('Wallet storage is not available')}
+}
+const wAL=()=>+(localStorage.getItem('tf_walock')||0),ALN={0:'Instant',1:'1 min',5:'5 min'};
+const wSec=on=>{try{const p=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.WalletSecure;p&&p.set({on})}catch(e){}};
+function wlLock(){WL.unlocked=false;WL.mode='';WL.buf='';WL.menu=false;WL.cards=[];WL.key=null;WL.raw=null;wlHide();wSec(false)}
+
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 
 /* PIN pad */
@@ -3661,30 +3698,39 @@ function wlKey(k){
   if(k==='<'){WL.buf=WL.buf.slice(0,-1);wlPad();return}
   if(WL.buf.length>=4)return;WL.buf+=k;buzz(6);wlPad();if(WL.buf.length<4)return;
   const v=WL.buf;WL.buf='';
-  setTimeout(()=>{
-    if(WL.mode==='unlock'){if(wHash(v)===wPin()){WL.unlocked=true;WL.mode='';renderWallet()}else{buzz('err');wlPad('Wrong PIN, try again')}}
-    else if(WL.mode==='old'){if(wHash(v)===wPin()){WL.mode='set';wlPad()}else{buzz('err');wlPad('Wrong PIN')}}
+  setTimeout(async()=>{
+    if(WL.mode==='unlock'){if(await wlCheck(v)){WL.unlocked=true;WL.mode='';renderWallet()}else{buzz('err');wlPad('Wrong PIN, try again')}}
+    else if(WL.mode==='old'){if(await wlCheck(v)){WL.mode='set';wlPad()}else{buzz('err');wlPad('Wrong PIN')}}
     else if(WL.mode==='set'){WL.tmp=v;WL.mode='confirm';wlPad()}
-    else if(WL.mode==='confirm'){if(v===WL.tmp){try{localStorage.setItem('tf_wpin',wHash(v))}catch(e){}WL.unlocked=true;WL.mode='';flash('Wallet PIN saved');renderWallet()}else{WL.mode='set';wlPad('The PINs did not match, try again')}}
+    else if(WL.mode==='confirm'){
+      if(v!==WL.tmp){WL.mode='set';wlPad('The PINs did not match, try again');return}
+      try{const raw=WL.raw||crypto.getRandomValues(new Uint8Array(32));await wlSetKey(v,raw);await wlUseRaw(raw);localStorage.setItem('tf_wpin','k')}catch(e){WL.mode='set';wlPad('Could not save the PIN');return}
+      WL.unlocked=true;WL.mode='';flash('Wallet PIN saved');renderWallet()}
   },120);
 }
 
 /* wallet page */
+const fmtD=s=>new Date(s+'T00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+const wMask=n=>n.length>4?'•••• '+n.slice(-4):'••••';
+const wlExp=c=>{if(!c.exp)return null;const d=Math.round((new Date(c.exp+'T00:00')-new Date(new Date().toDateString()))/864e5);return d<0?{t:'Expired',c:'bad'}:d===0?{t:'Expires today',c:'soon'}:d<=30?{t:'Expires in '+d+' days',c:'soon'}:null};
 function wlListHTML(){
-  const q=WL.q.toLowerCase(),L=WL.cards.filter(c=>(WL.f==='all'||(WL.f==='fav'?c.fav:c.type===WL.f))&&(!q||(c.name+' '+wtOf(c.type)[1]).toLowerCase().includes(q)));
-  return L.length?`<div class="wl-stack">${L.map(c=>`<button class="wlc" data-wid="${c.id}" style="--c:${wtOf(c.type)[3]}">${wImg(c.front)}<span class="wlc-l">${wtOf(c.type)[2]} ${esc(c.name)}${c.fav?' ★':''}</span></button>`).join('')}</div>`
-   :emptyBox('🪪',WL.cards.length?'No card matches':'Your wallet is empty','Add Aadhaar, PAN, college ID, ATM card and more. Photos stay on this phone.','');
+  const q=WL.q.toLowerCase(),L=WL.cards.filter(c=>(WL.f==='all'||(WL.f==='fav'?c.fav:WL.f==='soon'?wlExp(c):c.type===WL.f))&&(!q||(c.name+' '+wtOf(c.type)[1]).toLowerCase().includes(q)));
+  return L.length?`<div class="wl-stack">${L.map(c=>{const e=wlExp(c);return `<button class="wlc" data-wid="${c.id}" style="--c:${wtOf(c.type)[3]}">${wImg(c.front)}<span class="wlc-l">${wtOf(c.type)[2]} ${esc(c.name)}${c.fav?' ★':''}</span>${e?`<span class="wlc-x ${e.c}">${e.t}</span>`:''}</button>`}).join('')}</div>`
+   :emptyBox('🪪',WL.cards.length?'No card matches':'Your wallet is empty','Add Aadhaar, PAN, college ID, ATM card and more. Photos stay encrypted on this phone.','');
 }
 async function renderWallet(){
   if(tab!=='wallet')return;
+  if(!CR()){$('#wallet').innerHTML='<p style="padding:30px;text-align:center;color:var(--sub)">Encryption is not available in this browser, so the Wallet is turned off here. It works in the Android app and the installed web app.</p>';return}
+  wSec(true);
   if(!wPin()&&!WL.mode)WL.mode='set';
   if(!WL.unlocked){if(!WL.mode)WL.mode='unlock';wlPad();return}
   if(WL.mode){wlPad();return}
   await wlLoad();if(tab!=='wallet'||!WL.unlocked)return;
-  const types=[...new Set(WL.cards.map(c=>c.type))];
+  const types=[...new Set(WL.cards.map(c=>c.type))],att=WL.cards.filter(wlExp).length;
   $('#wallet').innerHTML=`<div class="wl-top"><input id="wl-q" type="search" placeholder="Search cards" value="${esc(WL.q)}" autocomplete="off"><button class="chipbtn" data-wl="menu" aria-label="Wallet options">⋯</button></div>`
-   +(WL.menu?'<div class="wl-menu"><button class="chipbtn" data-wl="chpin">Change PIN</button><button class="chipbtn" data-wl="lock">Lock now</button><button class="chipbtn" data-wl="reset" style="color:var(--red)">Reset wallet</button></div>':'')
-   +(WL.cards.length>1?`<div class="wl-chips">${[['all','All'],['fav','★ Favourites'],...types.map(k=>[k,wtOf(k)[1]])].map(([k,n])=>`<button data-wf="${k}" class="${WL.f===k?'on':''}">${n}</button>`).join('')}</div>`:'')
+   +(WL.menu?`<div class="wl-menu"><button class="chipbtn" data-wl="chpin">Change PIN</button><button class="chipbtn" data-wl="autolock">Auto-lock: ${ALN[wAL()]}</button><button class="chipbtn" data-wl="bk">Back up</button><button class="chipbtn" data-wl="rs">Restore</button><button class="chipbtn" data-wl="lock">Lock now</button><button class="chipbtn" data-wl="reset" style="color:var(--red)">Reset wallet</button></div>`:'')
+   +(att&&WL.f!=='soon'?`<button class="wl-warn" data-wf="soon">⚠ ${att} card${att>1?'s':''} expired or expiring soon</button>`:'')
+   +(WL.cards.length>1?`<div class="wl-chips">${[['all','All'],['fav','★ Favourites'],...(att?[['soon','⏰ Expiring']]:[]),...types.map(k=>[k,wtOf(k)[1]])].map(([k,n])=>`<button data-wf="${k}" class="${WL.f===k?'on':''}">${n}</button>`).join('')}</div>`:'')
    +`<div id="wl-list">${wlListHTML()}</div><button class="pbtn" data-wl="add">+ Add card</button>`;
 }
 
@@ -3694,24 +3740,31 @@ function wlHide(){const o=$('#wlo');if(!o)return;o.hidden=true;o.innerHTML='';WO
 const wlClose=()=>{if(WO.open)history.back();else wlHide()};
 addEventListener('popstate',()=>{if(WO.open&&!(history.state&&history.state.wl))wlHide()});
 function wlView(id){
-  const c=WL.cards.find(x=>x.id===id);if(!c)return;WD.id=id;
+  const c=WL.cards.find(x=>x.id===id);if(!c)return;WD.id=id;const e=wlExp(c);
   wlShow(`<div class="wlo-h"><button data-wl="close" aria-label="Close">✕</button><b>${esc(c.name)}</b><button data-wl="fav" aria-label="Favourite">${c.fav?'★':'☆'}</button></div>
   <div class="wlf" id="wlf" data-wl="flip"><div class="wlf-in"><div class="wlf-s">${wImg(c.front)}</div><div class="wlf-s wlf-b">${c.back?wImg(c.back):'<div class="wlf-no">No back side added</div>'}</div></div></div>
-  <p class="wlo-s">${wtOf(c.type)[2]} ${wtOf(c.type)[1]} · tap the card to flip</p>
-  <div class="wlo-a"><button data-wl="flip">Flip</button><button data-wl="edit">Edit</button><button data-wl="del" style="color:#ff6b6b">Delete</button></div>`);
+  <p class="wlo-s">${wtOf(c.type)[2]} ${wtOf(c.type)[1]}${c.exp?' · '+(e?`<b class="wlx ${e.c}">${e.t}</b>`:'valid till '+fmtD(c.exp)):''} · tap the card to flip</p>
+  ${c.num?`<div class="wlo-n"><span id="wl-nv">${esc(wMask(c.num))}</span><button data-wl="reveal">Show</button><button data-wl="copy">Copy</button></div>`:''}
+  ${c.note?`<p class="wlo-note">${esc(c.note)}</p>`:''}
+  <div class="wlo-a"><button data-wl="flip">Flip</button><button data-wl="share">Share</button><button data-wl="edit">Edit</button><button data-wl="del" style="color:#ff6b6b">Delete</button></div>`);
 }
 function wlEdit(id){
   const c=id&&WL.cards.find(x=>x.id===id);
   Object.keys(WD).forEach(k=>delete WD[k]);
-  Object.assign(WD,c?{...c}:{id:'',type:'aadhaar',name:'',front:'',back:'',fav:false});
+  Object.assign(WD,c?{...c}:{id:'',type:'aadhaar',name:'',front:'',back:'',fav:false,num:'',note:'',exp:'',lead:30,tid:''});
   wlEditDraw();
 }
+function wlSnap(){['name','num','note','exp','lead'].forEach(k=>{const e=$('#wl-'+k);if(e)WD[k]=e.value})}
 function wlEditDraw(){
   wlShow(`<div class="wlo-h"><button data-wl="close" aria-label="Close">✕</button><b>${WD.id?'Edit card':'New card'}</b><button class="chipbtn" data-wl="save">Save</button></div>
   <div class="wlo-b"><div class="wl-types">${WT.map(t=>`<button data-wt="${t[0]}" class="${WD.type===t[0]?'on':''}" style="--c:${t[3]}">${t[2]} ${t[1]}</button>`).join('')}</div>
   <input id="wl-name" class="wl-in" maxlength="40" placeholder="Name, e.g. My Aadhaar" value="${esc(WD.name||'')}">
   <div class="wl-slots">${['front','back'].map(s=>`<button class="wl-slot" data-slot="${s}">${WD[s]?wImg(WD[s]):`<span>＋<br>${s==='front'?'Front side':'Back side (optional)'}</span>`}</button>`).join('')}</div>
-  <p class="wlo-s">Tap a side to take a photo or pick one from your gallery, then crop it.</p>${WD.back?'<button class="tbtn" data-wl="rmback">Remove back side</button>':''}</div>`);
+  ${WD.back?'<button class="tbtn" data-wl="rmback">Remove back side</button>':''}
+  <input id="wl-num" class="wl-in" maxlength="40" placeholder="Card / ID number (optional)" value="${esc(WD.num||'')}" autocomplete="off">
+  <div class="wl-r2"><label>Expiry date<input id="wl-exp" type="date" class="wl-in" value="${esc(WD.exp||'')}"></label><label>Remind me<select id="wl-lead" class="wl-in">${[7,30,60].map(n=>`<option value="${n}"${+WD.lead===n?' selected':''}>${n} days before</option>`).join('')}</select></label></div>
+  <textarea id="wl-note" class="wl-in" rows="2" maxlength="200" placeholder="Notes, e.g. helpline number. Never store a PIN or CVV.">${esc(WD.note||'')}</textarea>
+  <p class="wlo-s">Tap a side to take a photo or pick one from your gallery, then crop it.</p></div>`);
 }
 
 /* crop: auto-detect, 4 draggable corners, perspective flatten */
@@ -3765,12 +3818,76 @@ function wlUse(){
   if(CS.fx!=='org'){const f=document.createElement('canvas');f.width=856;f.height=540;const x=f.getContext('2d');x.filter=CS.fx==='bw'?'grayscale(1) contrast(1.35) brightness(1.08)':'contrast(1.18) brightness(1.06) saturate(1.12)';x.drawImage(out,0,0);out=f}
   WD[WD.slot]=out.toDataURL('image/jpeg',.88);wlEditDraw();
 }
+/* v4: expiry reminder task */
+function wlTask(rec){
+  const i=tasks.findIndex(t=>t.id===rec.tid);if(i>-1)tasks.splice(i,1);rec.tid='';
+  const ex=rec.exp&&new Date(rec.exp+'T09:00');if(!ex||isNaN(ex)||ex<Date.now()){Store.save(tasks);render();return}
+  let r=new Date(ex.getTime()-rec.lead*864e5);if(r<Date.now())r=new Date(Date.now()+12e4);
+  const e=new Date(r.getTime()+18e5),sd=ymd(r),en=ymd(e)!==sd?'23:59':pad(e.getHours())+':'+pad(e.getMinutes());
+  const t={id:uid(),done:false,title:'Renew '+wtOf(rec.type)[1]+' (expires '+fmtD(rec.exp)+')',desc:'From your Wallet',category:'Task',date:sd,start:pad(r.getHours())+':'+pad(r.getMinutes()),end:en,tags:['wallet'],pri:null,rem:[0],fired:[],subs:[]};
+  t.fired=fireTimes(t).filter(f=>f<=Date.now());tasks.push(t);Store.save(tasks);askPerm();render();rec.tid=t.id;
+}
 async function wlSave(){
-  const nm=$('#wl-name');if(nm)WD.name=nm.value;
+  wlSnap();
   if(!WD.front){flash('Add the front side first');return}
-  const rec={id:WD.id||uid(),type:WD.type,name:(WD.name||'').trim()||wtOf(WD.type)[1],front:WD.front,back:WD.back||'',fav:!!WD.fav,u:Date.now()};
-  try{await WDB.put(rec)}catch(e){flash('Could not save, storage may be full');return}
-  flash('Saved to wallet');wlClose();renderWallet();
+  const rec={id:WD.id||uid(),type:WD.type,name:(WD.name||'').trim()||wtOf(WD.type)[1],front:WD.front,back:WD.back||'',fav:!!WD.fav,num:(WD.num||'').trim(),note:(WD.note||'').trim(),exp:WD.exp||'',lead:+WD.lead||30,tid:WD.tid||'',u:Date.now()};
+  wlTask(rec);
+  try{await wlPut(rec)}catch(e){flash('Could not save, storage may be full');return}
+  flash(rec.tid?'Saved, reminder added to your tasks':'Saved to wallet');wlClose();renderWallet();
+}
+
+/* v4: delivering files */
+function wlB64(b){return new Promise(r=>{const f=new FileReader();f.onload=()=>r(String(f.result).split(',')[1]);f.readAsDataURL(b)})}
+async function wlDeliver(b,name,mime,share){
+  const f=new File([b],name,{type:mime});
+  if(share&&navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e&&e.name==='AbortError')return}}
+  const fs=FS();
+  if(fs){try{await askFsPerm();await fs.writeFile({path:'TaskFlow/'+name,data:await wlB64(b),directory:'DOCUMENTS',recursive:true});flash('Saved to Documents/TaskFlow');return}catch(e){}}
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();flash('File saved');
+}
+
+/* v4: safe share with watermark */
+const WS={};
+function wlShareForm(){
+  const c=WL.cards.find(x=>x.id===WS.c);if(!c)return;if(!c.back&&WS.sides!=='front')WS.sides='front';
+  wlShow(`<div class="wlo-h"><button data-wl="vback">‹ Back</button><b>Share safely</b><span style="width:34px"></span></div>
+  <div class="wlo-b"><p class="wlo-s">A watermark with the reason and today's date is stamped across the image, so it is hard to reuse for anything else.</p>
+  <div class="wl-fx" style="margin:0">${[['front','Front'],...(c.back?[['back','Back'],['both','Both']]:[])].map(([k,n])=>`<button data-wl="ss:${k}" class="${WS.sides===k?'on':''}">${n}</button>`).join('')}</div>
+  <input id="wl-why" class="wl-in" maxlength="40" value="${esc(WS.why)}" placeholder="Reason, e.g. For college admission only">
+  <button class="pbtn" data-wl="ss-make">Preview</button></div>`);
+}
+const wLoadImg=s=>new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=s});
+async function wlMakeShare(){
+  const c=WL.cards.find(x=>x.id===WS.c),w=$('#wl-why');if(!c)return;if(w)WS.why=w.value.trim()||'For verification only';
+  const list=WS.sides==='both'?['front','back']:[WS.sides],ims=await Promise.all(list.map(s=>wLoadImg(c[s]))),W=856,H=540,g=24,cv=document.createElement('canvas');
+  cv.width=W+g*2;cv.height=(H+g)*ims.length+g;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);
+  ims.forEach((im,i)=>x.drawImage(im,g,g+i*(H+g),W,H));
+  const txt=WS.why+' · '+fmtD(ymd(new Date())),span=Math.hypot(cv.width,cv.height);
+  x.save();x.rotate(-Math.PI/7);x.font='700 32px sans-serif';x.textBaseline='middle';const tw=x.measureText(txt).width+90;x.lineWidth=5;x.strokeStyle='rgba(255,255,255,.4)';x.fillStyle='rgba(190,0,0,.36)';
+  for(let yy=-span/2,r=0;yy<span;yy+=105,r++)for(let xx=-span/2-(r%2)*tw/2;xx<span;xx+=tw){x.strokeText(txt,xx,yy);x.fillText(txt,xx,yy)}
+  x.restore();
+  const b=await new Promise(r=>cv.toBlob(r,'image/jpeg',.9));if(!b){flash('Could not create the image');return}
+  WS.blob=b;WS.name='wallet-'+c.type+'-'+ymd(new Date())+'.jpg';
+  wlShow(`<div class="wlo-h"><button data-wl="ss-back">‹ Back</button><b>Preview</b><span style="width:34px"></span></div>
+  <div class="wlo-b"><img src="${URL.createObjectURL(b)}" alt="" style="width:100%;border-radius:12px;background:#fff"><button class="pbtn" data-wl="ss-send">Share / Save</button><p class="wlo-s">This copy leaves the wallet and is not encrypted. Delete it once it has been used.</p></div>`);
+}
+
+/* v4: encrypted backup and restore */
+function wlAsk(title,sub,two,cb){
+  WL.ask=cb;WL.two=two;
+  wlShow(`<div class="wlo-h"><button data-wl="close" aria-label="Close">✕</button><b>${title}</b><span style="width:34px"></span></div>
+  <div class="wlo-b"><p class="wlo-s">${sub}</p><input id="wl-p1" type="password" class="wl-in" placeholder="Password" autocomplete="off">${two?'<input id="wl-p2" type="password" class="wl-in" placeholder="Repeat password" autocomplete="off">':''}<button class="pbtn" data-wl="ask-ok">Continue</button><p id="wl-pe" class="wlo-s" style="color:#ff6b6b;min-height:18px"></p></div>`);
+}
+async function wlPack(pw,obj){const salt=crypto.getRandomValues(new Uint8Array(16)),k=await wKek(pw,salt,['encrypt']);return JSON.stringify({tfw:1,s:B64(salt),...await wSeal(k,TE.encode(JSON.stringify(obj)))})}
+async function wlUnpack(pw,txt){const j=JSON.parse(txt);if(!j.tfw)throw 0;return JSON.parse(TD.decode(await wOpen(await wKek(pw,UB(j.s),['decrypt']),j)))}
+async function wlBackup(pw){
+  const txt=await wlPack(pw,{app:'taskflow-wallet',v:1,cards:WL.cards});
+  await wlDeliver(new Blob([txt],{type:'application/octet-stream'}),'taskflow-wallet-'+ymd(new Date())+'.tfw','application/octet-stream',false);
+}
+async function wlRestore(pw,txt){
+  const d=await wlUnpack(pw,txt);if(!d||!Array.isArray(d.cards))throw 0;let n=0;
+  for(const c of d.cards){if(!c||!c.id||!c.front)continue;if(c.exp&&!tasks.some(t=>t.id===c.tid))wlTask(c);await wlPut(c);n++}
+  return n;
 }
 
 /* clicks */
@@ -3779,8 +3896,8 @@ async function wlClick(e){
   if(d.wk!==undefined)return wlKey(d.wk);
   if(d.wid)return wlView(d.wid);
   if(d.wf){WL.f=d.wf;return renderWallet()}
-  if(d.wt){const n=$('#wl-name');if(n)WD.name=n.value;WD.type=d.wt;return wlEditDraw()}
-  if(d.slot){const n=$('#wl-name');if(n)WD.name=n.value;WD.slot=d.slot;const f=$('#wl-file');f.value='';return f.click()}
+  if(d.wt){wlSnap();WD.type=d.wt;return wlEditDraw()}
+  if(d.slot){wlSnap();WD.slot=d.slot;const f=$('#wl-file');f.value='';return f.click()}
   if(d.fx){CS.fx=d.fx;document.querySelectorAll('.wl-fx [data-fx]').forEach(b=>b.classList.toggle('on',b.dataset.fx===d.fx));return}
   const a=d.wl;
   if(a==='add')wlEdit('');
@@ -3791,11 +3908,23 @@ async function wlClick(e){
   else if(a==='reset'){if(confirm('Reset the wallet? This deletes every card and removes the Wallet PIN. It cannot be undone.')){try{await WDB.clear()}catch(_){}try{localStorage.removeItem('tf_wpin')}catch(_){}wlLock();flash('Wallet reset');renderWallet()}}
   else if(a==='close')wlClose();
   else if(a==='flip'){const f=$('#wlf');if(f)f.classList.toggle('flip')}
-  else if(a==='fav'){const c=WL.cards.find(x=>x.id===WD.id);if(c){c.fav=!c.fav;c.u=Date.now();try{await WDB.put(c)}catch(_){}wlView(c.id);flash(c.fav?'Added to favourites':'Removed from favourites')}}
+  else if(a==='fav'){const c=WL.cards.find(x=>x.id===WD.id);if(c){c.fav=!c.fav;c.u=Date.now();try{await wlPut(c)}catch(_){}wlView(c.id);flash(c.fav?'Added to favourites':'Removed from favourites')}}
   else if(a==='edit'){const id=WD.id;wlEdit(id)}
-  else if(a==='del'){const c=WL.cards.find(x=>x.id===WD.id);if(c&&confirm('Delete "'+c.name+'" from the wallet?')){try{await WDB.del(c.id)}catch(_){}flash('Card deleted');wlClose();renderWallet()}}
+  else if(a==='del'){const c=WL.cards.find(x=>x.id===WD.id);if(c&&confirm('Delete "'+c.name+'" from the wallet?')){try{await WDB.del(c.id)}catch(_){}{const i=tasks.findIndex(t=>t.id===c.tid);if(i>-1){tasks.splice(i,1);Store.save(tasks);render()}}flash('Card deleted');wlClose();renderWallet()}}
   else if(a==='save')wlSave();
-  else if(a==='rmback'){const n=$('#wl-name');if(n)WD.name=n.value;WD.back='';wlEditDraw()}
+  else if(a==='rmback'){wlSnap();WD.back='';wlEditDraw()}
+  else if(a==='share'){const c=WL.cards.find(x=>x.id===WD.id);if(c){WS.c=c.id;WS.sides='front';WS.why='For verification only';wlShareForm()}}
+  else if(a==='vback')wlView(WS.c);
+  else if(a&&a.startsWith('ss:')){const q=$('#wl-why');if(q)WS.why=q.value;WS.sides=a.slice(3);wlShareForm()}
+  else if(a==='ss-make')wlMakeShare();
+  else if(a==='ss-back')wlShareForm();
+  else if(a==='ss-send')wlDeliver(WS.blob,WS.name,'image/jpeg',true);
+  else if(a==='reveal'){const c=WL.cards.find(x=>x.id===WD.id),s=$('#wl-nv');if(!c||!s)return;const on=t.textContent==='Show';s.textContent=on?c.num:wMask(c.num);t.textContent=on?'Hide':'Show';clearTimeout(WL.rv);if(on)WL.rv=setTimeout(()=>{const s2=$('#wl-nv');if(s2){s2.textContent=wMask(c.num);t.textContent='Show'}},10000)}
+  else if(a==='copy'){const c=WL.cards.find(x=>x.id===WD.id);if(!c)return;try{await navigator.clipboard.writeText(c.num);flash('Number copied')}catch(_){const x=document.createElement('textarea');x.value=c.num;document.body.appendChild(x);x.select();try{document.execCommand('copy');flash('Number copied')}catch(__){flash('Could not copy')}x.remove()}}
+  else if(a==='autolock'){const n={0:1,1:5,5:0}[wAL()];try{localStorage.setItem('tf_walock',n)}catch(_){}renderWallet()}
+  else if(a==='bk'){WL.menu=false;if(!WL.cards.length){flash('Nothing to back up yet');renderWallet();return}wlAsk('Back up wallet','Choose a password. You will need it to restore. It is not your Wallet PIN and it cannot be recovered.',true,async pw=>{try{await wlBackup(pw);wlClose()}catch(_){$('#wl-pe').textContent='Could not create the backup'}})}
+  else if(a==='rs'){WL.menu=false;const f=$('#wl-rf');f.value='';f.click()}
+  else if(a==='ask-ok'){const p1=$('#wl-p1').value,p2=$('#wl-p2'),er=$('#wl-pe');if(WL.two){if(p1.length<6){er.textContent='Use at least 6 characters';return}if(!p2||p1!==p2.value){er.textContent='The passwords do not match';return}}else if(!p1){er.textContent='Enter the password';return}WL.ask(p1)}
   else if(a==='cback'){wlEditDraw()}
   else if(a==='use')wlUse();
   else if(a==='rot'){const s=CS.cv,c=document.createElement('canvas');c.width=s.height;c.height=s.width;const x=c.getContext('2d');x.translate(s.height,0);x.rotate(Math.PI/2);x.drawImage(s,0,0);CS.cv=c;CS.q=autoQuad(c);wlCropDraw()}
@@ -3807,11 +3936,17 @@ $('#wl-file').addEventListener('change',e=>{const f=e.target.files&&e.target.fil
 document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('#wl-sv circle');if(!c)return;CS.d=+c.dataset.i;try{c.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
 document.addEventListener('pointermove',e=>{if(CS.d==null)return;const sv=$('#wl-sv');if(!sv){CS.d=null;return}const r=sv.getBoundingClientRect(),W=CS.cv.width,H=CS.cv.height;CS.q[CS.d]={x:Math.min(W,Math.max(0,(e.clientX-r.left)/r.width*W)),y:Math.min(H,Math.max(0,(e.clientY-r.top)/r.height*H))};wlPoly()});
 document.addEventListener('pointerup',()=>{CS.d=null});document.addEventListener('pointercancel',()=>{CS.d=null});
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&(WL.unlocked||WO.open)){wlLock();if(tab==='wallet')renderWallet()}});
+$('#wl-rf').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;let txt='';try{txt=await f.text()}catch(_){flash('Could not read that file');return}
+  wlAsk('Restore wallet','Enter the password you chose when you made this backup.',false,async pw=>{try{const n=await wlRestore(pw,txt);flash('Restored '+n+' card'+(n===1?'':'s'));wlClose();renderWallet()}catch(_){$('#wl-pe').textContent='Wrong password, or not a wallet backup'}})});
+document.addEventListener('visibilitychange',()=>{
+  const on=WL.unlocked||WO.open;
+  if(document.hidden){if(!on)return;if(wAL()===0){wlLock();if(tab==='wallet')renderWallet()}else{WL.hid=Date.now();document.body.classList.add('wl-priv')}}
+  else{document.body.classList.remove('wl-priv');if(WL.hid&&Date.now()-WL.hid>wAL()*6e4){wlLock();if(tab==='wallet')renderWallet()}WL.hid=0}
+});
 </script>
 <script>
 (function(){
-  var BV='2026.11.27.01';window.__BV=BV;
+  var BV='2026.11.27.02';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);

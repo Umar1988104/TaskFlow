@@ -21,6 +21,43 @@ jobs:
           npm install -D @capacitor/cli@8
       - name: Add Android platform
         run: npx cap add android
+      - name: Add Wallet screen-security plugin
+        run: |
+          D=android/app/src/main/java/com/taskflow/app
+          cat > $D/WalletSecure.java <<'EOF'
+          package com.taskflow.app;
+          import android.view.WindowManager;
+          import com.getcapacitor.Plugin;
+          import com.getcapacitor.PluginCall;
+          import com.getcapacitor.PluginMethod;
+          import com.getcapacitor.annotation.CapacitorPlugin;
+          @CapacitorPlugin(name = "WalletSecure")
+          public class WalletSecure extends Plugin {
+            @PluginMethod
+            public void set(final PluginCall call) {
+              final boolean on = Boolean.TRUE.equals(call.getBoolean("on", false));
+              getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                  if (on) getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                  else getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                }
+              });
+              call.resolve();
+            }
+          }
+          EOF
+          cat > $D/MainActivity.java <<'EOF'
+          package com.taskflow.app;
+          import android.os.Bundle;
+          import com.getcapacitor.BridgeActivity;
+          public class MainActivity extends BridgeActivity {
+            @Override
+            public void onCreate(Bundle savedInstanceState) {
+              registerPlugin(WalletSecure.class);
+              super.onCreate(savedInstanceState);
+            }
+          }
+          EOF
       - name: Add notification permissions
         run: sed -i 's#</manifest>#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/><uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32"/><uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/></manifest>#' android/app/src/main/AndroidManifest.xml
       - name: Use the permanent signing key and bump version
