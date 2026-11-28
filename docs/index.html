@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.26.03'-->
+<!--var BV='2026.11.27.01'-->
 <meta name="app-version" content="2026.11.26.03">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
@@ -596,6 +596,32 @@ body.calm .srow{padding-top:14px;padding-bottom:14px}
 body.calm .pbtn.stk{box-shadow:0 -12px 16px 10px var(--bg),0 0 0 6px var(--bg)}
 
 #wstrip.isweek>.wk,#wstrip.isweek>.wdays{display:none}
+/* ===== v7.12 wallet ===== */
+body[data-tab=wallet] #cbtn,body[data-tab=wallet] .dock,body[data-tab=wallet] #sbtn,body[data-tab=wallet] .fab{display:none}
+#wallet{padding:4px 2px 90px}
+.wl-top{display:flex;gap:8px;align-items:center}.wl-top input{flex:1;min-width:0;padding:11px 14px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);color:var(--txt);font-size:calc(16px*var(--fs))}
+.wl-menu,.wl-chips{display:flex;gap:8px;overflow-x:auto;margin:10px 0 2px;padding:2px 2px 4px}.wl-chips button{flex:none;padding:7px 14px;border-radius:999px;background:var(--card);box-shadow:var(--shadow);font-size:calc(14px*var(--fs));font-weight:600;color:var(--txt)}.wl-chips button.on{background:var(--blue);color:#fff}
+.wl-stack{margin:14px 0 4px}
+.wlc{display:block;position:relative;width:100%;aspect-ratio:856/540;border-radius:4.5%/7.2%;overflow:hidden;background:var(--c);box-shadow:0 -6px 16px rgba(0,0,0,.22);margin-top:-44%;padding:0;border:0}
+.wl-stack .wlc:first-child{margin-top:0}.wlc:active{filter:brightness(.92)}
+.wlc img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.wlc-l{position:absolute;left:0;right:0;top:0;padding:9px 14px 24px;text-align:left;color:#fff;font-weight:700;font-size:calc(14px*var(--fs));background:linear-gradient(rgba(0,0,0,.62),transparent);text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.wl-pad{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:36px}.wl-lk{font-size:42px}.wl-pad .idots{margin:18px 0 20px}
+#wlo{position:fixed;inset:0;z-index:60;background:#0b0b0f;color:#fff;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 8px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);overflow-y:auto}
+#wlo[hidden]{display:none}#wlo button{color:#fff}#wlo .chipbtn{background:var(--blue);color:#fff;box-shadow:none}
+.wlo-h{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px}.wlo-h b{flex:1;text-align:center;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wlo-h>button:not(.chipbtn){padding:10px 8px;font-size:18px}
+.wlf{width:min(100%,640px);margin:22px auto 10px;aspect-ratio:856/540;perspective:1400px;cursor:pointer}
+.wlf-in{position:relative;width:100%;height:100%;transition:transform .6s var(--spring);transform-style:preserve-3d}.wlf.flip .wlf-in{transform:rotateY(180deg)}
+.wlf-s{position:absolute;inset:0;border-radius:4.5%/7.2%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 18px 50px rgba(0,0,0,.6);background:#1c1c1e}.wlf-b{transform:rotateY(180deg)}
+.wlf-s img{width:100%;height:100%;object-fit:cover;display:block}.wlf-no{height:100%;display:grid;place-items:center;color:#8e8e93;font-size:15px}
+.wlo-b{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.wl-types{display:flex;flex-wrap:wrap;gap:8px}.wl-types button{padding:8px 12px;border-radius:999px;background:#1c1c1e;font-size:14px;font-weight:600;border:1.5px solid transparent}.wl-types button.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 30%,#1c1c1e)}
+.wl-in{width:100%;padding:13px 14px;border-radius:14px;background:#1c1c1e;color:#fff;font-size:16px}
+.wl-slots{display:grid;gap:12px}.wl-slot{aspect-ratio:856/540;border-radius:4.5%/7.2%;border:2px dashed #3a3a3c;background:#141418;color:#8e8e93!important;overflow:hidden;display:grid;place-items:center;font-size:15px;line-height:1.6;padding:0}.wl-slot img{width:100%;height:100%;object-fit:cover}
+.wlo-s{color:#8e8e93;font-size:13px;text-align:center;margin:6px 0}
+.wlo-a,.wl-fx{display:flex;gap:10px;justify-content:center;margin-top:12px}.wlo-a button,.wl-fx button{padding:11px 20px;border-radius:999px;background:#1c1c1e;font-weight:600;font-size:15px}.wl-fx button.on{background:var(--blue)}
+.wl-crop{position:relative;border-radius:12px;overflow:hidden;background:#000}.wl-crop canvas{display:block;width:100%;height:auto}.wl-crop svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+#wl-pg{fill:rgba(0,122,255,.14);stroke:#fff;stroke-width:2.5;vector-effect:non-scaling-stroke}#wl-sv circle{fill:rgba(255,255,255,.3);stroke:#fff;stroke-width:3;vector-effect:non-scaling-stroke}
 </style>
 </head>
 <body>
@@ -618,6 +644,7 @@ body.calm .pbtn.stk{box-shadow:0 -12px 16px 10px var(--bg),0 0 0 6px var(--bg)}
     <section id="home" hidden></section>
     <section id="notes" hidden></section>
   <section id="settings" hidden></section>
+  <section id="wallet" hidden data-noswipe></section>
 </div>
 <div class="dock"><div class="dock-in">
   <div id="qs"><button data-w="anytime">Anytime</button><button data-w="today">Today</button><button data-w="tomorrow">Tomorrow</button><button data-w="daily">Daily</button><button data-w="weekdays">Weekdays</button><button data-w="!high">High priority</button><button data-w="contest">Contest</button><button data-w="homework">Homework</button><button data-w="exam">Exam</button><button data-w="at 7pm">7 pm</button></div>
@@ -625,7 +652,7 @@ body.calm .pbtn.stk{box-shadow:0 -12px 16px 10px var(--bg),0 0 0 6px var(--bg)}
   <div class="field"><input id="in" type="text" placeholder="tomorrow 7:30-10:30 contest on Codeforces" enterkeyhint="done" autocomplete="off"><button id="add" aria-label="Add task">+</button></div>
 </div></div>
 <div id="mbar"><span id="mbt"></span></div>
-<div id="mpop" hidden><button data-mn="progress"><span>📊</span>Progress</button><button data-mn="settings"><span>👤</span>Profile</button></div>
+<div id="mpop" hidden><button data-mn="wallet"><span>👛</span>Wallet</button><button data-mn="progress"><span>📊</span>Progress</button><button data-mn="settings"><span>👤</span>Profile</button></div>
 <div id="stat" hidden></div>
 <nav class="tabs">
   <button data-tab="today"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M16 2v3M3 9h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg><span>Tasks</span></button>
@@ -635,6 +662,7 @@ body.calm .pbtn.stk{box-shadow:0 -12px 16px 10px var(--bg),0 0 0 6px var(--bg)}
   <button data-menu="1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="19" cy="12" r="1.7" fill="currentColor"/></svg><span>Menu</span></button>
 </nav>
 <div class="ov" id="ov"></div>
+<div id="wlo" hidden></div><input type="file" id="wl-file" accept="image/*" hidden>
 <button class="fab" id="fab" aria-label="Add task"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
 <div class="undo" id="undo" hidden><span id="undo-m"></span><button id="undo-b">Undo</button></div>
 <div id="lpo" hidden></div><div id="lpm" hidden></div>
@@ -1641,17 +1669,19 @@ addEventListener('popstate',e=>{closeLPM();const st=e.state||{tab:'home',stack:[
 $('#ov').addEventListener('click',closeTop);
 function setTab(t,np){
   const prev=tab;
+  if(prev==='wallet'&&t!=='wallet')wlLock();
   if(!np&&t!==tab)history.pushState({tab:t,stack:[]},'');
   tab=t;document.body.dataset.tab=t;
-  $('#ttl').textContent={home:'Home',today:'Tasks',upcoming:'Upcoming',money:'Money',progress:'Progress',settings:'Profile',notes:'Notepad'}[t];
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.menu!==undefined?(t==='progress'||t==='settings'):b.dataset.tab===t));
-  $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';$('#home').hidden=t!=='home';$('#notes').hidden=t!=='notes';
+  $('#ttl').textContent={home:'Home',today:'Tasks',upcoming:'Upcoming',money:'Money',progress:'Progress',settings:'Profile',notes:'Notepad',wallet:'Wallet'}[t];
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.menu!==undefined?(t==='progress'||t==='settings'||t==='wallet'):b.dataset.tab===t));
+  $('#dash').hidden=t!=='today';$('#wstrip').hidden=t!=='today';$('#list').hidden=!(t==='today'||t==='upcoming');$('#money').hidden=t!=='money';$('#tseg').hidden=!(t==='today'||t==='upcoming');document.querySelectorAll('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#progress').hidden=t!=='progress';$('#settings').hidden=t!=='settings';$('#wallet').hidden=t!=='wallet';$('#home').hidden=t!=='home';$('#notes').hidden=t!=='notes';
   const dir=setTab.ran?tabDir(prev,t):0;window.scrollTo(0,0);slideIn(dir);lastKey='';switchUntil=performance.now()+520;
   const tok=++setTab.tok;
   const go=()=>{if(tok!==setTab.tok)return;
     if(tab==='notes'&&stale('notes'))renderNotes();
     if(tab==='progress'&&stale('progress'))renderProgress();
     if(tab==='settings'&&stale('settings'))renderSettings();
+    if(tab==='wallet')renderWallet();
     if(tab==='money')$('#money').dataset.fresh='1';
     render();window.scrollTo(0,0);staggerPage();
   };
@@ -1815,7 +1845,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.11 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.12 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -2398,6 +2428,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.27.01',t:'Wallet for your cards',i:["A Wallet in the Menu: keep photos of Aadhaar, PAN, voter ID, licence, college ID, ATM cards and more","Crop each card with auto-detect and four draggable corners, with Enhance and B&W looks","Front and back sides: tap a card to flip it","Stacked wallet view, search, favourites and type filters","Its own 4-digit Wallet PIN, separate from the app lock"]},
  {v:'2026.11.26.03',t:'Add anything, habits, focus timer and more',i:["One smart bar on Home: chai 20 becomes an expense, call Rahul tomorrow 5pm a task, anything else a note","Monthly recap picture you can share","Insight cards, a Pay EMI card and a month-end forecast","Habit tracker, focus timer and split bills","Planner week view on the Tasks tab","Notes can become tasks, link to tasks, take a colour or a PIN lock","Edit cash entries and loan expenses, repeat your last expense, and a Save button that stays on screen","One line-icon set, and confetti when a goal or loan is completed"]},
  {v:'2026.11.26.02',t:'A calmer, crisper look',i:["Money amounts use equal-width digits with a smaller rupee sign and decimals","The Home header changes colour through the day","New Glass theme, plus Sunset, Forest, Ocean and Mono packs","Calm mode: no gradients, one accent colour and more space","Line drawings replace emoji on empty screens","Scroll on Money to see how much is left in the top bar","Auto accent colour that follows your avatar colour"]},
  {v:'2026.11.26.01',t:'Smoother, snappier and easier to swipe',i:["Pages slide in the direction you tap, and you can swipe left or right to change tabs","A highlight glides between choices on switches and option buttons","Lists slide in one after another and deleted items collapse smoothly","Soft ticks for taps, a firmer buzz for success and a double buzz for warnings","Tabs open instantly: only the page you are on is drawn","Drag a sheet down from anywhere to close it; swipe a task left a little to snooze it to tomorrow, or all the way to delete"]},
@@ -2694,7 +2725,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.11 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.12 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -2966,7 +2997,7 @@ function endDrag(){
 document.addEventListener('pointerup',endDrag);document.addEventListener('pointercancel',endDrag);
 
 /* ===== v7.9: smoothness layer (page slides, sliding pills, list motion, swipes, sheet drag) ===== */
-const TABX={today:0,upcoming:0,money:1,home:2,notes:3,progress:4,settings:4};
+const TABX={today:0,upcoming:0,money:1,home:2,notes:3,progress:4,settings:4,wallet:4};
 const EASE='cubic-bezier(.2,.9,.3,1)';
 const NOANIM=()=>S.anim===false||!Element.prototype.animate||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 setTab.tok=0;
@@ -3069,7 +3100,7 @@ syncSegs();
   document.addEventListener('touchstart',e=>{
     tx=null;if(e.touches.length!==1||stack.length)return;
     const t=e.touches[0],el=e.target;if(!el.closest||t.clientX<24||t.clientX>innerWidth-24)return;
-    if(el.closest('input,textarea,select,.trow,.tl,.tlb,.mtop,#lpm,#mpop,#lock,.sheet,.tabs,.dock,[data-noswipe]')||hscroll(el))return;
+    if(el.closest('input,textarea,select,.trow,.tl,.tlb,.mtop,#lpm,#mpop,#lock,#wlo,.sheet,.tabs,.dock,[data-noswipe]')||hscroll(el))return;
     tx={x:t.clientX,y:t.clientY,t:Date.now(),dead:false};
   },{passive:true});
   document.addEventListener('touchmove',e=>{
@@ -3605,10 +3636,182 @@ try{localStorage.setItem('taskflow.ota.ok',window.__BV)}catch(e){}
 if(!S.introDone){S.introDone=true;saveS();if(!tasks.length){introI=0;setTimeout(()=>openSheet('intro'),450)}}
 maybeWizard();updStatus();
 
+
+/* ===== v7.12: Wallet (photo cards, crop, flip, own PIN) ===== */
+const WT=[['aadhaar','Aadhaar','🪪','#e8590c'],['pan','PAN','💳','#1c7ed6'],['voter','Voter ID','🗳️','#7048e8'],['dl','Licence','🚗','#2f9e44'],['passport','Passport','📕','#0b7285'],['college','College ID','🎓','#c2255c'],['atm','Debit / ATM','💳','#364fc7'],['credit','Credit card','💎','#9c36b5'],['ins','Insurance','🛡️','#e67700'],['other','Other','📄','#495057']];
+const wtOf=k=>WT.find(x=>x[0]===k)||WT[9];
+const WDB={db:null,open(){return this.db?Promise.resolve(this.db):new Promise((ok,no)=>{const r=indexedDB.open('tf_wallet',1);r.onupgradeneeded=()=>r.result.createObjectStore('cards',{keyPath:'id'});r.onsuccess=()=>{this.db=r.result;ok(r.result)};r.onerror=()=>no(r.error)})},
+  async tx(m,f){const d=await this.open();return new Promise((ok,no)=>{const t=d.transaction('cards',m),q=f(t.objectStore('cards'));t.oncomplete=()=>ok(q&&q.result);t.onerror=()=>no(t.error)})},
+  all(){return this.tx('readonly',s=>s.getAll())},put(c){return this.tx('readwrite',s=>s.put(c))},del(id){return this.tx('readwrite',s=>s.delete(id))},clear(){return this.tx('readwrite',s=>s.clear())}};
+const WL={cards:[],q:'',f:'all',unlocked:false,buf:'',mode:'',tmp:'',menu:false},WO={open:false},WD={},CS={d:null};
+const wPin=()=>{try{return localStorage.getItem('tf_wpin')||''}catch(e){return ''}};
+const wHash=p=>hashPin('w'+p);
+const wImg=s=>s?`<img src="${s}" alt="">`:'';
+async function wlLoad(){try{WL.cards=(await WDB.all()).sort((a,b)=>(b.fav?1:0)-(a.fav?1:0)||b.u-a.u)}catch(e){WL.cards=[];flash('Wallet storage is not available')}}
+function wlLock(){WL.unlocked=false;WL.mode='';WL.buf='';WL.menu=false;WL.cards=[];wlHide()}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+
+/* PIN pad */
+function wlPad(msg){
+  const t={set:'Choose a Wallet PIN',confirm:'Enter it again',unlock:'Enter your Wallet PIN',old:'Enter your current PIN'}[WL.mode];
+  const sub=msg||(WL.mode==='set'?'A separate 4-digit PIN that only protects your cards.':'');
+  $('#wallet').innerHTML=`<div class="wl-pad"><div class="wl-lk">🔒</div><h2 style="margin:6px 0 0;font-size:calc(22px*var(--fs));font-weight:700">${t}</h2><p style="min-height:22px;margin:6px 0 0;color:var(--sub);font-size:calc(14px*var(--fs))">${sub}</p><div class="idots">${[0,1,2,3].map(i=>`<i class="${i<WL.buf.length?'on':''}"></i>`).join('')}</div><div class="kpad">${[1,2,3,4,5,6,7,8,9,'x',0,'<'].map(k=>k==='x'?'<span></span>':`<button data-wk="${k}">${k==='<'?'⌫':k}</button>`).join('')}</div>${WL.unlocked?'<button class="tbtn" data-wl="pcancel" style="margin-top:18px">Cancel</button>':(wPin()?'<button class="tbtn" data-wl="reset" style="margin-top:18px;color:var(--red)">Forgot PIN? Reset wallet</button>':'')}</div>`;
+}
+function wlKey(k){
+  if(k==='<'){WL.buf=WL.buf.slice(0,-1);wlPad();return}
+  if(WL.buf.length>=4)return;WL.buf+=k;buzz(6);wlPad();if(WL.buf.length<4)return;
+  const v=WL.buf;WL.buf='';
+  setTimeout(()=>{
+    if(WL.mode==='unlock'){if(wHash(v)===wPin()){WL.unlocked=true;WL.mode='';renderWallet()}else{buzz('err');wlPad('Wrong PIN, try again')}}
+    else if(WL.mode==='old'){if(wHash(v)===wPin()){WL.mode='set';wlPad()}else{buzz('err');wlPad('Wrong PIN')}}
+    else if(WL.mode==='set'){WL.tmp=v;WL.mode='confirm';wlPad()}
+    else if(WL.mode==='confirm'){if(v===WL.tmp){try{localStorage.setItem('tf_wpin',wHash(v))}catch(e){}WL.unlocked=true;WL.mode='';flash('Wallet PIN saved');renderWallet()}else{WL.mode='set';wlPad('The PINs did not match, try again')}}
+  },120);
+}
+
+/* wallet page */
+function wlListHTML(){
+  const q=WL.q.toLowerCase(),L=WL.cards.filter(c=>(WL.f==='all'||(WL.f==='fav'?c.fav:c.type===WL.f))&&(!q||(c.name+' '+wtOf(c.type)[1]).toLowerCase().includes(q)));
+  return L.length?`<div class="wl-stack">${L.map(c=>`<button class="wlc" data-wid="${c.id}" style="--c:${wtOf(c.type)[3]}">${wImg(c.front)}<span class="wlc-l">${wtOf(c.type)[2]} ${esc(c.name)}${c.fav?' ★':''}</span></button>`).join('')}</div>`
+   :emptyBox('🪪',WL.cards.length?'No card matches':'Your wallet is empty','Add Aadhaar, PAN, college ID, ATM card and more. Photos stay on this phone.','');
+}
+async function renderWallet(){
+  if(tab!=='wallet')return;
+  if(!wPin()&&!WL.mode)WL.mode='set';
+  if(!WL.unlocked){if(!WL.mode)WL.mode='unlock';wlPad();return}
+  if(WL.mode){wlPad();return}
+  await wlLoad();if(tab!=='wallet'||!WL.unlocked)return;
+  const types=[...new Set(WL.cards.map(c=>c.type))];
+  $('#wallet').innerHTML=`<div class="wl-top"><input id="wl-q" type="search" placeholder="Search cards" value="${esc(WL.q)}" autocomplete="off"><button class="chipbtn" data-wl="menu" aria-label="Wallet options">⋯</button></div>`
+   +(WL.menu?'<div class="wl-menu"><button class="chipbtn" data-wl="chpin">Change PIN</button><button class="chipbtn" data-wl="lock">Lock now</button><button class="chipbtn" data-wl="reset" style="color:var(--red)">Reset wallet</button></div>':'')
+   +(WL.cards.length>1?`<div class="wl-chips">${[['all','All'],['fav','★ Favourites'],...types.map(k=>[k,wtOf(k)[1]])].map(([k,n])=>`<button data-wf="${k}" class="${WL.f===k?'on':''}">${n}</button>`).join('')}</div>`:'')
+   +`<div id="wl-list">${wlListHTML()}</div><button class="pbtn" data-wl="add">+ Add card</button>`;
+}
+
+/* overlay (viewer, editor, crop) */
+function wlShow(h){const o=$('#wlo');o.innerHTML=h;o.hidden=false;o.scrollTop=0;if(!WO.open){WO.open=true;history.pushState({tab,stack:stack.slice(),wl:1},'')}}
+function wlHide(){const o=$('#wlo');if(!o)return;o.hidden=true;o.innerHTML='';WO.open=false}
+const wlClose=()=>{if(WO.open)history.back();else wlHide()};
+addEventListener('popstate',()=>{if(WO.open&&!(history.state&&history.state.wl))wlHide()});
+function wlView(id){
+  const c=WL.cards.find(x=>x.id===id);if(!c)return;WD.id=id;
+  wlShow(`<div class="wlo-h"><button data-wl="close" aria-label="Close">✕</button><b>${esc(c.name)}</b><button data-wl="fav" aria-label="Favourite">${c.fav?'★':'☆'}</button></div>
+  <div class="wlf" id="wlf" data-wl="flip"><div class="wlf-in"><div class="wlf-s">${wImg(c.front)}</div><div class="wlf-s wlf-b">${c.back?wImg(c.back):'<div class="wlf-no">No back side added</div>'}</div></div></div>
+  <p class="wlo-s">${wtOf(c.type)[2]} ${wtOf(c.type)[1]} · tap the card to flip</p>
+  <div class="wlo-a"><button data-wl="flip">Flip</button><button data-wl="edit">Edit</button><button data-wl="del" style="color:#ff6b6b">Delete</button></div>`);
+}
+function wlEdit(id){
+  const c=id&&WL.cards.find(x=>x.id===id);
+  Object.keys(WD).forEach(k=>delete WD[k]);
+  Object.assign(WD,c?{...c}:{id:'',type:'aadhaar',name:'',front:'',back:'',fav:false});
+  wlEditDraw();
+}
+function wlEditDraw(){
+  wlShow(`<div class="wlo-h"><button data-wl="close" aria-label="Close">✕</button><b>${WD.id?'Edit card':'New card'}</b><button class="chipbtn" data-wl="save">Save</button></div>
+  <div class="wlo-b"><div class="wl-types">${WT.map(t=>`<button data-wt="${t[0]}" class="${WD.type===t[0]?'on':''}" style="--c:${t[3]}">${t[2]} ${t[1]}</button>`).join('')}</div>
+  <input id="wl-name" class="wl-in" maxlength="40" placeholder="Name, e.g. My Aadhaar" value="${esc(WD.name||'')}">
+  <div class="wl-slots">${['front','back'].map(s=>`<button class="wl-slot" data-slot="${s}">${WD[s]?wImg(WD[s]):`<span>＋<br>${s==='front'?'Front side':'Back side (optional)'}</span>`}</button>`).join('')}</div>
+  <p class="wlo-s">Tap a side to take a photo or pick one from your gallery, then crop it.</p>${WD.back?'<button class="tbtn" data-wl="rmback">Remove back side</button>':''}</div>`);
+}
+
+/* crop: auto-detect, 4 draggable corners, perspective flatten */
+function autoQuad(cv){
+  const W=cv.width,H=cv.height,s=Math.min(1,220/Math.max(W,H)),w=Math.max(8,Math.round(W*s)),h=Math.max(8,Math.round(H*s)),t=document.createElement('canvas');
+  t.width=w;t.height=h;const x=t.getContext('2d',{willReadFrequently:true});x.drawImage(cv,0,0,w,h);
+  const d=x.getImageData(0,0,w,h).data,g=new Float32Array(w*h),e=new Float32Array(w*h);let sum=0;
+  for(let i=0;i<w*h;i++)g[i]=.3*d[i*4]+.59*d[i*4+1]+.11*d[i*4+2];
+  for(let y=1;y<h-1;y++)for(let X=1;X<w-1;X++){const i=y*w+X,m=Math.abs(g[i+1]-g[i-1])+Math.abs(g[i+w]-g[i-w]);e[i]=m;sum+=m}
+  const th=Math.max(30,sum/(w*h)*2.5),col=new Float32Array(w),row=new Float32Array(h);
+  for(let y=1;y<h-1;y++)for(let X=1;X<w-1;X++)if(e[y*w+X]>th){col[X]++;row[y]++}
+  const f=(a,n,k)=>{let i=0,j=n-1;while(i<n&&a[i]<k)i++;while(j>i&&a[j]<k)j--;return[i,j]};
+  const[l,r]=f(col,w,h*.22),[tp,b]=f(row,h,w*.22);
+  let q=[l/w*W,tp/h*H,r/w*W,b/h*H];
+  if(r-l<w*.3||b-tp<h*.3)q=[W*.08,H*.12,W*.92,H*.88];
+  return[{x:q[0],y:q[1]},{x:q[2],y:q[1]},{x:q[2],y:q[3]},{x:q[0],y:q[3]}];
+}
+function warp(cv,P,W,H){
+  const S=cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data,sw=cv.width,sh=cv.height;
+  const[x0,x1,x2,x3]=P.map(p=>p.x),[y0,y1,y2,y3]=P.map(p=>p.y);
+  const dx1=x1-x2,dx2=x3-x2,dx3=x0-x1+x2-x3,dy1=y1-y2,dy2=y3-y2,dy3=y0-y1+y2-y3,den=dx1*dy2-dx2*dy1;
+  const g=(dx3*dy2-dx2*dy3)/den,h=(dx1*dy3-dx3*dy1)/den,a=x1-x0+g*x1,b=x3-x0+h*x3,d=y1-y0+g*y1,e=y3-y0+h*y3;
+  const out=document.createElement('canvas');out.width=W;out.height=H;const ox=out.getContext('2d'),od=ox.createImageData(W,H),D=od.data;
+  const cx=v=>v<0?0:v>sw-1?sw-1:v,cy=v=>v<0?0:v>sh-1?sh-1:v;
+  for(let y=0;y<H;y++){const t=(y+.5)/H;for(let x=0;x<W;x++){
+    const s=(x+.5)/W,z=g*s+h*t+1,px=(a*s+b*t+x0)/z-.5,py=(d*s+e*t+y0)/z-.5,ix=Math.floor(px),iy=Math.floor(py),fx=px-ix,fy=py-iy;
+    const A=(cy(iy)*sw+cx(ix))*4,B=(cy(iy)*sw+cx(ix+1))*4,C=(cy(iy+1)*sw+cx(ix))*4,E=(cy(iy+1)*sw+cx(ix+1))*4,o=(y*W+x)*4;
+    for(let k=0;k<3;k++)D[o+k]=(S[A+k]*(1-fx)+S[B+k]*fx)*(1-fy)+(S[C+k]*(1-fx)+S[E+k]*fx)*fy;
+    D[o+3]=255}}
+  ox.putImageData(od,0,0);return out;
+}
+function loadSrc(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const s=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*s);c.height=Math.round(im.naturalHeight*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c)};im.onerror=()=>{URL.revokeObjectURL(u);no()};im.src=u})}
+async function wlCrop(file){
+  try{CS.cv=await loadSrc(file)}catch(e){flash('Could not open that photo');return}
+  CS.q=autoQuad(CS.cv);CS.fx='enh';wlCropDraw();
+}
+function wlCropDraw(){
+  const cv=CS.cv,m=Math.max(cv.width,cv.height);
+  wlShow(`<div class="wlo-h"><button data-wl="cback">‹ Back</button><b>Crop ${WD.slot}</b><button class="chipbtn" data-wl="use">Use</button></div>
+  <div class="wlo-b"><div class="wl-crop"><canvas id="wl-cc"></canvas><svg id="wl-sv" viewBox="0 0 ${cv.width} ${cv.height}"><polygon id="wl-pg"/>${[0,1,2,3].map(i=>`<circle data-i="${i}" r="${m/24}"/>`).join('')}</svg></div>
+  <div class="wl-fx">${[['org','Original'],['enh','Enhance'],['bw','B&amp;W']].map(([k,n])=>`<button data-fx="${k}" class="${CS.fx===k?'on':''}">${n}</button>`).join('')}</div>
+  <div class="wl-fx"><button data-wl="rot">⟳ Rotate</button><button data-wl="auto">Auto-detect</button></div>
+  <p class="wlo-s">Drag the four corners onto the corners of the card. Tilted photos are straightened.</p></div>`);
+  const c=$('#wl-cc');c.width=cv.width;c.height=cv.height;c.getContext('2d').drawImage(cv,0,0);wlPoly();
+}
+function wlPoly(){const pg=$('#wl-pg');if(!pg)return;pg.setAttribute('points',CS.q.map(p=>p.x+','+p.y).join(' '));document.querySelectorAll('#wl-sv circle').forEach(c=>{const p=CS.q[+c.dataset.i];c.setAttribute('cx',p.x);c.setAttribute('cy',p.y)})}
+function wlUse(){
+  const P=CS.q;let ar=0;for(let i=0;i<4;i++){const a=P[i],b=P[(i+1)%4];ar+=a.x*b.y-b.x*a.y}
+  if(Math.abs(ar)/2<CS.cv.width*CS.cv.height*.02){flash('Move the corners onto the card');return}
+  let out;try{out=warp(CS.cv,P,856,540)}catch(e){flash('Could not crop that photo');return}
+  if(CS.fx!=='org'){const f=document.createElement('canvas');f.width=856;f.height=540;const x=f.getContext('2d');x.filter=CS.fx==='bw'?'grayscale(1) contrast(1.35) brightness(1.08)':'contrast(1.18) brightness(1.06) saturate(1.12)';x.drawImage(out,0,0);out=f}
+  WD[WD.slot]=out.toDataURL('image/jpeg',.88);wlEditDraw();
+}
+async function wlSave(){
+  const nm=$('#wl-name');if(nm)WD.name=nm.value;
+  if(!WD.front){flash('Add the front side first');return}
+  const rec={id:WD.id||uid(),type:WD.type,name:(WD.name||'').trim()||wtOf(WD.type)[1],front:WD.front,back:WD.back||'',fav:!!WD.fav,u:Date.now()};
+  try{await WDB.put(rec)}catch(e){flash('Could not save, storage may be full');return}
+  flash('Saved to wallet');wlClose();renderWallet();
+}
+
+/* clicks */
+async function wlClick(e){
+  const t=e.target.closest('[data-wl],[data-wt],[data-slot],[data-wid],[data-wf],[data-wk],[data-fx]');if(!t)return;const d=t.dataset;
+  if(d.wk!==undefined)return wlKey(d.wk);
+  if(d.wid)return wlView(d.wid);
+  if(d.wf){WL.f=d.wf;return renderWallet()}
+  if(d.wt){const n=$('#wl-name');if(n)WD.name=n.value;WD.type=d.wt;return wlEditDraw()}
+  if(d.slot){const n=$('#wl-name');if(n)WD.name=n.value;WD.slot=d.slot;const f=$('#wl-file');f.value='';return f.click()}
+  if(d.fx){CS.fx=d.fx;document.querySelectorAll('.wl-fx [data-fx]').forEach(b=>b.classList.toggle('on',b.dataset.fx===d.fx));return}
+  const a=d.wl;
+  if(a==='add')wlEdit('');
+  else if(a==='menu'){WL.menu=!WL.menu;renderWallet()}
+  else if(a==='lock'){wlLock();renderWallet()}
+  else if(a==='chpin'){WL.menu=false;WL.mode='old';wlPad()}
+  else if(a==='pcancel'){WL.mode='';renderWallet()}
+  else if(a==='reset'){if(confirm('Reset the wallet? This deletes every card and removes the Wallet PIN. It cannot be undone.')){try{await WDB.clear()}catch(_){}try{localStorage.removeItem('tf_wpin')}catch(_){}wlLock();flash('Wallet reset');renderWallet()}}
+  else if(a==='close')wlClose();
+  else if(a==='flip'){const f=$('#wlf');if(f)f.classList.toggle('flip')}
+  else if(a==='fav'){const c=WL.cards.find(x=>x.id===WD.id);if(c){c.fav=!c.fav;c.u=Date.now();try{await WDB.put(c)}catch(_){}wlView(c.id);flash(c.fav?'Added to favourites':'Removed from favourites')}}
+  else if(a==='edit'){const id=WD.id;wlEdit(id)}
+  else if(a==='del'){const c=WL.cards.find(x=>x.id===WD.id);if(c&&confirm('Delete "'+c.name+'" from the wallet?')){try{await WDB.del(c.id)}catch(_){}flash('Card deleted');wlClose();renderWallet()}}
+  else if(a==='save')wlSave();
+  else if(a==='rmback'){const n=$('#wl-name');if(n)WD.name=n.value;WD.back='';wlEditDraw()}
+  else if(a==='cback'){wlEditDraw()}
+  else if(a==='use')wlUse();
+  else if(a==='rot'){const s=CS.cv,c=document.createElement('canvas');c.width=s.height;c.height=s.width;const x=c.getContext('2d');x.translate(s.height,0);x.rotate(Math.PI/2);x.drawImage(s,0,0);CS.cv=c;CS.q=autoQuad(c);wlCropDraw()}
+  else if(a==='auto'){CS.q=autoQuad(CS.cv);wlPoly()}
+}
+$('#wallet').addEventListener('click',wlClick);$('#wlo').addEventListener('click',wlClick);
+$('#wallet').addEventListener('input',e=>{if(e.target.id==='wl-q'){WL.q=e.target.value;const l=$('#wl-list');if(l)l.innerHTML=wlListHTML()}});
+$('#wl-file').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(f)wlCrop(f)});
+document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('#wl-sv circle');if(!c)return;CS.d=+c.dataset.i;try{c.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
+document.addEventListener('pointermove',e=>{if(CS.d==null)return;const sv=$('#wl-sv');if(!sv){CS.d=null;return}const r=sv.getBoundingClientRect(),W=CS.cv.width,H=CS.cv.height;CS.q[CS.d]={x:Math.min(W,Math.max(0,(e.clientX-r.left)/r.width*W)),y:Math.min(H,Math.max(0,(e.clientY-r.top)/r.height*H))};wlPoly()});
+document.addEventListener('pointerup',()=>{CS.d=null});document.addEventListener('pointercancel',()=>{CS.d=null});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&(WL.unlocked||WO.open)){wlLock();if(tab==='wallet')renderWallet()}});
 </script>
 <script>
 (function(){
-  var BV='2026.11.26.03';window.__BV=BV;
+  var BV='2026.11.27.01';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
