@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.28.01'-->
+<!--var BV='2026.11.28.02'-->
 <meta name="app-version" content="2026.11.26.03">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
@@ -632,6 +632,42 @@ body.wl-priv #wallet,body.wl-priv #wlo{filter:blur(28px)}
 textarea.wl-in{resize:none;font-family:inherit}
 .wlo-n{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:6px;font-size:17px;letter-spacing:.5px}.wlo-n button{padding:6px 12px;border-radius:999px;background:#1c1c1e;font-size:13px;font-weight:600}
 .wlo-note{color:#c7c7cc;font-size:14px;text-align:center;margin:8px 0;white-space:pre-wrap}.wlo-a{flex-wrap:wrap}
+/* v7.15 notepad */
+#notes{padding:6px 4px 96px;background-image:radial-gradient(color-mix(in srgb,var(--sub) 30%,transparent) 1px,transparent 1.4px);background-size:20px 20px;border-radius:22px}
+.nk-h{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 0}.nk-cnt{color:var(--sub);font-size:calc(14px*var(--fs));font-weight:700;letter-spacing:.3px}
+.nk-vw{width:42px;height:42px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);color:var(--txt);font-size:18px}
+.nk-cap{display:flex;gap:8px}.nk-cap button:first-child{flex:1;text-align:left;padding:15px 16px;border-radius:18px;background:var(--card);border:1.5px dashed var(--sep);color:var(--sub);font-size:calc(15px*var(--fs));font-weight:600}.nk-cap button+button{width:54px;border-radius:18px;background:linear-gradient(135deg,var(--blue),var(--b2,#7d5cff));color:#fff;font-size:22px;box-shadow:0 8px 18px color-mix(in srgb,var(--blue) 30%,transparent)}
+.nk-q{width:100%;text-align:left;padding:12px 14px;border-radius:14px;background:var(--card);box-shadow:var(--shadow)}
+.nk-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 4px}.nk-tabs button{flex:none;padding:7px 14px;border-radius:999px;background:var(--card);box-shadow:var(--shadow);color:var(--txt);font-weight:700;font-size:calc(13px*var(--fs))}.nk-tabs button.on{background:var(--txt);color:var(--bg)}.nk-tabs .lb{color:var(--blue)}.nk-tabs .lb.on{background:var(--blue);color:#fff}
+.nk-tb{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:14px;background:var(--card);color:var(--sub);font-size:calc(13px*var(--fs))}.nk-tb button{color:var(--red);font-weight:700}
+.nk-sec{margin:10px 6px 6px;font-size:calc(11px*var(--fs));font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--sub)}
+.nk-grid{columns:2;column-gap:12px;padding-top:6px}.nk-grid.one{columns:1}
+.nk-grid .ncard{display:flex;flex-direction:column;gap:7px;width:100%;margin:0 0 14px;break-inside:avoid;position:relative;padding:18px 14px 12px;border-radius:5px 5px 20px 5px;min-height:0;cursor:pointer;text-align:left;box-shadow:0 2px 0 color-mix(in srgb,var(--nc) 26%,transparent),var(--shadow);transition:transform .15s var(--spring)}
+.nk-grid .ncard:active{transform:scale(.98)}.nk-grid .ncard::after{content:"";position:absolute;right:0;bottom:0;width:20px;height:20px;border-radius:12px 0 20px 0;background:linear-gradient(135deg,var(--bg) 50%,color-mix(in srgb,var(--nc) 30%,rgba(0,0,0,.1)) 50%)}
+.nk-tape{position:absolute;top:-7px;left:50%;width:46px;height:15px;margin-left:-23px;transform:rotate(-3deg);border-radius:3px;background:color-mix(in srgb,var(--nc) 55%,transparent);opacity:.75}
+.nk-pn{position:absolute;top:-6px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a80,#e53935 60%,#8e1b17);box-shadow:0 3px 5px rgba(0,0,0,.3)}
+.nk-grid .ncard b{font-size:calc(16px*var(--fs));line-height:1.25;letter-spacing:-.2px;word-break:break-word}
+.nk-tx{font-size:calc(14px*var(--fs));line-height:1.4;color:color-mix(in srgb,var(--txt) 80%,transparent);white-space:pre-wrap;word-break:break-word;display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
+.nk-li{display:flex;flex-direction:column;gap:6px}.nk-it{display:flex;gap:8px;align-items:flex-start;font-size:calc(14px*var(--fs));line-height:1.3;transition:opacity .25s,transform .25s}.nk-it.gone{opacity:0;transform:translateX(14px)}.nk-grid .ncard .nk-it{display:flex!important;flex-direction:row!important;align-items:flex-start;gap:8px;overflow:visible;-webkit-line-clamp:unset}.nk-it em{font-style:normal;word-break:break-word;flex:1;min-width:0;display:block}.nk-li small{color:var(--sub)}
+.nk-bx{display:block;flex:none;box-sizing:border-box;width:16px;min-width:16px;height:16px;margin-top:1px;border-radius:50%;border:2px solid var(--nc);font-style:normal}
+.nk-pg{display:block;height:4px;border-radius:4px;background:color-mix(in srgb,var(--nc) 20%,transparent);overflow:hidden;flex:1}.nk-pg i{display:block;height:100%;background:var(--nc);border-radius:4px}
+.nk-ft{display:flex;align-items:center;gap:8px;justify-content:space-between}.nk-ft small{color:var(--sub);font-size:calc(11px*var(--fs));white-space:nowrap}
+.nk-lb{display:flex;flex-wrap:wrap;gap:4px}.nk-lb u,#nk-lbs u{text-decoration:none;padding:2px 8px;border-radius:999px;font-size:calc(11px*var(--fs));font-weight:700;background:color-mix(in srgb,var(--nc) 22%,transparent);color:var(--txt)}
+.nk-tr{display:flex;gap:8px}.nk-tr button{flex:1;padding:7px;border-radius:10px;background:color-mix(in srgb,var(--txt) 8%,transparent);font-weight:700;font-size:calc(12px*var(--fs));color:var(--txt)}.nk-tr button+button{color:var(--red)}
+#nk.sheet{top:0;bottom:0;max-height:none;max-width:none;height:100%;border-radius:0;padding:0;display:flex;flex-direction:column;background:var(--nkbg,var(--bg));box-shadow:none;overflow:hidden}
+.nk-top{display:flex;align-items:center;gap:4px;padding:calc(env(safe-area-inset-top,0px) + 8px) 10px 4px}.nk-top .sm{flex:1;text-align:center;color:var(--sub)}.nk-top button{width:44px;height:44px;border-radius:14px;font-size:22px;color:var(--txt);opacity:.75}.nk-top button.on{opacity:1;background:color-mix(in srgb,var(--nc) 25%,transparent)}
+.nk-body{flex:1;overflow-y:auto;padding:6px 20px 24px;display:flex;flex-direction:column;gap:6px}
+#nk-ti,#nk-tx,.nk-ri{border:0!important;outline:0!important;box-shadow:none!important;border-radius:0!important;-webkit-appearance:none;appearance:none}
+#nk-ti{font-size:calc(26px*var(--fs));font-weight:800;letter-spacing:-.6px;background:none;color:var(--txt);width:100%;padding:8px 0;font-family:ui-rounded,"SF Pro Rounded",system-ui,sans-serif}
+#nk-tx{background:none;color:var(--txt);width:100%;min-height:160px;resize:none;font-size:calc(17px*var(--fs));line-height:1.55;padding:4px 0;background-image:repeating-linear-gradient(transparent,transparent calc(1.55em - 1px),color-mix(in srgb,var(--nc) 18%,transparent) calc(1.55em - 1px),color-mix(in srgb,var(--nc) 18%,transparent) 1.55em)}
+.nk-r{display:flex;align-items:center;gap:8px;padding:3px 0;border-radius:10px}.nk-r.drag{background:color-mix(in srgb,var(--nc) 18%,transparent);box-shadow:0 6px 16px rgba(0,0,0,.18)}.nk-dh{flex:none;color:var(--sub);font-style:normal;letter-spacing:-3px;padding:8px 6px;touch-action:none;cursor:grab;opacity:.6}
+.nk-cx{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--nc);position:relative}.nk-cx.on{background:var(--nc)}.nk-cx.on::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:14px;font-weight:800}
+.nk-ri{flex:1;min-width:0;background:none;color:var(--txt);font-size:calc(17px*var(--fs));padding:8px 0}.nk-r.dn .nk-ri{text-decoration:line-through;color:var(--sub)}.nk-rx{flex:none;width:32px;height:32px;color:var(--sub);opacity:.6}
+.nk-add{display:block;text-align:left;padding:10px 4px;color:var(--sub);font-weight:600;font-size:calc(15px*var(--fs))}.nk-dhd{display:block;padding:12px 4px 4px;color:var(--sub);font-weight:700;font-size:calc(13px*var(--fs))}
+#nk-lbs{display:flex;flex-wrap:wrap;gap:6px}#nk-lbs u{cursor:pointer}#nk-links{display:flex;flex-wrap:wrap;gap:6px}
+#nk-cols{display:flex;gap:10px;padding:12px 18px;overflow-x:auto;background:color-mix(in srgb,var(--card) 80%,transparent)}#nk-cols[hidden],#nk-lbp[hidden]{display:none}#nk-cols button{flex:none;width:34px;height:34px;border-radius:50%;border:2px solid var(--sep);background:var(--card)}#nk-cols button.on{border-color:var(--txt);box-shadow:0 0 0 2px var(--bg) inset}
+#nk-lbp{padding:12px 18px;background:color-mix(in srgb,var(--card) 80%,transparent);display:flex;flex-direction:column;gap:10px}.nk-lbi{display:flex;gap:8px}.nk-lbi input{flex:1;min-width:0;padding:10px 12px;border-radius:12px;background:var(--card);color:var(--txt)}.nk-lbi button{padding:0 16px;border-radius:12px;background:var(--blue);color:#fff;font-weight:700}.nk-lbc{display:flex;flex-wrap:wrap;gap:8px}.nk-lbc button{padding:6px 12px;border-radius:999px;background:var(--card);color:var(--txt);font-weight:600;font-size:calc(13px*var(--fs))}.nk-lbc button.on{background:var(--blue);color:#fff}
+.nk-bar{display:flex;gap:4px;overflow-x:auto;padding:8px 10px calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--sep);background:color-mix(in srgb,var(--card) 70%,transparent)}.nk-bar button{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 9px;border-radius:14px;font-size:calc(11px*var(--fs));font-weight:700;color:var(--sub)}.nk-bar button b{font-size:19px;font-weight:400;color:var(--txt)}
 </style>
 </head>
 <body>
@@ -897,6 +933,10 @@ textarea.wl-in{resize:none;font-family:inherit}
   <details class="pol"><summary>Terms of use</summary><p>TaskFlow is provided as is, without warranty. Keep your own backups, because data on a lost or reset phone cannot be recovered by the developer. Reminders depend on your phone's notification and battery settings. By using the app you agree to use it lawfully and at your own risk.</p></details>
 </div>
 
+<div class="sheet" id="nk"><div class="nk-top"><button data-nke="back" aria-label="Back">‹</button><span id="nk-st" class="sm">New note</span><button data-nke="pin" id="nk-pin" aria-label="Pin">📌</button><button data-nke="arch" id="nk-arch" aria-label="Archive">🗄</button></div>
+<div class="nk-body"><input id="nk-ti" placeholder="Title" maxlength="120" autocomplete="off"><textarea id="nk-tx" placeholder="Take a note…" rows="3"></textarea><div id="nk-ck"></div><div id="nk-lbs"></div><div id="nk-links"></div></div>
+<div id="nk-cols" hidden></div><div id="nk-lbp" hidden></div>
+<div class="nk-bar"><button data-nkb="col"><b>🎨</b>Colour</button><button data-nkb="lab"><b>🏷</b>Label</button><button data-nkb="conv" id="nk-conv"><b>☑</b>Checklist</button><button data-nkb="task"><b>➕</b>Task</button><button data-nkb="share"><b>↗</b>Share</button><button data-nkb="lock"><b>🔒</b>Lock</button><button data-nkb="del"><b>🗑</b>Delete</button></div></div>
 <div class="sheet" id="npad"><div class="grab"></div>
   <div class="nth"><span id="nt-d" class="sm"></span><div class="nta"><button id="nt-cl" aria-label="Checklist item">☐</button><button id="nt-ck" aria-label="Tick or untick">☑</button><button id="nt-pin" aria-label="Pin">📌</button><button id="nt-sh" aria-label="Share">↗</button><button id="nt-del" aria-label="Delete">🗑</button></div></div>
   <textarea id="nt-t" placeholder="Start writing…"></textarea>
@@ -1661,14 +1701,14 @@ $('#sq-r').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if
 
 /* ===== navigation: sheets and tabs use browser history so Back goes to the previous page ===== */
 let stack=[];
-const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',rn:'#rn',npad:'#npad',pf:'#pf',wz:'#wz',hp:'#hp',pv:'#pv',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
+const SHEETS={details:'#sheet',edit:'#edit',cont:'#cont',pick:'#pick',mx:'#mx',cs:'#cs',mm:'#mm',cal:'#cal',sg:'#sg',wn:'#wn',sb:'#sb',rn:'#rn',npad:'#npad',nk:'#nk',pf:'#pf',wz:'#wz',hp:'#hp',pv:'#pv',ml:'#ml',mw:'#mw',mf:'#mf',mb:'#mb',mk:'#mk',ma:'#ma',me:'#me',mu:'#mu',mc:'#mc',mt:'#mt',mr:'#mr',rev:'#rev',focus:'#focus',intro:'#intro',qa:'#qa',resc:'#resc',srch:'#srch'};
 function showSheets(){
   const top=stack[stack.length-1],vis=top==='pick'?stack.slice(-2):top?[top]:[];
   Object.keys(SHEETS).forEach(k=>$(SHEETS[k]).classList.toggle('show',vis.includes(k)));
   $('#ov').classList.toggle('show',stack.length>0);
   if(top==='details')drawDetails();
   if(top==='cont')drawContests();
-  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='rn')drawRc();if(top!=='npad'&&tab==='notes')renderNotes();if(top==='pf')drawPf();if(top==='hp')drawHp();if(top==='pv')drawPv();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
+  if(top==='ml')drawLoans();if(top==='cs')drawCash();if(top==='mm')drawXfer();if(top==='cal')drawCal();if(top==='wn')drawWn();if(top==='sb')drawSubs();if(top==='rn')drawRc();if(!stack.includes('nk')&&window.__nkOpen)nClosed();if(top!=='npad'&&top!=='nk'&&tab==='notes')renderNotes();if(top==='pf')drawPf();if(top==='hp')drawHp();if(top==='pv')drawPv();if(top==='sg')drawGoals();if(top==='mf')drawLoanF();if(top==='mw')drawWish();if(top==='mb')drawBucket();if(top==='ma')drawBudget();if(top==='me')drawAll();if(top==='mu')drawUdhar();if(top==='mr')drawReport();if(top==='mc')drawRecur();if(top==='mt')drawMove();if(top==='intro')drawIntro();if(top==='rev')drawRev();if(top==='focus')startFocus();else stopFocus();if(top==='srch')doSearch();
   if(!stack.length)document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
 }
 function openSheet(n){if(n==='details')$('#sheet').classList.remove('full');stack.push(n);history.pushState({tab,stack:stack.slice()},'');showSheets()}
@@ -1855,7 +1895,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.14 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.15 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -2438,6 +2478,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.28.02',t:'A new Notepad',i:['Real checklists: tick items right on the card, drag to reorder, completed items fold away','Colours, labels, pin, archive and a Trash that keeps deleted notes for 7 days','Masonry paper-slip cards, grid or list layout, search across titles, items and labels','Turn a note into a task, lock it with your PIN or share it']},
  {v:'2026.11.28.01',t:'Wallet for the family',i:['Mark whose card it is (Self, Dad, Mom…) and filter the wallet by person','A Wallet shortcut when you long-press the installed web app icon','New TaskFlow app icon for the Android app']},
  {v:'2026.11.27.02',t:'Wallet: lock, expiry and backup',i:['Wallet photos are now encrypted on your phone, protected by your Wallet PIN','Auto-lock choices, a blurred app switcher and screenshot block in the Android app','Expiry date on each card, with a reminder added to your tasks','Card number kept masked with Show and Copy, plus notes','Share a card as a watermarked image with a reason and date','Encrypted wallet backup and restore with a password']},
  {v:'2026.11.27.01',t:'Wallet for your cards',i:["A Wallet in the Menu: keep photos of Aadhaar, PAN, voter ID, licence, college ID, ATM cards and more","Crop each card with auto-detect and four draggable corners, with Enhance and B&W looks","Front and back sides: tap a card to flip it","Stacked wallet view, search, favourites and type filters","Its own 4-digit Wallet PIN, separate from the app lock"]},
@@ -2737,7 +2778,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.14 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.15 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -3650,6 +3691,173 @@ maybeWizard();updStatus();
 
 
 
+/* ===== v7.15: Notepad, Keep-style (lists, colours, labels, archive, trash) ===== */
+const NCOL=['','#ffd60a','#ff9f0a','#30d158','#64d2ff','#bf5af2','#ff375f','#00c7be','#a2845e','#8e8e93'];
+const NS={v:'all',lb:'',list:localStorage.getItem('tf_nview')==='1'};
+let ND=null;const NK={n:null,dt:0,doneOpen:false,isNew:false};
+const nCol=n=>n.col?NCOL[n.col]:'';
+function nNorm(n){
+  if(n.ty)return n;
+  const ls=(n.t||'').split('\n');n.ti=/^[☐☑]/.test(ls[0]||'')?'':(ls.shift()||'').trim();
+  const has=ls.some(l=>/^[☐☑]/.test(l));
+  if(has){n.ty='l';n.tx='';n.ck=ls.filter(l=>l.trim()).map(l=>{const m=/^([☐☑]) ?(.*)$/.exec(l);return{id:uid(),x:m?m[2]:l.trim(),d:!!m&&m[1]==='☑'}})}
+  else{n.ty='t';n.ck=[];n.tx=ls.join('\n').replace(/^\n+|\n+$/g,'')}
+  n.lb=n.lb||[];return n;
+}
+function nSync(n){n.t=(n.ti||'')+'\n'+(n.ty==='l'?n.ck.map(i=>(i.d?'☑ ':'☐ ')+i.x).join('\n'):n.tx||'')}
+const nEmpty=n=>!((n.ti||'').trim()||(n.tx||'').trim()||(n.ck||[]).some(i=>i.x.trim()));
+const nMatch=(n,q)=>!q||((n.ti||'')+' '+(n.tx||'')+' '+n.ck.map(i=>i.x).join(' ')+' '+(n.lb||[]).join(' ')).toLowerCase().includes(q);
+function nList(){
+  const q=NQ.trim().toLowerCase();let L=M.notes.filter(n=>!nEmpty(n)||n===NK.n);
+  L=NS.v==='trash'?L.filter(n=>n.dl):NS.v==='arch'?L.filter(n=>n.ar&&!n.dl):L.filter(n=>!n.ar&&!n.dl&&(NS.v!=='list'||n.ty==='l'));
+  if(NS.lb)L=L.filter(n=>(n.lb||[]).includes(NS.lb));
+  return L.filter(n=>nMatch(n,q)).sort((a,b)=>(b.pin?1:0)-(a.pin?1:0)||b.u-a.u);
+}
+function nCard(n){
+  const c=nCol(n),tr=NS.v==='trash';let body='',foot='';
+  if(n.lock)body='<span class="nk-tx">'+'🔒'+' Locked. Enter your PIN to open.</span>';
+  else if(n.ty==='l'){const op=n.ck.filter(i=>!i.d),dn=n.ck.length-op.length;
+    body=`<div class="nk-li">${op.slice(0,6).map(i=>`<span class="nk-it" data-ni="${i.id}"><i class="nk-bx"></i><em>${esc(i.x)}</em></span>`).join('')}${op.length>6?`<small>+ ${op.length-6} more</small>`:''}</div>`;
+    foot=n.ck.length?`<span class="nk-pg"><i style="width:${Math.round(dn/n.ck.length*100)}%"></i></span><small>${dn}/${n.ck.length}</small>`:''}
+  else if(n.tx.trim())body=`<span class="nk-tx">${esc(n.tx.slice(0,320))}</span>`;
+  const lbs=!n.lock&&(n.lb||[]).length?`<div class="nk-lb">${n.lb.slice(0,3).map(l=>`<u>${esc(l)}</u>`).join('')}</div>`:'';
+  return `<div class="ncard nk${n.pin?' pin':''}" data-nid="${n.id}" role="button" tabindex="0" style="--nc:${c||'var(--sub)'};${c?'background:color-mix(in srgb,'+c+' 24%,var(--card))':''}">${n.pin?'<i class="nk-pn"></i>':'<i class="nk-tape"></i>'}${n.lock?'':(n.ti?`<b>${esc(n.ti.slice(0,90))}</b>`:'')}${body}${lbs}<div class="nk-ft">${foot}<small>${(n.tl||[]).length?'🔗'+' ':''}${ntDate(n.u)}</small></div>${tr?`<div class="nk-tr"><button data-nr="${n.id}">↩ Restore</button><button data-nx="${n.id}">Delete</button></div>`:''}</div>`;
+}
+function nGrid(){
+  const L=nList();
+  if(!L.length){const e={all:['📝','Your notepad is empty','Write a note or make a checklist.'],list:['☑','No checklists yet','Tap ☑ to make one.'],arch:['🗄️','Nothing archived','Archive notes you want out of the way.'],trash:['🗑️','Trash is empty','Deleted notes stay here for 7 days.']}[NS.v];return emptyBox(e[0],e[1],e[2],'')}
+  const pn=NS.v==='trash'?[]:L.filter(n=>n.pin),rest=L.filter(n=>!pn.includes(n)),g=a=>`<div class="nk-grid${NS.list?' one':''}">${a.map(nCard).join('')}</div>`;
+  return (pn.length?`<p class="nk-sec">Pinned</p>${g(pn)}${rest.length?'<p class="nk-sec">Others</p>':''}`:'')+(rest.length?g(rest):'');
+}
+function nDraw(){
+  const el=$('#notes');if(!el)return;const now=Date.now(),b4=M.notes.length;
+  M.notes=(M.notes||[]).filter(n=>!(n.dl&&now-n.dl>6048e5));M.notes.forEach(nNorm);if(M.notes.length!==b4)saveM();
+  const real=M.notes.filter(n=>!nEmpty(n)),live=real.filter(n=>!n.dl&&!n.ar),lists=live.filter(n=>n.ty==='l').length,ar=real.filter(n=>n.ar&&!n.dl).length,tr=real.filter(n=>n.dl).length,lb=[...new Set(real.filter(n=>!n.dl).flatMap(n=>n.lb||[]))];
+  el.innerHTML=`<div class="nk-h"><div class="nk-cnt">${live.length} note${live.length===1?'':'s'}${lists?' · '+lists+' list'+(lists===1?'':'s'):''}</div><button class="nk-vw" data-nk="view" aria-label="Switch layout">${NS.list?'▦':'☰'}</button></div>
+  <div class="nk-cap"><button data-nk="new">✎ Take a note…</button><button data-nk="newl" aria-label="New checklist">☑</button></div>
+  <input class="tin nk-q" id="nk-q" placeholder="Search notes, items, labels" value="${esc(NQ)}" autocomplete="off">
+  <div class="nk-tabs">${[['all','Notes'],['list','Lists'],['arch','Archive'+(ar?' '+ar:'')],['trash','Trash'+(tr?' '+tr:'')]].map(([k,n])=>`<button data-nv="${k}" class="${NS.v===k?'on':''}">${n}</button>`).join('')}${lb.map(l=>`<button data-nlb="${esc(l)}" class="lb${NS.lb===l?' on':''}"># ${esc(l)}</button>`).join('')}</div>
+  ${NS.v==='trash'&&tr?'<div class="nk-tb"><span>Notes in Trash are deleted after 7 days.</span><button data-nk="empty">Empty Trash</button></div>':''}
+  <div id="nk-grid">${nGrid()}</div>`;
+}
+renderNotes=function(){const old=snap('notes');nDraw();flipRun('notes',old)};
+$('#notes').addEventListener('input',e=>{if(e.target.id==='nk-q'){NQ=e.target.value;$('#nk-grid').innerHTML=nGrid()}});
+$('#notes').addEventListener('click',e=>{
+  const t=e.target.closest('[data-nk],[data-nv],[data-nlb],[data-ni],[data-nid],[data-nr],[data-nx]');if(!t)return;const d=t.dataset;
+  if(d.nr){const n=M.notes.find(x=>x.id===d.nr);if(n){delete n.dl;saveM();nDraw();flash('Note restored')}}
+  else if(d.nx){if(confirm('Delete this note forever?')){M.notes=M.notes.filter(x=>x.id!==d.nx);saveM();nDraw()}}
+  else if(d.ni){const c=t.closest('[data-nid]'),n=c&&M.notes.find(x=>x.id===c.dataset.nid),i=n&&n.ck.find(x=>x.id===d.ni);if(i){i.d=true;nSync(n);saveM();buzz(6);t.classList.add('gone');setTimeout(()=>{$('#nk-grid').innerHTML=nGrid()},260)}}
+  else if(d.nid)nOpen(d.nid);
+  else if(d.nk==='new')nOpen(null,'t');else if(d.nk==='newl')nOpen(null,'l');
+  else if(d.nk==='view'){NS.list=!NS.list;try{localStorage.setItem('tf_nview',NS.list?'1':'0')}catch(_){}nDraw()}
+  else if(d.nk==='empty'){if(confirm('Delete everything in Trash forever?')){M.notes=M.notes.filter(n=>!n.dl);saveM();nDraw()}}
+  else if(d.nv){NS.v=d.nv;NS.lb='';nDraw()}
+  else if(d.nlb!==undefined){NS.lb=NS.lb===d.nlb?'':d.nlb;nDraw()}
+});
+/* editor */
+function nOpen(id,ty){
+  let n=id&&M.notes.find(x=>x.id===id);
+  if(n){nNorm(n);if(n.lock){if(!S.pin){flash('Set a PIN lock in Settings, Security to open locked notes');return}const v=prompt('Enter your PIN to open this note');if(v===null)return;if(hashPin(v)!==S.pin){buzz('err');flash('Wrong PIN');return}}}
+  else n={id:uid(),t:'',ti:'',tx:'',ck:ty==='l'?[{id:uid(),x:'',d:false}]:[],ty:ty||'t',col:0,pin:false,ar:false,lb:[],tl:[],c:Date.now(),u:Date.now()};
+  NK.n=n;NK.isNew=!id;NK.doneOpen=false;window.__nkOpen=true;NT=n.id;nFill();openSheet('nk');
+  setTimeout(()=>{const f=n.ty==='l'?document.querySelector('#nk-open .nk-ri'):(n.ti||n.tx?null:$('#nk-ti'));if(f&&!id)f.focus()},380);
+}
+openNote=function(id){nOpen(id,'t')};
+function nFill(){
+  const n=NK.n,c=nCol(n),k=$('#nk');
+  k.style.setProperty('--nkbg',c?'color-mix(in srgb,'+c+' 22%,var(--bg))':'');k.style.setProperty('--nc',c||'var(--blue)');
+  $('#nk-ti').value=n.ti||'';const tx=$('#nk-tx');tx.value=n.tx||'';tx.hidden=n.ty==='l';$('#nk-ck').hidden=n.ty!=='l';
+  if(n.ty==='l')nRows();else nAuto();
+  $('#nk-pin').classList.toggle('on',!!n.pin);$('#nk-arch').classList.toggle('on',!!n.ar);
+  $('#nk-conv').innerHTML=n.ty==='l'?'<b>¶</b>To text':'<b>☑</b>Checklist';
+  $('#nk-st').textContent=NK.isNew&&nEmpty(n)?'New '+(n.ty==='l'?'checklist':'note'):'Edited '+ntDate(n.u);
+  $('#nk-cols').hidden=true;$('#nk-lbp').hidden=true;nLbs();nLinks();
+  $('#nk-cols').innerHTML=NCOL.map((cc,i)=>`<button data-nkc="${i}" class="${(n.col|0)===i?'on':''}" style="${cc?'background:'+cc:''}" aria-label="Colour ${i}"></button>`).join('');
+}
+const nAuto=()=>{const t=$('#nk-tx');t.style.height='auto';t.style.height=Math.max(160,t.scrollHeight)+'px'};
+function nRows(){
+  const n=NK.n,op=n.ck.filter(i=>!i.d),dn=n.ck.filter(i=>i.d);
+  const row=i=>`<div class="nk-r${i.d?' dn':''}" data-i="${i.id}"><i class="nk-dh" data-nh>⋮⋮</i><button class="nk-cx${i.d?' on':''}" data-nrc aria-label="Tick"></button><input class="nk-ri" value="${esc(i.x)}" placeholder="List item" maxlength="200" autocomplete="off"><button class="nk-rx" data-nrd aria-label="Remove">✕</button></div>`;
+  $('#nk-ck').innerHTML=`<div id="nk-open">${op.map(row).join('')}</div><button class="nk-add" data-nadd>＋ List item</button>`+(dn.length?`<button class="nk-dhd" data-ndt>${NK.doneOpen?'▾':'▸'} ${dn.length} completed</button>${NK.doneOpen?`<div>${dn.map(row).join('')}</div>`:''}`:'');
+}
+function nSave(now){
+  clearTimeout(NK.dt);
+  const f=()=>{const n=NK.n;if(!n)return;n.ti=$('#nk-ti').value;if(n.ty==='t')n.tx=$('#nk-tx').value;
+    if(nEmpty(n)&&!M.notes.includes(n))return;if(!M.notes.includes(n))M.notes.unshift(n);
+    n.u=Date.now();nSync(n);saveM();$('#nk-st').textContent='Saved '+ntDate(n.u)};
+  now?f():NK.dt=setTimeout(f,300);
+}
+function nClosed(){
+  if(!window.__nkOpen)return;window.__nkOpen=false;nSave(true);const n=NK.n;
+  if(n){if(n.ty==='l')n.ck=n.ck.filter(i=>i.x.trim());if(nEmpty(n))M.notes=M.notes.filter(x=>x!==n);else nSync(n);saveM()}
+  NK.n=null;NT=null;
+}
+function nLbs(){const n=NK.n;$('#nk-lbs').innerHTML=(n.lb||[]).map(l=>`<u data-nlx="${esc(l)}"># ${esc(l)} ✕</u>`).join('')}
+function nLinks(){const n=NK.n,ls=(n.tl||[]).map(id=>tasks.find(t=>t.id===id)).filter(Boolean);$('#nk-links').innerHTML=ls.map(t=>`<button class="ntl" data-ntg="${t.id}">${'🔗'}${esc(t.title.slice(0,28))}<i data-ntu="${t.id}">✕</i></button>`).join('')}
+function nLbPanel(){
+  const n=NK.n,all=[...new Set(M.notes.flatMap(x=>x.lb||[]).concat(n.lb||[]))];
+  $('#nk-lbp').innerHTML=`<div class="nk-lbi"><input id="nk-lbi" placeholder="Create a label" maxlength="20" autocomplete="off"><button data-nkb="lbadd">Add</button></div><div class="nk-lbc">${all.map(l=>`<button data-nlt="${esc(l)}" class="${(n.lb||[]).includes(l)?'on':''}"># ${esc(l)}</button>`).join('')||'<small>No labels yet.</small>'}</div>`;
+}
+function nToggleLb(l){const n=NK.n;n.lb=n.lb||[];n.lb=n.lb.includes(l)?n.lb.filter(x=>x!==l):n.lb.concat(l);nSave(true);nLbs();nLbPanel()}
+function nConv(){
+  const n=NK.n;n.ti=$('#nk-ti').value;
+  if(n.ty==='t'){n.tx=$('#nk-tx').value;n.ck=n.tx.split('\n').map(x=>x.trim()).filter(Boolean).map(x=>({id:uid(),x,d:false}));if(!n.ck.length)n.ck=[{id:uid(),x:'',d:false}];n.ty='l';n.tx=''}
+  else{n.tx=n.ck.map(i=>i.x).filter(x=>x.trim()).join('\n');n.ck=[];n.ty='t'}
+  nFill();nSave(true);
+}
+function nTask(){
+  const n=NK.n;nSave(true);const title=((n.ti||'').trim()||(n.ty==='l'?(n.ck.find(i=>!i.d)||{}).x:n.tx.split('\n')[0])||'').trim();
+  if(!title){flash('Add a title or a line first');return}
+  $('#in').value=title;const tk=addTask(null,null,true),id=tk&&tk.id;
+  if(id){n.tl=[...new Set((n.tl||[]).concat(id))];nSave(true);nLinks();flash('Task created from this note')}
+}
+function nShare(){
+  const n=NK.n;nSave(true);const v=((n.ti?n.ti+'\n\n':'')+(n.ty==='l'?n.ck.map(i=>(i.d?'☑ ':'☐ ')+i.x).join('\n'):n.tx)).trim();if(!v)return;
+  if(navigator.share)navigator.share({text:v}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(v).then(()=>flash('Note copied')).catch(()=>prompt('Copy this note:',v));else prompt('Copy this note:',v);
+}
+$('#nk').addEventListener('click',e=>{
+  const t=e.target.closest('[data-nke],[data-nkb],[data-nkc],[data-nrc],[data-nrd],[data-nadd],[data-ndt],[data-nlt],[data-nlx],[data-ntg],[data-ntu]');if(!t||!NK.n)return;const n=NK.n,d=t.dataset;
+  const it=()=>{const r=t.closest('.nk-r');return r&&n.ck.find(x=>x.id===r.dataset.i)};
+  if(d.nke==='back')closeTop();
+  else if(d.nke==='pin'){nSave(true);if(nEmpty(n)){flash('Write something first');return}n.pin=!n.pin;nSave(true);t.classList.toggle('on',n.pin);flash(n.pin?'Pinned to the top':'Unpinned')}
+  else if(d.nke==='arch'){nSave(true);if(nEmpty(n)){flash('Write something first');return}n.ar=!n.ar;if(n.ar)n.pin=false;nSave(true);closeTop();flash(n.ar?'Archived':'Moved back to Notes')}
+  else if(d.nkb==='col'){const w=$('#nk-cols');$('#nk-lbp').hidden=true;w.hidden=!w.hidden}
+  else if(d.nkb==='lab'){const w=$('#nk-lbp');$('#nk-cols').hidden=true;nLbPanel();w.hidden=!w.hidden;if(!w.hidden)setTimeout(()=>$('#nk-lbi').focus(),50)}
+  else if(d.nkb==='lbadd'){const i=$('#nk-lbi'),v=i.value.trim().replace(/^#/,'');if(v&&!(n.lb||[]).includes(v))nToggleLb(v);else i.value=''}
+  else if(d.nkb==='conv')nConv();
+  else if(d.nkb==='task')nTask();
+  else if(d.nkb==='share')nShare();
+  else if(d.nkb==='lock'){nSave(true);if(nEmpty(n)){flash('Write something first');return}if(!S.pin){flash('Set a PIN lock in Settings, Security first');return}n.lock=!n.lock;nSave(true);flash(n.lock?'Locked. The PIN is needed to open it':'Unlocked')}
+  else if(d.nkb==='del'){nSave(true);if(M.notes.includes(n)){n.dl=Date.now();n.pin=false;saveM();flash('Moved to Trash')}closeTop()}
+  else if(d.nkc!==undefined){n.col=+d.nkc;nFill();nSave(true);$('#nk-cols').hidden=false}
+  else if(d.nrc!==undefined){const i=it();if(i){i.d=!i.d;nRows();nSave(true);buzz(6)}}
+  else if(d.nrd!==undefined){const i=it();if(i){n.ck=n.ck.filter(x=>x!==i);if(!n.ck.length)n.ck=[{id:uid(),x:'',d:false}];nRows();nSave(true)}}
+  else if(d.nadd!==undefined){n.ck.push({id:uid(),x:'',d:false});nRows();const a=document.querySelectorAll('#nk-open .nk-ri');if(a.length)a[a.length-1].focus()}
+  else if(d.ndt!==undefined){NK.doneOpen=!NK.doneOpen;nRows()}
+  else if(d.nlt!==undefined)nToggleLb(d.nlt);
+  else if(d.nlx!==undefined)nToggleLb(d.nlx);
+  else if(d.ntu){e.stopPropagation();n.tl=(n.tl||[]).filter(x=>x!==d.ntu);nSave(true);nLinks()}
+  else if(d.ntg){curId=d.ntg;openSheet('details')}
+});
+$('#nk').addEventListener('input',e=>{
+  const g=e.target;
+  if(g.id==='nk-tx')nAuto();
+  if(g.classList.contains('nk-ri')){const r=g.closest('.nk-r'),i=NK.n.ck.find(x=>x.id===r.dataset.i);if(i)i.x=g.value}
+  if(g.id==='nk-ti'||g.id==='nk-tx'||g.classList.contains('nk-ri'))nSave();
+});
+$('#nk').addEventListener('keydown',e=>{
+  const g=e.target,n=NK.n;if(!n)return;
+  if(g.id==='nk-lbi'&&e.key==='Enter'){e.preventDefault();const v=g.value.trim().replace(/^#/,'');if(v&&!(n.lb||[]).includes(v))nToggleLb(v);g.value='';return}
+  if(!g.classList||!g.classList.contains('nk-ri'))return;
+  const r=g.closest('.nk-r'),i=n.ck.find(x=>x.id===r.dataset.i);if(!i)return;
+  if(e.key==='Enter'){e.preventDefault();const ni={id:uid(),x:'',d:false};n.ck.splice(n.ck.indexOf(i)+1,0,ni);nRows();const nx=document.querySelector('#nk .nk-r[data-i="'+ni.id+'"] .nk-ri');nx&&nx.focus();nSave()}
+  else if(e.key==='Backspace'&&!g.value&&n.ck.length>1){e.preventDefault();const k=n.ck.indexOf(i),pv=n.ck[k-1]||n.ck[k+1];n.ck.splice(k,1);nRows();const el=pv&&document.querySelector('#nk .nk-r[data-i="'+pv.id+'"] .nk-ri');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length)}nSave()}
+});
+document.addEventListener('pointerdown',e=>{const h=e.target.closest&&e.target.closest('#nk [data-nh]');if(!h)return;const row=h.closest('.nk-r');ND={row};row.classList.add('drag');try{h.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
+document.addEventListener('pointermove',e=>{if(!ND)return;const y=e.clientY;for(const r of document.querySelectorAll('#nk-open .nk-r')){if(r===ND.row)continue;const b=r.getBoundingClientRect();if(y>b.top&&y<b.bottom){y<b.top+b.height/2?r.before(ND.row):r.after(ND.row);break}}});
+const nDrop=()=>{if(!ND)return;const n=NK.n;if(n){const ids=[...document.querySelectorAll('#nk-open .nk-r')].map(r=>r.dataset.i),mp=Object.fromEntries(n.ck.map(i=>[i.id,i]));n.ck=ids.map(i=>mp[i]).concat(n.ck.filter(i=>i.d));nSave(true)}ND.row.classList.remove('drag');ND=null};
+document.addEventListener('pointerup',nDrop);document.addEventListener('pointercancel',nDrop);
+
 /* ===== v7.13: Wallet (photo cards, crop, flip, encrypted, own PIN) ===== */
 const WT=[['aadhaar','Aadhaar','🪪','#e8590c'],['pan','PAN','💳','#1c7ed6'],['voter','Voter ID','🗳️','#7048e8'],['dl','Licence','🚗','#2f9e44'],['passport','Passport','📕','#0b7285'],['college','College ID','🎓','#c2255c'],['atm','Debit / ATM','💳','#364fc7'],['credit','Credit card','💎','#9c36b5'],['ins','Insurance','🛡️','#e67700'],['other','Other','📄','#495057']];
 const wtOf=k=>WT.find(x=>x[0]===k)||WT[9];
@@ -3949,7 +4157,7 @@ document.addEventListener('visibilitychange',()=>{
 </script>
 <script>
 (function(){
-  var BV='2026.11.28.01';window.__BV=BV;
+  var BV='2026.11.28.02';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);
