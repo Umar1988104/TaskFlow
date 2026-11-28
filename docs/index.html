@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--var BV='2026.11.27.02'-->
+<!--var BV='2026.11.28.01'-->
 <meta name="app-version" content="2026.11.26.03">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f7">
@@ -1855,7 +1855,7 @@ function renderSettings(){
     grp('Contest platforms',Object.keys(SRC).map(n=>sw(`data-src="${n}"`,SRC[n].n,S.src[n])).join(''))+
     grp('Data',seg('autoBackup','Automatic backup to your phone',[['off','Off'],['daily','Daily'],['weekly','Weekly']])+btn('bk-now','Back up now')+btn('ota-url','Update link: '+esc(S.otaUrl||'not set'))+btn('ota-check','Check for updates now')+btn('whatsnew',"What's new")+`<div class="srow"><span style="font-size:calc(13px*var(--fs));color:var(--sub)">${FS()?(S.lastBackup?'Last saved '+S.lastBackup+' in Documents/TaskFlow':'Not saved yet')+(S.lastBackupErr?' · '+esc(S.lastBackupErr):''):'Automatic backup works in the Android app. Here, use Download backup.'}</span></div>`+btn('dl','Download backup')+btn('cp','Copy backup to clipboard')+`<label class="srow btn" for="bk-file"><span>Restore from file…</span></label><input id="bk-file" type="file" accept=".json,application/json" hidden>`+btn('clear','Delete all tasks and history','danger'))+
     grp('Help',btn('help','Help, feedback and about')+btn('semail','Support email: '+esc(S.supportEmail||'not set'))+btn('intro','Show the welcome screens again'))+
-    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.13 · version ${window.__BV}</p>`;
+    `<p class="sm" style="margin:14px 6px 0">TaskFlow 7.14 · version ${window.__BV}</p>`;
 }
 function act(a,b){
   if(a==='notif')askPerm();
@@ -2438,6 +2438,7 @@ function revealRings(root){
 }
 /* ===== what's new, flip card ===== */
 const CHANGES=[
+ {v:'2026.11.28.01',t:'Wallet for the family',i:['Mark whose card it is (Self, Dad, Mom…) and filter the wallet by person','A Wallet shortcut when you long-press the installed web app icon','New TaskFlow app icon for the Android app']},
  {v:'2026.11.27.02',t:'Wallet: lock, expiry and backup',i:['Wallet photos are now encrypted on your phone, protected by your Wallet PIN','Auto-lock choices, a blurred app switcher and screenshot block in the Android app','Expiry date on each card, with a reminder added to your tasks','Card number kept masked with Show and Copy, plus notes','Share a card as a watermarked image with a reason and date','Encrypted wallet backup and restore with a password']},
  {v:'2026.11.27.01',t:'Wallet for your cards',i:["A Wallet in the Menu: keep photos of Aadhaar, PAN, voter ID, licence, college ID, ATM cards and more","Crop each card with auto-detect and four draggable corners, with Enhance and B&W looks","Front and back sides: tap a card to flip it","Stacked wallet view, search, favourites and type filters","Its own 4-digit Wallet PIN, separate from the app lock"]},
  {v:'2026.11.26.03',t:'Add anything, habits, focus timer and more',i:["One smart bar on Home: chai 20 becomes an expense, call Rahul tomorrow 5pm a task, anything else a note","Monthly recap picture you can share","Insight cards, a Pay EMI card and a month-end forecast","Habit tracker, focus timer and split bills","Planner week view on the Tasks tab","Notes can become tasks, link to tasks, take a colour or a PIN lock","Edit cash entries and loan expenses, repeat your last expense, and a Save button that stays on screen","One line-icon set, and confetti when a goal or loan is completed"]},
@@ -2736,7 +2737,7 @@ const FAQ=[
  ['How do updates work?','If you set an update link in Settings, Data, the app checks it, shows Update ready and restarts into the new version without reinstalling.'],
  ['I changed phones. How do I move my data?','On the old phone use Back up now, copy the file from Documents/TaskFlow to the new phone, then in Settings, Data choose Restore from file.']];
 function drawHp(){
-  $('#hp-v').textContent='Version 7.13 · build '+window.__BV;
+  $('#hp-v').textContent='Version 7.14 · build '+window.__BV;
   $('#hp-faq').innerHTML=FAQ.map(q=>`<details class="faq"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('');
 }
 $('#hp').addEventListener('click',e=>{
@@ -3714,8 +3715,8 @@ const fmtD=s=>new Date(s+'T00:00').toLocaleDateString('en-IN',{day:'numeric',mon
 const wMask=n=>n.length>4?'•••• '+n.slice(-4):'••••';
 const wlExp=c=>{if(!c.exp)return null;const d=Math.round((new Date(c.exp+'T00:00')-new Date(new Date().toDateString()))/864e5);return d<0?{t:'Expired',c:'bad'}:d===0?{t:'Expires today',c:'soon'}:d<=30?{t:'Expires in '+d+' days',c:'soon'}:null};
 function wlListHTML(){
-  const q=WL.q.toLowerCase(),L=WL.cards.filter(c=>(WL.f==='all'||(WL.f==='fav'?c.fav:WL.f==='soon'?wlExp(c):c.type===WL.f))&&(!q||(c.name+' '+wtOf(c.type)[1]).toLowerCase().includes(q)));
-  return L.length?`<div class="wl-stack">${L.map(c=>{const e=wlExp(c);return `<button class="wlc" data-wid="${c.id}" style="--c:${wtOf(c.type)[3]}">${wImg(c.front)}<span class="wlc-l">${wtOf(c.type)[2]} ${esc(c.name)}${c.fav?' ★':''}</span>${e?`<span class="wlc-x ${e.c}">${e.t}</span>`:''}</button>`}).join('')}</div>`
+  const q=WL.q.toLowerCase(),L=WL.cards.filter(c=>(WL.f==='all'||(WL.f==='fav'?c.fav:WL.f==='soon'?wlExp(c):WL.f.startsWith('o:')?c.who===WL.f.slice(2):c.type===WL.f))&&(!q||(c.name+' '+(c.who||'')+' '+wtOf(c.type)[1]).toLowerCase().includes(q)));
+  return L.length?`<div class="wl-stack">${L.map(c=>{const e=wlExp(c);return `<button class="wlc" data-wid="${c.id}" style="--c:${wtOf(c.type)[3]}">${wImg(c.front)}<span class="wlc-l">${wtOf(c.type)[2]} ${esc(c.name)}${c.who?' · '+esc(c.who):''}${c.fav?' ★':''}</span>${e?`<span class="wlc-x ${e.c}">${e.t}</span>`:''}</button>`}).join('')}</div>`
    :emptyBox('🪪',WL.cards.length?'No card matches':'Your wallet is empty','Add Aadhaar, PAN, college ID, ATM card and more. Photos stay encrypted on this phone.','');
 }
 async function renderWallet(){
@@ -3726,11 +3727,11 @@ async function renderWallet(){
   if(!WL.unlocked){if(!WL.mode)WL.mode='unlock';wlPad();return}
   if(WL.mode){wlPad();return}
   await wlLoad();if(tab!=='wallet'||!WL.unlocked)return;
-  const types=[...new Set(WL.cards.map(c=>c.type))],att=WL.cards.filter(wlExp).length;
+  const owners=[...new Set(WL.cards.map(c=>c.who).filter(Boolean))],types=[...new Set(WL.cards.map(c=>c.type))],att=WL.cards.filter(wlExp).length;
   $('#wallet').innerHTML=`<div class="wl-top"><input id="wl-q" type="search" placeholder="Search cards" value="${esc(WL.q)}" autocomplete="off"><button class="chipbtn" data-wl="menu" aria-label="Wallet options">⋯</button></div>`
    +(WL.menu?`<div class="wl-menu"><button class="chipbtn" data-wl="chpin">Change PIN</button><button class="chipbtn" data-wl="autolock">Auto-lock: ${ALN[wAL()]}</button><button class="chipbtn" data-wl="bk">Back up</button><button class="chipbtn" data-wl="rs">Restore</button><button class="chipbtn" data-wl="lock">Lock now</button><button class="chipbtn" data-wl="reset" style="color:var(--red)">Reset wallet</button></div>`:'')
    +(att&&WL.f!=='soon'?`<button class="wl-warn" data-wf="soon">⚠ ${att} card${att>1?'s':''} expired or expiring soon</button>`:'')
-   +(WL.cards.length>1?`<div class="wl-chips">${[['all','All'],['fav','★ Favourites'],...(att?[['soon','⏰ Expiring']]:[]),...types.map(k=>[k,wtOf(k)[1]])].map(([k,n])=>`<button data-wf="${k}" class="${WL.f===k?'on':''}">${n}</button>`).join('')}</div>`:'')
+   +(WL.cards.length>1?`<div class="wl-chips">${[['all','All'],['fav','★ Favourites'],...(att?[['soon','⏰ Expiring']]:[]),...owners.map(o=>['o:'+o,'👤 '+o]),...types.map(k=>[k,wtOf(k)[1]])].map(([k,n])=>`<button data-wf="${k}" class="${WL.f===k?'on':''}">${n}</button>`).join('')}</div>`:'')
    +`<div id="wl-list">${wlListHTML()}</div><button class="pbtn" data-wl="add">+ Add card</button>`;
 }
 
@@ -3743,7 +3744,7 @@ function wlView(id){
   const c=WL.cards.find(x=>x.id===id);if(!c)return;WD.id=id;const e=wlExp(c);
   wlShow(`<div class="wlo-h"><button data-wl="close" aria-label="Close">✕</button><b>${esc(c.name)}</b><button data-wl="fav" aria-label="Favourite">${c.fav?'★':'☆'}</button></div>
   <div class="wlf" id="wlf" data-wl="flip"><div class="wlf-in"><div class="wlf-s">${wImg(c.front)}</div><div class="wlf-s wlf-b">${c.back?wImg(c.back):'<div class="wlf-no">No back side added</div>'}</div></div></div>
-  <p class="wlo-s">${wtOf(c.type)[2]} ${wtOf(c.type)[1]}${c.exp?' · '+(e?`<b class="wlx ${e.c}">${e.t}</b>`:'valid till '+fmtD(c.exp)):''} · tap the card to flip</p>
+  <p class="wlo-s">${wtOf(c.type)[2]} ${wtOf(c.type)[1]}${c.who?' · '+esc(c.who):''}${c.exp?' · '+(e?`<b class="wlx ${e.c}">${e.t}</b>`:'valid till '+fmtD(c.exp)):''} · tap the card to flip</p>
   ${c.num?`<div class="wlo-n"><span id="wl-nv">${esc(wMask(c.num))}</span><button data-wl="reveal">Show</button><button data-wl="copy">Copy</button></div>`:''}
   ${c.note?`<p class="wlo-note">${esc(c.note)}</p>`:''}
   <div class="wlo-a"><button data-wl="flip">Flip</button><button data-wl="share">Share</button><button data-wl="edit">Edit</button><button data-wl="del" style="color:#ff6b6b">Delete</button></div>`);
@@ -3751,14 +3752,15 @@ function wlView(id){
 function wlEdit(id){
   const c=id&&WL.cards.find(x=>x.id===id);
   Object.keys(WD).forEach(k=>delete WD[k]);
-  Object.assign(WD,c?{...c}:{id:'',type:'aadhaar',name:'',front:'',back:'',fav:false,num:'',note:'',exp:'',lead:30,tid:''});
+  Object.assign(WD,c?{...c}:{id:'',type:'aadhaar',name:'',front:'',back:'',fav:false,num:'',note:'',exp:'',lead:30,tid:'',who:''});
   wlEditDraw();
 }
-function wlSnap(){['name','num','note','exp','lead'].forEach(k=>{const e=$('#wl-'+k);if(e)WD[k]=e.value})}
+function wlSnap(){['name','who','num','note','exp','lead'].forEach(k=>{const e=$('#wl-'+k);if(e)WD[k]=e.value})}
 function wlEditDraw(){
   wlShow(`<div class="wlo-h"><button data-wl="close" aria-label="Close">✕</button><b>${WD.id?'Edit card':'New card'}</b><button class="chipbtn" data-wl="save">Save</button></div>
   <div class="wlo-b"><div class="wl-types">${WT.map(t=>`<button data-wt="${t[0]}" class="${WD.type===t[0]?'on':''}" style="--c:${t[3]}">${t[2]} ${t[1]}</button>`).join('')}</div>
   <input id="wl-name" class="wl-in" maxlength="40" placeholder="Name, e.g. My Aadhaar" value="${esc(WD.name||'')}">
+  <input id="wl-who" class="wl-in" maxlength="24" list="wl-owners" placeholder="Whose card? e.g. Dad (optional)" value="${esc(WD.who||'')}" autocomplete="off"><datalist id="wl-owners">${[...new Set(WL.cards.map(c=>c.who).filter(Boolean))].map(o=>`<option value="${esc(o)}">`).join('')}</datalist>
   <div class="wl-slots">${['front','back'].map(s=>`<button class="wl-slot" data-slot="${s}">${WD[s]?wImg(WD[s]):`<span>＋<br>${s==='front'?'Front side':'Back side (optional)'}</span>`}</button>`).join('')}</div>
   ${WD.back?'<button class="tbtn" data-wl="rmback">Remove back side</button>':''}
   <input id="wl-num" class="wl-in" maxlength="40" placeholder="Card / ID number (optional)" value="${esc(WD.num||'')}" autocomplete="off">
@@ -3830,7 +3832,7 @@ function wlTask(rec){
 async function wlSave(){
   wlSnap();
   if(!WD.front){flash('Add the front side first');return}
-  const rec={id:WD.id||uid(),type:WD.type,name:(WD.name||'').trim()||wtOf(WD.type)[1],front:WD.front,back:WD.back||'',fav:!!WD.fav,num:(WD.num||'').trim(),note:(WD.note||'').trim(),exp:WD.exp||'',lead:+WD.lead||30,tid:WD.tid||'',u:Date.now()};
+  const rec={id:WD.id||uid(),type:WD.type,name:(WD.name||'').trim()||wtOf(WD.type)[1],who:(WD.who||'').trim(),front:WD.front,back:WD.back||'',fav:!!WD.fav,num:(WD.num||'').trim(),note:(WD.note||'').trim(),exp:WD.exp||'',lead:+WD.lead||30,tid:WD.tid||'',u:Date.now()};
   wlTask(rec);
   try{await wlPut(rec)}catch(e){flash('Could not save, storage may be full');return}
   flash(rec.tid?'Saved, reminder added to your tasks':'Saved to wallet');wlClose();renderWallet();
@@ -3938,6 +3940,7 @@ document.addEventListener('pointermove',e=>{if(CS.d==null)return;const sv=$('#wl
 document.addEventListener('pointerup',()=>{CS.d=null});document.addEventListener('pointercancel',()=>{CS.d=null});
 $('#wl-rf').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;let txt='';try{txt=await f.text()}catch(_){flash('Could not read that file');return}
   wlAsk('Restore wallet','Enter the password you chose when you made this backup.',false,async pw=>{try{const n=await wlRestore(pw,txt);flash('Restored '+n+' card'+(n===1?'':'s'));wlClose();renderWallet()}catch(_){$('#wl-pe').textContent='Wrong password, or not a wallet backup'}})});
+if(location.hash==='#wallet')setTimeout(()=>{try{setTab('wallet')}catch(e){}},600);
 document.addEventListener('visibilitychange',()=>{
   const on=WL.unlocked||WO.open;
   if(document.hidden){if(!on)return;if(wAL()===0){wlLock();if(tab==='wallet')renderWallet()}else{WL.hid=Date.now();document.body.classList.add('wl-priv')}}
@@ -3946,7 +3949,7 @@ document.addEventListener('visibilitychange',()=>{
 </script>
 <script>
 (function(){
-  var BV='2026.11.27.02';window.__BV=BV;
+  var BV='2026.11.28.01';window.__BV=BV;
   function run(code){var x=document.createElement('script');x.text=code;document.body.appendChild(x)}
   try{
     var raw=localStorage.getItem('taskflow.ota'),o=raw&&JSON.parse(raw);

@@ -58,6 +58,33 @@ jobs:
             }
           }
           EOF
+      - name: Generate app icon
+        run: |
+          pip install pillow
+          python3 - <<'EOF'
+          from PIL import Image, ImageDraw
+          import os
+          src = Image.open('docs/icon-512.png').convert('RGBA')
+          R = 'android/app/src/main/res'
+          for d, s in {'mdpi': 48, 'hdpi': 72, 'xhdpi': 96, 'xxhdpi': 144, 'xxxhdpi': 192}.items():
+              p = R + '/mipmap-' + d
+              os.makedirs(p, exist_ok=True)
+              ic = src.resize((s, s), Image.LANCZOS)
+              ic.save(p + '/ic_launcher.png')
+              m = Image.new('L', (s * 4, s * 4), 0)
+              ImageDraw.Draw(m).ellipse((0, 0, s * 4 - 1, s * 4 - 1), fill=255)
+              m = m.resize((s, s), Image.LANCZOS)
+              r = ic.copy()
+              r.putalpha(m)
+              r.save(p + '/ic_launcher_round.png')
+              f = int(s * 108 / 48)
+              inner = int(f * 0.8)
+              fg = Image.new('RGBA', (f, f), (0, 0, 0, 0))
+              fg.paste(src.resize((inner, inner), Image.LANCZOS), ((f - inner) // 2, (f - inner) // 2))
+              fg.save(p + '/ic_launcher_foreground.png')
+          os.makedirs(R + '/values', exist_ok=True)
+          open(R + '/values/ic_launcher_background.xml', 'w').write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#007AFF</color>\n</resources>\n')
+          EOF
       - name: Add notification permissions
         run: sed -i 's#</manifest>#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/><uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32"/><uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/></manifest>#' android/app/src/main/AndroidManifest.xml
       - name: Use the permanent signing key and bump version

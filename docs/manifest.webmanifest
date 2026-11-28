@@ -6,6 +6,14 @@
  "display": "standalone",
  "background_color": "#f2f2f7",
  "theme_color": "#f2f2f7",
+ "shortcuts": [
+  {
+   "name": "Wallet",
+   "short_name": "Wallet",
+   "url": "./#wallet",
+   "icons": [{"src": "icon-192.png", "sizes": "192x192"}]
+  }
+ ],
  "icons": [
   {
    "src": "icon-192.png",
